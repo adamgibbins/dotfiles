@@ -1,0 +1,2 @@
+These are my dotfiles, currently theres no way to automatically install them.
+I recommend you clone these to your home dir, say ~/.dotfiles and manually symlink them.
