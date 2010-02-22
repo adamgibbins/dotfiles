@@ -1,0 +1,29 @@
+[user]
+	name = Adam Gibbins
+	email = 
+
+[color]
+	ui = auto
+	interactive = auto
+
+[pager]
+	status = true
+	show-branch = true
+
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	staged = diff --cached
+	unstaged = diff
+	both = diff HEAD
+	oneline = log --pretty=oneline
+	amend = commit --amend
+
+[format]
+	numbered = auto
+
+[core]
+	legacyheaders = false
+	usedeltabaseoffset = true
+	excludesfile = /home/aeg/.gitignore
