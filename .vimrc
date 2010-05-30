@@ -18,3 +18,10 @@ map <leader>tn :tabnew %<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
+
+" remap : to ; so no need to press shift to enter command mode
+nore ; :
+nore , ;
+
+" Omni Completion
+setlocal omnifunc=syntaxcomplete#Complete
