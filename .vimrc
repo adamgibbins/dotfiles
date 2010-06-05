@@ -26,9 +26,20 @@ nore , ;
 " Omni Completion
 setlocal omnifunc=syntaxcomplete#Complete
 
-" Highlight trailing whitespace
+" Highlight trailing white space
 highlight ExtraWhitespace ctermbg=red guibg=red
 au ColorScheme * highlight ExtraWhitespace guibg=red
 au BufEnter * match ExtraWhitespace /\s\+$/
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\s\+$/
+
+" Status bar
+set statusline=%F%m%r%h%w\ [%{&ff}]\ %y\ [%04l,%04v][%p%%]\ [%L\ lines]
+set laststatus=2
+
+" Spelling
+set spell
+set spelllang=en_gb
+
+" Templates
+autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.tpl
