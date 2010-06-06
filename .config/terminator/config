@@ -9,7 +9,7 @@
     urgent_bell = True
     use_system_font = False
     show_titlebar = False
-    font = Monospace 9
+    font = Monospace 10
     scrollback_lines = 5000
 [layouts]
   [[default]]
