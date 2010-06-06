@@ -1,12 +1,12 @@
 [global_config]
   window_state = maximise
-  borderless = True
 [keybindings]
 [profiles]
   [[default]]
-    use_system_font = False
+    scrollbar_position = hidden
     visible_bell = True
     urgent_bell = True
+    use_system_font = False
     show_titlebar = False
     font = Monospace 9
     scrollback_lines = 5000
