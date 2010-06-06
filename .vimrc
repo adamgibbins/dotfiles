@@ -38,8 +38,8 @@ set statusline=%F%m%r%h%w\ [%{&ff}]\ %y\ [%04l,%04v][%p%%]\ [%L\ lines]
 set laststatus=2
 
 " Spelling
-set spell
 set spelllang=en_gb
+map <leader>ss :setlocal spell!<cr>
 
 " Templates
 autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.tpl
