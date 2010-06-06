@@ -1,5 +1,6 @@
 [global_config]
   window_state = maximise
+  handle_size = 2
 [keybindings]
 [profiles]
   [[default]]
