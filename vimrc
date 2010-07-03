@@ -17,7 +17,13 @@ set expandtab                 " Turn tabs into spaces
 set shiftwidth=2
 set tabstop=2
 set smarttab
-set autoindent
+
+if has("autocmd")
+  filetype plugin indent on
+else
+  set autoindent
+endif
+
 set smartindent
 set visualbell " No beeps
 
