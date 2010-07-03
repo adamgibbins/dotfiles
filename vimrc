@@ -56,3 +56,7 @@ map <leader>ss :setlocal spell!<cr>
 
 " Templates
 autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.tpl
+
+" Abbreviations
+ab #b /****************************************
+ab #e *****************************************/
