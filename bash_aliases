@@ -11,3 +11,5 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias auu='sudo aptitude update; sudo aptitude dist-upgrade; sudo aptitude autoclean'
+
+alias ...='cd ../..'
