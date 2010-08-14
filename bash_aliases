@@ -15,3 +15,6 @@ alias auu='sudo aptitude update; sudo aptitude dist-upgrade; sudo aptitude autoc
 alias ...='cd ../..'
 
 alias wgetr="wget -rSNpk -np --execute robots=off -U \"Mozilla/5.001 (windows; U; NT4.0; en-us) Gecko/25250101\" $@"
+
+alias pacrm='sudo yaourt -Rns'
+alias paccleanup='yaourt -Rs $(pacman -Qtdq)'
