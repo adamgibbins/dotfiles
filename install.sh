@@ -1,6 +1,10 @@
 #!/bin/bash
 # Originally from http://github.com/jferris/config_files/blob/master/install.sh
 
+git submodule init
+git submodule update
+wget http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim vim/autoload/
+
 cutstring="DO NOT EDIT BELOW THIS LINE"
 
 for name in *; do

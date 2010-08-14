@@ -2,3 +2,4 @@ vim/.netrwhist
 *.swp
 *.bkp
 *~
+vim /autoload/pathogen.vim
