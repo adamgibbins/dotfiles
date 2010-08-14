@@ -1,4 +1,9 @@
 set nocompatible              " vim not vi
+
+" Use awesome pathogen plugin to manage other plugins
+filetype off
+call pathogen#runtime_append_all_bundles()
+
 syntax on                     " Syntax highlighting
 set background=dark           " Dark background
 filetype plugin indent on     " Detect file type
