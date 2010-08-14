@@ -3,7 +3,7 @@
 
 git submodule init
 git submodule update
-wget http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/pathogen.vim
+wget http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/
 
 cutstring="DO NOT EDIT BELOW THIS LINE"
 
