@@ -1,59 +1,69 @@
-! General
-!urxvt*geometry:         80x26
-!urxvt.termName:  rxvt-256color
-urxvt.loginShell:         true
-urxvt.scrollBar:         false
-urxvt.secondaryScroll:    true
-urxvt.saveLines:         65535
-urxvt.cursorBlink:       false
-!urxvt.urgentOnBell:       true
-!urxvt.borderLess:       false
-!urxvt.borderWidth:          1
-!urxvt.internalBorder:       0
-!
-! Extensions
-urxvt*perl-lib:         /usr/lib/urxvt/perl/
-urxvt*perl-ext-common:  default,matcher,searchable-scrollback
-urxvt*urlLauncher:      /usr/bin/firefox
-urxvt*matcher.button:   1
-! So we catch even nasty URLs
-urxvt.cutchars:         `()'*<>[]{|}"
-URxvt*cutchars:         `"()'*<>[]{|}
-!
-! Appearance
-urxvt.font:             xft:monospace:pixelsize=13
-urxvt.boldFont:         xft:monospace:pixelsize=13
-!
-! Cursor
-urxvt.cursorColor: #DCDCCC
-*foreground: #DDEEDD
-*background: #1C1C1C
+Xcursor.theme: entis_mini_cursors_x11_others
 
-!black
-*color0: #1C1C1C
-*color8: #4d4d4d
-!red
-*color1: #D81860
-*color9: #F00060
-!green
-*color2: #B7CE42
-*color10: #BDE077
-!yellow
-*color3: #FEA63C
-*color11: #FFE863
-!blue
-*color4: #66AABB
-*color12: #AACCBB
-!magenta
-*color5: #9E6FFE
-*color13: #9E6FFE
-!cyan
-*color6: #5E7175
-*color14: #A3BABF
-!white
-*color7: #DDEEDD
-*color15: #6C887A
-!magenta
-*color5: #B7416E
-*color13: #BB4466
+! xpdf -----------------------------------------------------------------------
 
+xpdf*enableFreetype:    yes
+xpdf*antialias:         yes
+xpdf*foreground:        black
+xpdf*background:        white
+xpdf*urlCommand:        /usr/bin/firefox %s
+
+! Xft settings ---------------------------------------------------------------
+
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+
+! urxvt ----------------------------------------------------------------------
+
+URxvt.buffered:         true
+URxvt.background:       #2d2d2d
+URxvt.foreground:       #86c113
+URxvt.cursorColor:      #86c113
+URxvt.underlineColor:   #86c113
+URxvt.font:             xft:gohufont:pixelsize=16:antialias=false
+URxvt.boldFont:         xft:gohufont:bold:pixelsize=16:antialias=false
+!URxvt.perl-ext-common:  default,tabbed
+URxvt.title:            Terminal
+URxvt.scrollBar_right:     true
+URxvt.scrollstyle:    plain
+URxvt*geometry:        80x24
+URxvt.perl-ext-common : default,matcher
+URxvt.urlLauncher     : firefox
+URxvt.matcher.button  : 1
+
+
+!--------------------------------------------------
+! file:          terminal colours
+!---------------------------------------------------
+
+*background:                                #171717
+*foreground:                                #ffffff
+
+! Black --------------------------------------------
+        *color0:                            #292929
+        *color8:                            #3d3d3d
+! Red ----------------------------------------------
+        *color1:                            #DE6951
+        *color9:                            #c56a47
+! Green --------------------------------------------
+        *color2:                            #bcda55
+        *color10:                            #9dbf60
+! Yellow -------------------------------------------
+        *color3:                            #E2A564
+        *color11:                            #EC8A25
+! Blue ---------------------------------------------
+        *color4:                            #2187F6
+        *color12:                            #5495DC
+! Magenta ------------------------------------------
+        *color5:                            #875C8D
+        *color13:                            #E41F66
+! Cyan ---------------------------------------------
+        *color6:                            #4390B1
+        *color14:                            #276CC2
+! White --------------------------------------------
+        *color7:                            #D2D2D2
+        *color15:                            #ffffff
+! EOD ----------------------------------------------
