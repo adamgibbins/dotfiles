@@ -3,6 +3,7 @@ set nocompatible              " vim not vi
 " Use awesome pathogen plugin to manage other plugins
 filetype off
 call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 
 syntax on                     " Syntax highlighting
 set background=dark           " Dark background
