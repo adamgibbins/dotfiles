@@ -25,3 +25,6 @@
 [submodule "vim/bundle/align"]
 	path = vim/bundle/align
 	url = git://github.com/tsaleh/vim-align.git
+[submodule "vim/bundle/gitolite"]
+	path = vim/bundle/gitolite
+	url = git://github.com/tmatilai/gitolite.vim.git
