@@ -28,3 +28,6 @@
 [submodule "vim/bundle/gitolite"]
 	path = vim/bundle/gitolite
 	url = git://github.com/tmatilai/gitolite.vim.git
+[submodule "vim/bundle/autoclose"]
+	path = vim/bundle/autoclose
+	url = git://github.com/Townk/vim-autoclose.git
