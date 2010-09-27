@@ -23,7 +23,9 @@ set expandtab                 " Turn tabs into spaces
 set shiftwidth=2
 set tabstop=2
 set smarttab
-set mouse=a                   " Enable the mouse
+
+" Move swap files
+set dir=~/tmp
 
 if has("autocmd")
   filetype plugin indent on
