@@ -8,6 +8,7 @@
 --
 
 import XMonad
+import XMonad.Hooks.DynamicLog -- dzen
 import Data.Monoid
 import System.Exit
 
@@ -258,7 +259,7 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
+main = xmonad =<< dzen defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
