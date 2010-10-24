@@ -7,3 +7,6 @@
 [submodule "ssh"]
 	path = ssh
 	url = git@git.mayhemlabs.net:ssh
+[submodule "vim/bundle/nerdcommenter"]
+	path = vim/bundle/nerdcommenter
+	url = git://github.com/scrooloose/nerdcommenter.git
