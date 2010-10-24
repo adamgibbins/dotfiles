@@ -15,14 +15,18 @@ set background=dark
 set history=500
 set number
 set ruler
-set showmatch    " Highlight matching brackets
+set showmatch     " Highlight matching brackets
 set fileformats=unix,dos,mac
 let mapleader=","
-set textwidth=78 " Wrap comments
+set textwidth=78  " Wrap comments
 set noerrorbells
+set showtabline=2 " Always show tabs at the top
+set encoding=utf8
+set termencoding=utf8
 
 " Searching
 set ignorecase " Case insensitive
+set smartcase  " Case sensitive if search string contains capital letters
 set hlsearch   " Highlight matches
 set incsearch  " Highlight matches as you type
 
