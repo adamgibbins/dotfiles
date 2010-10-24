@@ -31,3 +31,6 @@
 [submodule "vim/bundle/autoclose"]
 	path = vim/bundle/autoclose
 	url = git://github.com/Townk/vim-autoclose.git
+[submodule "ssh"]
+	path = ssh
+	url = git@git.mayhemlabs.net:ssh
