@@ -19,6 +19,7 @@ set showmatch    " Highlight matching brackets
 set fileformats=unix,dos,mac
 let mapleader=","
 set textwidth=78 " Wrap comments
+set noerrorbells
 
 " Searching
 set ignorecase " Case insensitive
