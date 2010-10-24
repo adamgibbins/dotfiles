@@ -15,9 +15,10 @@ set background=dark
 set history=500
 set number
 set ruler
-set showmatch  " Highlight matching brackets
+set showmatch    " Highlight matching brackets
 set fileformats=unix,dos,mac
 let mapleader=","
+set textwidth=78 " Wrap comments
 
 " Searching
 set ignorecase " Case insensitive
