@@ -10,6 +10,7 @@ filetype plugin indent on
 " Syntax
 syntax on
 set background=dark
+set t_Co=245 " More than 8 colours
 
 " Misc
 set history=500
