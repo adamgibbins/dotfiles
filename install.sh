@@ -4,7 +4,7 @@
 git submodule init
 git submodule update
 mkdir -p vim/autoload
-wget http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/pathogen.vim
+wget --no-check-certificate http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/pathogen.vim
 
 cutstring="DO NOT EDIT BELOW THIS LINE"
 
