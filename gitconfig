@@ -28,3 +28,6 @@
 	legacyheaders = false
 	usedeltabaseoffset = true
 	excludesfile = /home/aeg/.gitignore
+
+[diff]
+	tool = vimdiff
