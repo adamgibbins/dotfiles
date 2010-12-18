@@ -19,3 +19,6 @@
 [submodule "vim/bundle/vimwiki"]
 	path = vim/bundle/vimwiki
 	url = git://github.com/vim-scripts/vimwiki.git
+[submodule "vim/bundle/taglist"]
+	path = vim/bundle/taglist
+	url = git://github.com/clones/vim-taglist.git
