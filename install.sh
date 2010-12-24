@@ -1,10 +1,16 @@
 #!/bin/bash
 # Originally from http://github.com/jferris/config_files/blob/master/install.sh
 
+# Grab the latest
+git pull
+
+# Clone all the various modules, vim etc
 git submodule init
-git submodule update
+git submodule update --merge
+
+# Download pathogen - nice vim plugin management
 mkdir -p vim/autoload
-wget --no-check-certificate http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/pathogen.vim
+wget -q --no-check-certificate http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/pathogen.vim
 
 cutstring="DO NOT EDIT BELOW THIS LINE"
 
