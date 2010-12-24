@@ -12,6 +12,8 @@ call pathogen#helptags()
 
 " Detect filetype
 filetype plugin indent on
+" Define map leader - needs to be near top else doesn't work correctly.
+let mapleader=","
 " }}}
 
 """"""""""""""""
@@ -19,7 +21,7 @@ filetype plugin indent on
 """"""""""""""""
 syntax on
 set background=dark
-set t_Co=245 " More than 8 colours
+set t_Co=248 " More than 8 colours
 " }}}
 
 """"""""""""""""
@@ -35,8 +37,6 @@ set ruler
 set showmatch
 " Prefer unix file format over everything else
 set fileformats=unix,dos,mac
-" Define map leader
-let mapleader=","
 " Wrap line insertion.
 " FIXME: Make this only work on comments.
 set textwidth=78
@@ -55,6 +55,21 @@ set nowritebackup
 set spelllang=en_gb
 " Toggle spelling
 map <leader>ss :setlocal spell!<cr>
+" }}}
+
+""""""""""""""""
+" Key Mappings {{{
+""""""""""""""""
+" Map keys so Ctrl-W isn't required to move around windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+" Map handy tab keys
+map <leader>tn :tabnew<cr>
+map <leader>te :tabedit
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
 " }}}
 
 """"""""""""""""
