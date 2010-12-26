@@ -55,6 +55,8 @@ set nowritebackup
 set spelllang=en_gb
 " Toggle spelling
 map <leader>ss :setlocal spell!<cr>
+" Vimwiki
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/'}]
 " }}}
 
 """"""""""""""""
