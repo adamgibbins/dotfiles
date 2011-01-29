@@ -37,9 +37,6 @@ set ruler
 set showmatch
 " Prefer unix file format over everything else
 set fileformats=unix,dos,mac
-" Wrap line insertion.
-" FIXME: Make this only work on comments.
-set textwidth=78
 " Get rid of those horrible dings and flashes.
 set noerrorbells
 " Show tar bar at top if more than 1 tab.

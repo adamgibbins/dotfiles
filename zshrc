@@ -10,6 +10,6 @@ export DISABLE_LS_COLORS="false"
 plugins=(git github ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
-export PATH=~/bin:${PATH}
+export PATH=~/bin:/var/lib/gems/1.8/bin:${PATH}
 
 for config_file (~/.zsh/*.zsh) source $config_file
