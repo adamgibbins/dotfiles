@@ -21,7 +21,8 @@ let mapleader=","
 """"""""""""""""
 syntax on
 set background=dark
-set t_Co=248 " More than 8 colours
+set t_Co=256 " More than 8 colours
+colorscheme ir_black
 " }}}
 
 """"""""""""""""
