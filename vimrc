@@ -1,5 +1,5 @@
 """"""""""""""""
-" Initial Setup {{{
+" Initial Setup
 """"""""""""""""
 " Need this first as it alters vim behaviour
 set nocompatible
@@ -14,19 +14,17 @@ call pathogen#helptags()
 filetype plugin indent on
 " Define map leader - needs to be near top else doesn't work correctly.
 let mapleader=","
-" }}}
 
 """"""""""""""""
-" Syntax {{{
+" Syntax
 """"""""""""""""
 syntax on
 set background=dark
 set t_Co=256 " More than 8 colours
 colorscheme ir_black
-" }}}
 
 """"""""""""""""
-" Misc {{{
+" Misc
 """"""""""""""""
 " High history, default is stupidly small
 set history=500
@@ -55,10 +53,9 @@ set spelllang=en_gb
 map <leader>ss :setlocal spell!<cr>
 " Vimwiki
 let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/', 'auto_export': 1 }]
-" }}}
 
 """"""""""""""""
-" Key Mappings {{{
+" Key Mappings
 """"""""""""""""
 " Map keys so Ctrl-W isn't required to move around windows
 map <C-j> <C-W>j
@@ -70,19 +67,17 @@ map <leader>tn :tabnew<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-" }}}
 
 """"""""""""""""
-" Folding {{{
+" Folding
 """"""""""""""""
 " Show folds on the left hand side column
 set foldcolumn=1
 " Fold where markers are placed
 set foldmethod=marker
-" }}}
 
 """"""""""""""""
-" Searching {{{
+" Searching
 """"""""""""""""
 " Ignore case when searching
 set ignorecase
@@ -92,10 +87,9 @@ set smartcase
 set hlsearch
 " Hilight search matches as you type
 set incsearch
-" }}}
 
 """"""""""""""""
-" Indentation {{{
+" Indentation
 """"""""""""""""
 " Expand all tabs to spaces
 set expandtab
@@ -108,10 +102,9 @@ set smartindent
 " Indent Guides - ,ig to trigger
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
-" }}}
 
 """"""""""""""""
-" Statusbar {{{ 
+" Statusbar 
 """"""""""""""""
 "statusline setup
 set statusline=%f       "tail of the filename
@@ -255,4 +248,3 @@ function! s:Median(nums)
         return (nums[l/2] + nums[(l/2)-1]) / 2
     endif
 endfunction
-" }}}
