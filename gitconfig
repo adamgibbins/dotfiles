@@ -1,35 +1,37 @@
+# vim: st=2:ts=2:et:ft=gitconfig
+
 [user]
-	name = Adam Gibbins
-	email = ag@adamgibbins.com
+  name  = Adam Gibbins
+  email = ag@adamgibbins.com
 
 [color]
-	ui = auto
-	interactive = auto
+  ui          = auto
+  interactive = auto
 
 [pager]
-	status = true
-	show-branch = true
+  status      = true
+  show-branch = true
 
 [alias]
-	st = status
-	ci = commit
-	co = checkout
-	staged = diff --cached
-	unstaged = diff
-	both = diff HEAD
-	oneline = log --pretty=oneline
-	amend = commit --amend
-  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  st       = status
+  ci       = commit
+  co       = checkout
+  staged   = diff --cached
+  unstaged = diff
+  both     = diff HEAD
+  oneline  = log --pretty         = oneline
+  amend    = commit --amend
+  graph    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 
 [format]
-	numbered = auto
+  numbered = auto
 
 [core]
-	legacyheaders = false
-	usedeltabaseoffset = true
-	excludesfile = /home/aeg/.gitignore
-	autocrlf = input
-	safecrlf = true
+  legacyheaders      = false
+  usedeltabaseoffset = true
+  excludesfile       = /home/aeg/.gitignore
+  autocrlf           = input
+  safecrlf           = true
 
 [diff]
-	tool = vimdiff
+  tool = vimdiff

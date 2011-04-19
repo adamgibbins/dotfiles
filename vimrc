@@ -53,6 +53,10 @@ set spelllang=en_gb
 map <leader>ss :setlocal spell!<cr>
 " Vimwiki
 let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/', 'auto_export': 1 }]
+" Keep at least 5 lines above/below
+set scrolloff=5
+" Keep at least 5 lines left/right
+set sidescrolloff=5
 
 """"""""""""""""
 " Key Mappings

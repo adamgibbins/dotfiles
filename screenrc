@@ -14,3 +14,4 @@ hardstatus string '%{= kG}[ %{G}%H %{g}] [ %l ] [%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%
 activity "active: %n (%t) [%w:%s]"
 
 nonblock on
+defflow off

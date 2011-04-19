@@ -40,3 +40,6 @@
 [submodule "vim/bundle/minibufexplorer"]
 	path = vim/bundle/minibufexplorer
 	url = git://github.com/vim-scripts/minibufexplorerpp.git
+[submodule "vim/bundle/tabular"]
+	path = vim/bundle/tabular
+	url = git://github.com/godlygeek/tabular.git

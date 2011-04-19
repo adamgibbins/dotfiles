@@ -7,7 +7,7 @@ export DISABLE_AUTO_UPDATE="false"
 export DISABLE_LS_COLORS="false"
 
 # oh-my-zsh plugins
-plugins=(git github ssh-agent)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 export PATH=~/bin:/var/lib/gems/1.8/bin:${PATH}
