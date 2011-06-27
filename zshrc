@@ -5,6 +5,7 @@ export ZSH_THEME="mrtazz"
 export CASE_SENSITIVE="false"
 export DISABLE_AUTO_UPDATE="false"
 export DISABLE_LS_COLORS="false"
+export REPORTTIME=5
 
 # oh-my-zsh plugins
 plugins=(git)
