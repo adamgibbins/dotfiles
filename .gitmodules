@@ -46,3 +46,6 @@
 [submodule "vim/bundle/gnupg"]
 	path = vim/bundle/gnupg
 	url = git://github.com/vim-scripts/gnupg.git
+[submodule "vim/bundle/session"]
+	path = vim/bundle/session
+	url = git://github.com/xolox/vim-session.git
