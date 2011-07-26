@@ -49,3 +49,6 @@
 [submodule "vim/bundle/session"]
 	path = vim/bundle/session
 	url = git://github.com/xolox/vim-session.git
+[submodule "vim/bundle/taskpaper"]
+	path = vim/bundle/taskpaper
+	url = git://github.com/jessmartin/taskpaper.vim.git
