@@ -26,6 +26,8 @@ colorscheme ir_black
 """"""""""""""""
 " Misc
 """"""""""""""""
+" Smart command line completion
+set wildmenu
 " More powerful backspacing
 set backspace=indent,eol,start
 " High history, default is stupidly small
