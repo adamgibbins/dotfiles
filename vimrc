@@ -26,12 +26,16 @@ colorscheme ir_black
 """"""""""""""""
 " Misc
 """"""""""""""""
+" More powerful backspacing
+set backspace=indent,eol,start
 " High history, default is stupidly small
 set history=500
 " Show line numbers
 set number
 " Show the line position
 set ruler
+" Show (partial) command in status line
+set showcmd
 " Hilight matching brackets
 set showmatch
 " Prefer unix file format over everything else
@@ -57,6 +61,8 @@ let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwik
 set scrolloff=5
 " Keep at least 5 lines left/right
 set sidescrolloff=5
+" Suffixes that get lower priority when tab using tab completion on filenames.
+set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 """"""""""""""""
 " Key Mappings
