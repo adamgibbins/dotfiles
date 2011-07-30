@@ -4,6 +4,9 @@
   name  = Adam Gibbins
   email = ag@adamgibbins.com
 
+[format]
+  numbered = auto
+
 [color]
   ui          = auto
   interactive = auto
@@ -11,6 +14,10 @@
 [pager]
   status      = true
   show-branch = true
+
+# Remove empty directories if cloning from SVN (which can commit directories)
+[svn]
+  rmdir = true
 
 [alias]
   st       = status
@@ -22,6 +29,7 @@
   oneline  = log --pretty         = oneline
   amend    = commit --amend
   graph    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  who      = "!sh -c 'git log -1 --pretty=\"format:%an <%ae>\" --author=\"$1\"' -"
 
 [format]
   numbered = auto
