@@ -15,12 +15,15 @@
 # Adjustments would still go to the .zshrc.local file.
 ################################################################################
 
+export CC=gcc-4.2
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+
 ## Settings for umask
-if (( EUID == 0 )); then
-  umask 002
-else
-  umask 022
-fi
+#if (( EUID == 0 )); then
+#  umask 002
+#else
+#  umask 022
+#fi
 
 ## ZLE tweaks ##
 
