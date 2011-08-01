@@ -46,3 +46,6 @@
 [submodule "vim/bundle/taskpaper"]
 	path = vim/bundle/taskpaper
 	url = git://github.com/jessmartin/taskpaper.vim.git
+[submodule "vim/bundle/vimoutliner"]
+	path = vim/bundle/vimoutliner
+	url = git://github.com/vimoutliner/vimoutliner.git

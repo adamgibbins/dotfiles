@@ -26,6 +26,8 @@ colorscheme ir_black
 """"""""""""""""
 " Misc
 """"""""""""""""
+" Ensure modelines are enabled
+set modelines=1
 " Smart command line completion
 set wildmenu
 " More powerful backspacing
