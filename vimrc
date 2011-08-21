@@ -1,6 +1,3 @@
-""""""""""""""""
-" Initial Setup
-""""""""""""""""
 " Need this first as it alters vim behaviour
 set nocompatible
 autocmd!
@@ -15,17 +12,15 @@ filetype plugin indent on
 " Define map leader - needs to be near top else doesn't work correctly.
 let mapleader=","
 
-""""""""""""""""
-" Syntax
-""""""""""""""""
+" No toolbar in GUI
+set guioptions-=T
+
+" Syntax and colours
 syntax on
 set background=dark
 set t_Co=256 " More than 8 colours
-colorscheme ir_black
+colorscheme tir_black
 
-""""""""""""""""
-" Misc
-""""""""""""""""
 " Ensure modelines are enabled
 set modelines=1
 " Smart command line completion
@@ -68,9 +63,6 @@ set sidescrolloff=5
 " Suffixes that get lower priority when tab using tab completion on filenames.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
-""""""""""""""""
-" Key Mappings
-""""""""""""""""
 " Map keys so Ctrl-W isn't required to move around windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -82,17 +74,11 @@ map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
-""""""""""""""""
-" Folding
-""""""""""""""""
 " Show folds on the left hand side column
 set foldcolumn=1
 " Fold where markers are placed
 set foldmethod=marker
 
-""""""""""""""""
-" Searching
-""""""""""""""""
 " Ignore case when searching
 set ignorecase
 " Make search case sensitive if it contains capitals
@@ -102,9 +88,6 @@ set hlsearch
 " Hilight search matches as you type
 set incsearch
 
-""""""""""""""""
-" Indentation
-""""""""""""""""
 " Expand all tabs to spaces
 set expandtab
 " Set tab width to 2 spaces
@@ -117,9 +100,6 @@ set smartindent
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
 
-""""""""""""""""
-" Statusbar 
-""""""""""""""""
 "statusline setup
 set statusline=%f       "tail of the filename
 
