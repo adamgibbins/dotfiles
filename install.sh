@@ -4,10 +4,6 @@
 # Grab the latest
 git pull
 
-# Clone all the various modules, vim etc
-git submodule init
-git submodule update --merge
-
 # Download pathogen - nice vim plugin management
 mkdir -p vim/autoload
 wget -q --no-check-certificate http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/pathogen.vim

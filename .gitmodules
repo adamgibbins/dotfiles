@@ -1,3 +1,0 @@
-[submodule "ssh"]
-	path = ssh
-	url = git@git.mayhemlabs.net:ssh
