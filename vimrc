@@ -21,6 +21,8 @@ set background=dark
 set t_Co=256 " More than 8 colours
 colorscheme tir_black
 
+" Max line width before text wrapping
+set textwidth=80
 " Ensure modelines are enabled
 set modelines=1
 " Smart command line completion
@@ -104,7 +106,7 @@ let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
 
 " Command-T
-let g:CommandTMaxHeight=15
+let g:CommandTMaxHeight=30
 set wildignore+=*.o,*.obj,.git,*.pyc
 
 "statusline setup
