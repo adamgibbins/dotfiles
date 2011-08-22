@@ -160,8 +160,8 @@ function! StatuslineCurrentHighlight()
     endif
 endfunction
 
-""recalculate the trailing whitespace warning when idle, and after saving
-"autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+"recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
 "return '[\s]' if trailing white space is detected
 "return '' otherwise
