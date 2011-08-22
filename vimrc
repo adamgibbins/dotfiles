@@ -50,6 +50,9 @@ set termencoding=utf8
 " You're using source control anyhow right?
 set nobackup
 set nowritebackup
+" Persistant undo
+set undodir=~/.vim_runtime/undodir
+set undofile
 " Set dictionary for spellcheck
 set spelllang=en_gb
 " Toggle spelling
@@ -99,6 +102,10 @@ set smartindent
 " Indent Guides - ,ig to trigger
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
+
+" Command-T
+let g:CommandTMaxHeight=15
+set wildignore+=*.o,*.obj,.git,*.pyc
 
 "statusline setup
 set statusline=%f       "tail of the filename
