@@ -21,6 +21,9 @@ set background=dark
 set t_Co=256 " More than 8 colours
 colorscheme tir_black
 
+" GUI Font
+set gfn=Monaco\ 8
+
 " Max line width before text wrapping
 set textwidth=80
 " Ensure modelines are enabled
