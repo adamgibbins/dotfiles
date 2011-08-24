@@ -103,7 +103,7 @@ set shiftwidth=2
 set tabstop=2
 " TODO: Document
 set smarttab
-set smartindent
+set cindent
 " Indent Guides - ,ig to trigger
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
