@@ -40,7 +40,7 @@ set number
 set ruler
 " Show (partial) command in status line
 set showcmd
-" Hilight matching brackets
+" Highlight matching brackets
 set showmatch
 " Prefer unix file format over everything else
 set fileformats=unix,dos,mac
@@ -55,7 +55,7 @@ set termencoding=utf8
 " You're using source control anyhow right?
 set nobackup
 set nowritebackup
-" Persistant undo
+" Persistent undo
 set undodir=~/.vim_runtime/undodir
 set undofile
 " Set dictionary for spellcheck
@@ -91,9 +91,9 @@ set foldmethod=marker
 set ignorecase
 " Make search case sensitive if it contains capitals
 set smartcase
-" Hilight search matches
+" Highlight search matches
 set hlsearch
-" Hilight search matches as you type
+" Highlight search matches as you type
 set incsearch
 
 " Expand all tabs to spaces
@@ -103,10 +103,16 @@ set shiftwidth=2
 set tabstop=2
 " TODO: Document
 set smarttab
-set smartindent
+set autoindent
+" Disable smartident, cindent is more reliable.
+set nosmartindent
+set cindent
 " Indent Guides - ,ig to trigger
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
+
+" Remember vim status on exit
+set viminfo='50,\"1000,:100,n~/.viminfo
 
 " Command-T
 let g:CommandTMaxHeight=30
