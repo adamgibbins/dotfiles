@@ -101,6 +101,7 @@ set expandtab
 " Set tab width to 2 spaces
 set shiftwidth=2
 set tabstop=2
+set softtabstop=2
 " TODO: Document
 set smarttab
 set autoindent
