@@ -2,7 +2,7 @@
 
 [user]
   name  = Adam Gibbins
-	email = adam.gibbins@youdevise.com
+	email = adam@adamgibbins.com
 
 [format]
   numbered = auto
@@ -30,6 +30,7 @@
   amend    = commit --amend
   graph    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   who      = "!sh -c 'git log -1 --pretty=\"format:%an <%ae>\" --author=\"$1\"' -"
+  msg      = commit --allow-empty -m
 
 [format]
   numbered = auto
