@@ -20,13 +20,14 @@
   rmdir = true
 
 [alias]
-  st       = status
+  st       = status -sb
   ci       = commit
   co       = checkout
   staged   = diff --cached
   unstaged = diff
   both     = diff HEAD
-  oneline  = log --pretty         = oneline
+  worddiff = diff --word-diff
+  oneline  = log --pretty --decorate
   amend    = commit --amend
   graph    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   who      = "!sh -c 'git log -1 --pretty=\"format:%an <%ae>\" --author=\"$1\"' -"
