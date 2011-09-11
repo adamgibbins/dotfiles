@@ -3961,3 +3961,4 @@ zrclocal
 # Local variables:
 # mode: sh
 # End:
+function git(){hub "$@"}
