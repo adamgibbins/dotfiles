@@ -91,8 +91,8 @@ set foldmethod=marker
 set ignorecase
 " Make search case sensitive if it contains capitals
 set smartcase
-" Highlight search matches
-set hlsearch
+" Do not highlight search matches
+set nohlsearch
 " Highlight search matches as you type
 set incsearch
 
