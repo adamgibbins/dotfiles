@@ -399,10 +399,8 @@ function! s:buffer_type(...) dict abort
     let type = 'directory'
   elseif self.spec() == ''
     let type = 'null'
-  elseif filereadable(self.spec())
-    let type = 'file'
   else
-    let type = ''
+    let type = 'file'
   endif
   if a:0
     return !empty(filter(copy(a:000),'v:val ==# type'))
@@ -769,7 +767,6 @@ endfunction
 call s:command("-nargs=? -complete=customlist,s:CommitComplete Gcommit :execute s:Commit(<q-args>)")
 
 function! s:Commit(args) abort
-  let old_type = s:buffer().type()
   let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
   let dir = getcwd()
   let msgfile = s:repo().dir('COMMIT_EDITMSG')
@@ -814,14 +811,14 @@ function! s:Commit(args) abort
         if args !~# '\%(^\| \)--cleanup\>'
           let args = '--cleanup=strip '.args
         endif
-        let old_nr = bufnr('')
         if bufname('%') == '' && line('$') == 1 && getline(1) == '' && !&mod
-          edit `=msgfile`
+          keepalt edit `=msgfile`
+        elseif s:buffer().type() ==# 'index'
+          keepalt edit `=msgfile`
+          execute (search('^#','n')+1).'wincmd+'
+          setlocal nopreviewwindow
         else
           keepalt split `=msgfile`
-        endif
-        if old_type ==# 'index'
-          execute 'bdelete '.old_nr
         endif
         let b:fugitive_commit_arguments = args
         setlocal bufhidden=delete filetype=gitcommit
@@ -986,7 +983,10 @@ function! s:Edit(cmd,bang,...) abort
       endif
       let echo = s:Edit('read',1,args)
       silent write!
-      setlocal readonly nomodified nomodifiable filetype=git foldmarker=<<<<<<<,>>>>>>>
+      setlocal buftype=nowrite nomodified filetype=git foldmarker=<<<<<<<,>>>>>>>
+      if getline(1) !~# '^diff '
+        setlocal readonly nomodifiable
+      endif
       if a:cmd =~# 'pedit'
         wincmd p
       endif
@@ -999,6 +999,8 @@ function! s:Edit(cmd,bang,...) abort
     return ''
   elseif a:0
     let file = s:buffer().expand(a:1)
+  elseif expand('%') ==# ''
+    let file = ':'
   elseif s:buffer().commit() ==# '' && s:buffer().path('/') !~# '^/.git\>'
     let file = s:buffer().path(':')
   else
@@ -1017,6 +1019,10 @@ function! s:Edit(cmd,bang,...) abort
 endfunction
 
 function! s:EditComplete(A,L,P) abort
+  return s:repo().superglob(a:A)
+endfunction
+
+function! s:EditRunComplete(A,L,P) abort
   if a:L =~# '^\w\+!'
     return s:GitComplete(a:A,a:L,a:P)
   else
@@ -1026,11 +1032,11 @@ endfunction
 
 call s:command("-bar -bang -nargs=? -complete=customlist,s:EditComplete Ge       :execute s:Edit('edit<bang>',0,<f-args>)")
 call s:command("-bar -bang -nargs=? -complete=customlist,s:EditComplete Gedit    :execute s:Edit('edit<bang>',0,<f-args>)")
-call s:command("-bar -bang -nargs=? -complete=customlist,s:EditComplete Gpedit   :execute s:Edit('pedit',<bang>0,<f-args>)")
-call s:command("-bar -bang -nargs=? -complete=customlist,s:EditComplete Gsplit   :execute s:Edit('split',<bang>0,<f-args>)")
-call s:command("-bar -bang -nargs=? -complete=customlist,s:EditComplete Gvsplit  :execute s:Edit('vsplit',<bang>0,<f-args>)")
-call s:command("-bar -bang -nargs=? -complete=customlist,s:EditComplete Gtabedit :execute s:Edit('tabedit',<bang>0,<f-args>)")
-call s:command("-bar -bang -nargs=? -count -complete=customlist,s:EditComplete Gread :execute s:Edit((!<count> && <line1> ? '' : <count>).'read',<bang>0,<f-args>)")
+call s:command("-bar -bang -nargs=? -complete=customlist,s:EditRunComplete Gpedit   :execute s:Edit('pedit',<bang>0,<f-args>)")
+call s:command("-bar -bang -nargs=? -complete=customlist,s:EditRunComplete Gsplit   :execute s:Edit('split',<bang>0,<f-args>)")
+call s:command("-bar -bang -nargs=? -complete=customlist,s:EditRunComplete Gvsplit  :execute s:Edit('vsplit',<bang>0,<f-args>)")
+call s:command("-bar -bang -nargs=? -complete=customlist,s:EditRunComplete Gtabedit :execute s:Edit('tabedit',<bang>0,<f-args>)")
+call s:command("-bar -bang -nargs=? -count -complete=customlist,s:EditRunComplete Gread :execute s:Edit((!<count> && <line1> ? '' : <count>).'read',<bang>0,<f-args>)")
 
 " }}}1
 " Gwrite, Gwq {{{1
@@ -1046,6 +1052,24 @@ function! s:Write(force,...) abort
     return 'wq'
   elseif s:buffer().type() == 'index'
     return 'Gcommit'
+  elseif s:buffer().path() ==# '' && getline(4) =~# '^+++ '
+    let filename = getline(4)[6:-1]
+    setlocal buftype=
+    silent write
+    setlocal buftype=nowrite
+    if matchstr(getline(2),'index [[:xdigit:]]\+\.\.\zs[[:xdigit:]]\{7\}') ==# s:repo().rev_parse(':0:'.filename)[0:6]
+      let err = s:repo().git_chomp('apply','--cached','--reverse',s:buffer().spec())
+    else
+      let err = s:repo().git_chomp('apply','--cached',s:buffer().spec())
+    endif
+    if err !=# ''
+      let v:errmsg = split(err,"\n")[0]
+      return 'echoerr v:errmsg'
+    elseif a:force
+      return 'bdelete'
+    else
+      return 'Gedit '.fnameescape(filename)
+    endif
   endif
   let mytab = tabpagenr()
   let mybufnr = bufnr('')
@@ -1408,7 +1432,7 @@ function! s:Blame(bang,line1,line2,count,args) abort
     else
       let cmd += ['--contents', '-']
     endif
-    let basecmd = call(s:repo().git_command,cmd+['--',s:buffer().path()],s:repo())
+    let basecmd = escape(call(s:repo().git_command,cmd+['--',s:buffer().path()],s:repo()),'!')
     try
       let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
       if !s:repo().bare()
@@ -1456,6 +1480,9 @@ function! s:Blame(bang,line1,line2,count,args) abort
         execute current
         execute "vertical resize ".(match(getline('.'),'\s\+\d\+)')+1)
         setlocal nomodified nomodifiable nonumber scrollbind nowrap foldcolumn=0 nofoldenable filetype=fugitiveblame
+        if exists('+relativenumber')
+          setlocal norelativenumber
+        endif
         nnoremap <buffer> <silent> <CR> :<C-U>exe <SID>BlameJump('')<CR>
         nnoremap <buffer> <silent> P    :<C-U>exe <SID>BlameJump('^'.v:count1)<CR>
         nnoremap <buffer> <silent> ~    :<C-U>exe <SID>BlameJump('~'.v:count1)<CR>
@@ -1602,7 +1629,7 @@ function! s:Browse(bang,line1,count,...) abort
         endif
         if branch != ''
           let remote = s:repo().git_chomp('config','branch.'.branch.'.remote')
-          if remote ==# ''
+          if remote =~# '^\.\=$'
             let remote = 'origin'
           elseif rev[0:strlen(branch)-1] ==# branch && rev[strlen(branch)] =~# '[:^~@]'
             let rev = s:repo().git_chomp('config','branch.'.branch.'.merge')[11:-1] . rev[strlen(branch):-1]
@@ -1757,6 +1784,9 @@ function! s:ReplaceCmd(cmd,...) abort
   silent edit!
   silent exe 'keepalt file '.s:fnameescape(fn)
   call delete(tmp)
+  if bufname('$') == tmp
+    silent execute 'bwipeout '.bufnr('$')
+  endif
   silent exe 'doau BufReadPost '.s:fnameescape(fn)
 endfunction
 
@@ -1788,7 +1818,7 @@ function! s:BufReadIndex()
       endtry
       set ft=gitcommit
     endif
-    setlocal ro noma nomod nomodeline bufhidden=delete
+    setlocal ro noma nomod nomodeline bufhidden=wipe
     call s:JumpInit()
     nunmap   <buffer>          P
     nunmap   <buffer>          ~
@@ -1799,6 +1829,9 @@ function! s:BufReadIndex()
     nnoremap <buffer> <silent> a :<C-U>let b:fugitive_display_format += 1<Bar>exe <SID>BufReadIndex()<CR>
     nnoremap <buffer> <silent> i :<C-U>let b:fugitive_display_format -= 1<Bar>exe <SID>BufReadIndex()<CR>
     nnoremap <buffer> <silent> C :<C-U>Gcommit<CR>
+    nnoremap <buffer> <silent> cA :<C-U>Gcommit --amend --reuse-message=HEAD<CR>
+    nnoremap <buffer> <silent> ca :<C-U>Gcommit --amend<CR>
+    nnoremap <buffer> <silent> cc :<C-U>Gcommit<CR>
     nnoremap <buffer> <silent> D :<C-U>execute <SID>StageDiff('Gvdiff')<CR>
     nnoremap <buffer> <silent> dd :<C-U>execute <SID>StageDiff('Gvdiff')<CR>
     nnoremap <buffer> <silent> dh :<C-U>execute <SID>StageDiff('Gsdiff')<CR>
@@ -1807,7 +1840,7 @@ function! s:BufReadIndex()
     nnoremap <buffer> <silent> dv :<C-U>execute <SID>StageDiff('Gvdiff')<CR>
     nnoremap <buffer> <silent> p :<C-U>execute <SID>StagePatch(line('.'),line('.')+v:count1-1)<CR>
     xnoremap <buffer> <silent> p :<C-U>execute <SID>StagePatch(line("'<"),line("'>"))<CR>
-    nnoremap <buffer> <silent> q :<C-U>bdelete<CR>
+    nnoremap <buffer> <silent> q :<C-U>if bufnr('$') == 1<Bar>quit<Bar>else<Bar>bdelete<Bar>endif<CR>
     nnoremap <buffer> <silent> R :<C-U>edit<CR>
   catch /^fugitive:/
     return 'echoerr v:errmsg'
