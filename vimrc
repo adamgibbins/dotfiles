@@ -14,6 +14,8 @@ let mapleader=","
 
 " No toolbar in GUI
 set guioptions-=T
+" No scrollbar in GUI
+set guioptions-=r
 
 " Syntax and colours
 syntax on
