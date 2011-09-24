@@ -36,8 +36,8 @@ set wildmenu
 set backspace=indent,eol,start
 " High history, default is stupidly small
 set history=500
-" Show line numbers
-set number
+" Show relative line numbers
+set relativenumber
 " Show the line position
 set ruler
 " Show (partial) command in status line
