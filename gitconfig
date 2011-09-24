@@ -1,8 +1,6 @@
-# vim: st=2:ts=2:et:ft=gitconfig
-
 [user]
   name  = Adam Gibbins
-	email = adam@adamgibbins.com
+  email = adam@adamgibbins.com
 
 [format]
   numbered = auto
@@ -45,3 +43,5 @@
 
 [diff]
   tool = vimdiff
+
+# vim: st=2:ts=2:et:ft=gitconfig
