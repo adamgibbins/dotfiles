@@ -74,6 +74,12 @@ chflags nohidden ~/Library
 # Disable local Time Machine backups
 sudo tmutil disablelocal
 
+# Enable Disk Utility debug mode
+defaults write com.apple.DiskUtility DUDebugMenuEnabled 1
+
+# Enable all image formats
+defaults write com.apple.DiskUtility advanced-image-options -bool true
+
 # Kill affected applications
 for app in Safari Finder Dock Mail; do killall "$app"; done
 
