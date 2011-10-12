@@ -121,6 +121,9 @@ set viminfo='50,\"1000,:100,n~/.viminfo
 let g:CommandTMaxHeight=30
 set wildignore+=*.o,*.obj,.git,*.pyc
 
+" Auto remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
+
 "statusline setup
 set statusline=%f       "tail of the filename
 
