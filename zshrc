@@ -2536,7 +2536,7 @@ alias semifont='echo -en "\033]50;-misc-fixed-medium-r-semicondensed-*-*-120-*-*
 #a2# Execute \kbd{du -sch}
 alias da='du -sch'
 #a2# Execute \kbd{jobs -l}
-alias j='jobs -l'
+#alias j='jobs -l'
 
 # compile stuff
 #a2# Execute \kbd{./configure}
