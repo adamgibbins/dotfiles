@@ -21,6 +21,7 @@
   st       = status -sb
   ci       = commit
   co       = checkout
+  d        = diff -b
   staged   = diff --cached
   unstaged = diff
   both     = diff HEAD
