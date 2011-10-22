@@ -715,10 +715,11 @@ fi
 zstyle ':acceptline:*' rehash true
 
 function Accept-Line() {
-    emulate -L zsh
+    setopt localoptions noksharrays
     local -a subs
     local -xi aldone
     local sub
+    local alcontext=${1:-$alcontext}
 
     zstyle -a ":acceptline:${alcontext}" actions subs
 
@@ -748,9 +749,17 @@ function Accept-Line-getdefault() {
     esac
 }
 
+function Accept-Line-HandleContext() {
+    zle Accept-Line
+
+    default_action=$(Accept-Line-getdefault)
+    zstyle -T ":acceptline:${alcontext}" call_default \
+        && zle ${default_action}
+}
+
 function accept-line() {
-    emulate -L zsh
-    local -a cmdline
+    setopt localoptions noksharrays
+    local -ax cmdline
     local -x alcontext
     local buf com fname format msg default_action
 
@@ -760,11 +769,14 @@ function accept-line() {
     com="${cmdline[1]}"
     fname="_${com}"
 
+    Accept-Line 'preprocess'
+
     zstyle -t ":acceptline:${alcontext}" rehash \
         && [[ -z ${commands[$com]} ]]           \
         && rehash
 
-    if    [[ -n ${reswords[(r)$com]} ]] \
+    if    [[ -n ${com}               ]] \
+       && [[ -n ${reswords[(r)$com]} ]] \
        || [[ -n ${aliases[$com]}     ]] \
        || [[ -n ${functions[$com]}   ]] \
        || [[ -n ${builtins[$com]}    ]] \
@@ -772,11 +784,8 @@ function accept-line() {
 
         # there is something sensible to execute, just do it.
         alcontext='normal'
-        zle Accept-Line
+        Accept-Line-HandleContext
 
-        default_action=$(Accept-Line-getdefault)
-        zstyle -T ":acceptline:${alcontext}" call_default \
-            && zle ${default_action}
         return
     fi
 
@@ -792,49 +801,45 @@ function accept-line() {
             # Okay, we warned the user before, he called us again,
             # so have it his way.
             alcontext='force'
-            zle Accept-Line
+            Accept-Line-HandleContext
 
-            default_action=$(Accept-Line-getdefault)
-            zstyle -T ":acceptline:${alcontext}" call_default \
-                && zle ${default_action}
             return
         fi
 
-        # prepare warning message for the user, configurable via zstyle.
-        zstyle -s ":acceptline:${alcontext}" compwarnfmt msg
+        if zstyle -t ":acceptline:${alcontext}" nocompwarn ; then
+            alcontext='normal'
+            Accept-Line-HandleContext
+        else
+            # prepare warning message for the user, configurable via zstyle.
+            zstyle -s ":acceptline:${alcontext}" compwarnfmt msg
 
-        if [[ -z ${msg} ]] ; then
-            msg="%c will not execute and completion %f exists."
+            if [[ -z ${msg} ]] ; then
+                msg="%c will not execute and completion %f exists."
+            fi
+
+            zformat -f msg "${msg}" "c:${com}" "f:${fname}"
+
+            zle -M -- "${msg}"
         fi
-
-        zformat -f msg "${msg}" "c:${com}" "f:${fname}"
-
-        zle -M -- "${msg}"
         return
     elif [[ -n ${buf//[$' \t\n']##/} ]] ; then
         # If we are here, the commandline contains something that is not
         # executable, which is neither subject to _command_name correction
         # and is not empty. might be a variable assignment
         alcontext='misc'
-        zle Accept-Line
+        Accept-Line-HandleContext
 
-        default_action=$(Accept-Line-getdefault)
-        zstyle -T ":acceptline:${alcontext}" call_default \
-            && zle ${default_action}
         return
     fi
 
     # If we got this far, the commandline only contains whitespace, or is empty.
     alcontext='empty'
-    zle Accept-Line
-
-    default_action=$(Accept-Line-getdefault)
-    zstyle -T ":acceptline:${alcontext}" call_default \
-        && zle ${default_action}
+    Accept-Line-HandleContext
 }
 
 zle -N accept-line
 zle -N Accept-Line
+zle -N Accept-Line-HandleContext
 
 # }}}
 
@@ -1072,7 +1077,7 @@ DIRSTACKFILE=${DIRSTACKFILE:-${HOME}/.zdirs}
 if [[ -f ${DIRSTACKFILE} ]] && [[ ${#dirstack[*]} -eq 0 ]] ; then
     dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
     # "cd -" won't work after login by just setting $OLDPWD, so
-    [[ -d $dirstack[0] ]] && cd $dirstack[0] && cd $OLDPWD
+    [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
 fi
 
 chpwd() {
@@ -1489,28 +1494,6 @@ iso2utf() {
             eval export "$(echo $ENV | sed 's/iso.*/UTF-8/ ; s/ISO.*/UTF-8/')"
         done
     fi
-}
-
-# set up software synthesizer via speakup
-swspeak() {
-    if [ -x /usr/sbin/swspeak-setup ] ; then
-       setopt singlelinezle
-       unsetopt prompt_cr
-       export PS1="%m%# "
-       /usr/sbin/swspeak-setup $@
-     else # old version:
-        if ! [[ -r /dev/softsynth ]] ; then
-            flite -o play -t "Sorry, software synthesizer not available. Did you boot with swspeak bootoption?"
-            return 1
-        else
-           setopt singlelinezle
-           unsetopt prompt_cr
-           export PS1="%m%# "
-            nice -n -20 speechd-up
-            sleep 2
-            flite -o play -t "Finished setting up software synthesizer"
-        fi
-     fi
 }
 
 # I like clean prompt, so provide simple way to get that
@@ -2273,17 +2256,6 @@ peval() {
 }
 functions peval &>/dev/null && alias calc=peval
 
-# brltty seems to have problems with utf8 environment and/or font Uni3-Terminus16 under
-# certain circumstances, so work around it, no matter which environment we have
-brltty() {
-    if [[ -z "$DISPLAY" ]] ; then
-        consolechars -f /usr/share/consolefonts/default8x16.psf.gz
-        command brltty "$@"
-    else
-        command brltty "$@"
-    fi
-}
-
 # just press 'asdf' keys to toggle between dvorak and us keyboard layout
 aoeu() {
     echo -n 'Switching to us keyboard layout: '
@@ -2536,7 +2508,7 @@ alias semifont='echo -en "\033]50;-misc-fixed-medium-r-semicondensed-*-*-120-*-*
 #a2# Execute \kbd{du -sch}
 alias da='du -sch'
 #a2# Execute \kbd{jobs -l}
-#alias j='jobs -l'
+alias j='jobs -l'
 
 # compile stuff
 #a2# Execute \kbd{./configure}
@@ -2781,12 +2753,12 @@ fir() {
 }
 # smart cd function, allows switching to /etc when running 'cd /etc/fstab'
 cd() {
-    if [[ -f ${1} ]]; then
+    if (( ${#argv} == 1 )) && [[ -f ${1} ]]; then
         [[ ! -e ${1:h} ]] && return 1
         print "Correcting ${1} to ${1:h}"
         builtin cd ${1:h}
     else
-        builtin cd ${1}
+        builtin cd "$@"
     fi
 }
 
@@ -3633,9 +3605,9 @@ if check_com -c highlight ; then
                 lang=${1%:*}
                 [[ ${1} == *:* ]] && [[ -n ${1#*:} ]] && theme=${1#*:}
                 if [[ -n ${theme} ]] ; then
-                    highlight --xterm256 --syntax ${lang} --style ${theme} ${2} | less -SMr
+                    highlight -O xterm256 --syntax ${lang} --style ${theme} ${2} | less -SMr
                 else
-                    highlight --ansi --syntax ${lang} ${2} | less -SMr
+                    highlight -O ansi --syntax ${lang} ${2} | less -SMr
                 fi
                 ;;
         esac
@@ -3961,4 +3933,3 @@ zrclocal
 # Local variables:
 # mode: sh
 # End:
-function git(){hub "$@"}
