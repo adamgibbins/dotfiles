@@ -31,6 +31,8 @@
   graph    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   who      = "!sh -c 'git log -1 --pretty=\"format:%an <%ae>\" --author=\"$1\"' -"
   msg      = commit --allow-empty -m
+  unstage  = reset HEAD
+  uncommit = reset --soft HEAD^
 
 [format]
   numbered = auto
@@ -44,5 +46,8 @@
 
 [diff]
   tool = vimdiff
+
+[merge]
+  summary = true
 
 # vim: st=2:ts=2:et:ft=gitconfig
