@@ -5,6 +5,9 @@ autocmd!
 filetype off
 
 " Vundle
+if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
+  !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -31,6 +34,7 @@ Bundle 'taglist.vim'
 Bundle 'tir_black'
 Bundle 'vimoutliner/vimoutliner'
 Bundle 'tpope/vim-markdown'
+Bundle 'ervandew/supertab'
 
 " Detect filetype
 filetype plugin indent on
