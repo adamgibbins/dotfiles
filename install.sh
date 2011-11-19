@@ -4,10 +4,6 @@
 # Grab the latest
 git pull
 
-# Download pathogen - nice vim plugin management
-mkdir -p vim/autoload
-wget -q --no-check-certificate http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim -O vim/autoload/pathogen.vim
-
 cutstring="DO NOT EDIT BELOW THIS LINE"
 
 for name in *; do
