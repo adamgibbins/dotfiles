@@ -30,6 +30,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'taglist.vim'
 Bundle 'tir_black'
 Bundle 'vimoutliner/vimoutliner'
+Bundle 'tpope/vim-markdown'
 
 " Detect filetype
 filetype plugin indent on
