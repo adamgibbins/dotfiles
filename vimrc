@@ -3,9 +3,33 @@ set nocompatible
 autocmd!
 " Need to turn this off prior to running pathogen
 filetype off
-" Awesome plugin management - pathogen
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'tomtom/tlib_vim'
+Bundle 'buftabs'
+Bundle 'wincent/Command-T'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tmatilai/gitolite.vim'
+Bundle 'gnupg'
+Bundle 'go.vim'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'cypok/vim-ledger'
+Bundle 'lunaru/vim-less'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'xolox/vim-session'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'honza/snipmate-snippets'
+Bundle 'garbas/vim-snipmate'
+Bundle 'tpope/vim-surround'
+Bundle 'godlygeek/tabular'
+Bundle 'taglist.vim'
+Bundle 'tir_black'
+Bundle 'vimoutliner/vimoutliner'
 
 " Detect filetype
 filetype plugin indent on
