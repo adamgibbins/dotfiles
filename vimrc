@@ -69,8 +69,6 @@ set spelllang=en_gb                   " Language to use for spell check dictiona
 set scrolloff=5                       " Keep at last 5 lines above/below when scrolling
 set sidescroll=1                      " Minimum number of columns to scroll sideways
 set sidescrolloff=5                   " Keep at least 5 lines each side when scrolling
-set foldcolumn=1                      " Show folds on the left hand side column
-set foldmethod=marker                 " Fold where markers are placed
 set expandtab                         " Expand tabs into spaces
 set shiftwidth=2                      " Number of spaces to use for indents
 set shiftround                        " Round to multiple of 'shiftwidth'
@@ -92,6 +90,7 @@ set autowrite
 set autoread                          " Auto re-read files if they've been externally modified
 set title
 set colorcolumn=+1                    " Draw a line at textwidth+1
+set virtualedit+=block                " Ability to move *anywhere* while in visual mode
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -109,6 +108,12 @@ set ignorecase
 set smartcase
 set nohlsearch
 set incsearch
+" }}}
+
+" Folding {{{
+set foldlevel=0
+set foldcolumn=1                      " Show folds on the left hand side column
+set foldmethod=marker                 " Fold where markers are placed
 " }}}
 
 " Wild Completion {{{
