@@ -134,6 +134,10 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Useful for editing files in a not-yet existant directory.
 nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
+" NerdTREE
+let NERDTreeChDirMode=2     " Change working directory as we navigate with nerdtree
+let NERDTreeShowBookmarks=1 " Show bookmarks
+
 " Vim wiki
 let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/', 'auto_export': 1 }]
 
