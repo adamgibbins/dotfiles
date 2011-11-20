@@ -13,7 +13,7 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'tomtom/tlib_vim'
-Bundle 'buftabs'
+Bundle 'fholgado/minibufexpl.vim'
 Bundle 'wincent/Command-T'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tmatilai/gitolite.vim'
