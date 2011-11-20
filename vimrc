@@ -67,13 +67,10 @@ set undodir=~/.vim_runtime/undodir    " Persistent backup between Vim sessions
 set undofile
 set spelllang=en_gb                   " Language to use for spell check dictionary
 set scrolloff=5                       " Keep at last 5 lines above/below when scrolling
+set sidescroll=1                      " Minimum number of columns to scroll sideways
 set sidescrolloff=5                   " Keep at least 5 lines each side when scrolling
 set foldcolumn=1                      " Show folds on the left hand side column
 set foldmethod=marker                 " Fold where markers are placed
-set ignorecase
-set smartcase
-set nohlsearch
-set incsearch
 set expandtab                         " Expand tabs into spaces
 set shiftwidth=2                      " Number of spaces to use for indents
 set shiftround                        " Round to multiple of 'shiftwidth'
@@ -105,6 +102,13 @@ syntax on
 set background=dark
 set t_Co=256                          " More than 8 colours
 colorscheme molokai
+" }}}
+
+" Searching {{{
+set ignorecase
+set smartcase
+set nohlsearch
+set incsearch
 " }}}
 
 " Wild Completion {{{
