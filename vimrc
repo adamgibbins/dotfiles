@@ -172,6 +172,12 @@ nmap <silent> ,h :set invhls<CR>:set hls?<CR>
 
 " Toggle NERDTree
 map <F3> :NERDTreeToggle<CR>
+
+" Write using sudo
+cmap w!! w !sudo tee % >/dev/null
+
+" Saves holding shift all the time
+nnoremap ; :
 " }}}
 
 " Auto remove trailing whitespace on save
@@ -198,7 +204,7 @@ let g:indent_guides_guide_size=1
 " Command-T
 let g:CommandTMaxHeight=30
 
-"statusline setup
+" Status line {{{
 set statusline=%f "tail of the filename
 
 "display a warning if fileformat isnt unix
@@ -248,7 +254,7 @@ autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
 "return '[\s]' if trailing white space is detected
 "return '' otherwise
-function! StatuslineTrailingSpaceWarning()
+function! StatuslineTrailingSpaceWarning() " {{{
     if !exists("b:statusline_trailing_space_warning")
 
         if !&modifiable
@@ -263,18 +269,17 @@ function! StatuslineTrailingSpaceWarning()
         endif
     endif
     return b:statusline_trailing_space_warning
-endfunction
-
+endfunction " }}}
 
 "return the syntax highlight group under the cursor ''
-function! StatuslineCurrentHighlight()
+function! StatuslineCurrentHighlight() " {{{
     let name = synIDattr(synID(line('.'),col('.'),1),'name')
     if name == ''
         return ''
     else
         return '[' . name . ']'
     endif
-endfunction
+endfunction " }}}
 
 "recalculate the tab warning flag when idle and after writing
 autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
@@ -282,7 +287,7 @@ autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 "return '[&et]' if &et is set wrong
 "return '[mixed-indenting]' if spaces and tabs are used to indent
 "return an empty string if everything is fine
-function! StatuslineTabWarning()
+function! StatuslineTabWarning() " {{{
     if !exists("b:statusline_tab_warning")
         let b:statusline_tab_warning = ''
 
@@ -302,7 +307,7 @@ function! StatuslineTabWarning()
         endif
     endif
     return b:statusline_tab_warning
-endfunction
+endfunction " }}}
 
 "recalculate the long line warning when idle and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
@@ -314,7 +319,7 @@ autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 "return '[#x,my,$z] if long lines are found, were x is the number of long
 "lines, y is the median length of the long lines and z is the length of the
 "longest line
-function! StatuslineLongLineWarning()
+function! StatuslineLongLineWarning() " {{{
     if !exists("b:statusline_long_line_warning")
 
         if !&modifiable
@@ -334,10 +339,10 @@ function! StatuslineLongLineWarning()
         endif
     endif
     return b:statusline_long_line_warning
-endfunction
+endfunction " }}}
 
 "return a list containing the lengths of the long lines in this buffer
-function! s:LongLines()
+function! s:LongLines() " {{{
     let threshold = (&tw ? &tw : 80)
     let spaces = repeat(" ", &ts)
 
@@ -353,10 +358,10 @@ function! s:LongLines()
     endwhile
 
     return long_line_lens
-endfunction
+endfunction " }}}
 
 "find the median of the given array of numbers
-function! s:Median(nums)
+function! s:Median(nums) " {{{
     let nums = sort(a:nums)
     let l = len(nums)
 
@@ -366,4 +371,5 @@ function! s:Median(nums)
     else
         return (nums[l/2] + nums[(l/2)-1]) / 2
     endif
-endfunction
+endfunction " }}}
+" }}}
