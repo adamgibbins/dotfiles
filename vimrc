@@ -77,7 +77,7 @@ set incsearch
 set expandtab                         " Expand tabs into spaces
 set shiftwidth=2                      " Number of spaces to use for indents
 set shiftround                        " Round to multiple of 'shiftwidth'
-set tabstop=2
+set tabstop=2                         " Number of spaces a tab is equivilent to
 set softtabstop=2
 set smarttab
 set autoindent
@@ -94,6 +94,7 @@ set nottimeout
 set autowrite
 set autoread                          " Auto re-read files if they've been externally modified
 set title
+set colorcolumn=+1                    " Draw a line at textwidth+1
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -165,6 +166,9 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Make the directory that contains the file in the current buffer.
 " Useful for editing files in a not-yet existant directory.
 nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " NerdTREE
 let NERDTreeChDirMode=2     " Change working directory as we navigate with nerdtree
