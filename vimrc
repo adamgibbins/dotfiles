@@ -49,8 +49,6 @@ set t_Co=256                          " More than 8 colours
 colorscheme tir_black
 set textwidth=80                      " Max line width before auto wrapping.
 set modelines=1                       " Check 1 line for mode lines
-set wildmenu
-set wildmode=longest,full,list
 set backspace=indent,eol,start        " Move powerful/smarter backspacing
 set history=500                       " High history, default is stupidly small
 set relativenumber                    " Show relative line numbers
@@ -100,6 +98,20 @@ set title
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+" }}}
+
+" Wild Completion {{{
+set wildmenu
+set wildmode=list:longest
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX Rubbish
+set wildignore+=*.luac                           " Lua byte code
+set wildignore+=*.pyc                            " Python byt
 " }}}
 
 " GUI {{{
