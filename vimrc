@@ -119,6 +119,9 @@ map <leader>tm :tabmove
 
 " Show invisible characters
 nmap <silent> <F5> :set list!<CR>
+
+" Toggle highlight search
+nmap <silent> ,h :set invhls<CR>:set hls?<CR>
 " }}}
 
 " Auto remove trailing whitespace on save
