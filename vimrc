@@ -131,7 +131,7 @@ set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store                       " OSX Rubbish
 set wildignore+=*.luac                           " Lua byte code
-set wildignore+=*.pyc                            " Python byt
+set wildignore+=*.pyc                            " Python byte code
 " }}}
 
 " GUI {{{
@@ -199,7 +199,6 @@ let g:indent_guides_guide_size=1
 
 " Command-T
 let g:CommandTMaxHeight=30
-set wildignore+=*.o,*.obj,.git,*.pyc
 
 "statusline setup
 set statusline=%f       "tail of the filename
