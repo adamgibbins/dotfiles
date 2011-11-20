@@ -4,7 +4,7 @@ autocmd!
 " Need to turn this off prior to running pathogen
 filetype off
 
-" Vundle
+" Vundle {{{
 if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
   !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
 endif
@@ -35,72 +35,67 @@ Bundle 'tpope/vim-surround'
 Bundle 'vimoutliner/vimoutliner'
 Bundle 'wincent/Command-T'
 Bundle 'xolox/vim-session'
+" }}}
 
-" Detect filetype
+" General Settings {{{
+filetype on
 filetype plugin indent on
-" Define map leader - needs to be near top else doesn't work correctly.
-let mapleader=","
-
-" No toolbar in GUI
-set guioptions-=T
-" No scrollbar in GUI
-set guioptions-=r
-
-" Syntax and colours
+set shortmess=at                      " Short error messages
+set guioptions-=T                     " No tool bar in GUI
+set guioptions-=r                     " No scrollbar in GUI
+set gfn=Monaco\ 8                     " GUI Font
+set cursorline                        " Highlight the current line
 syntax on
 set background=dark
-set t_Co=256 " More than 8 colours
+set t_Co=256                          " More than 8 colours
 colorscheme tir_black
-
-" GUI Font
-set gfn=Monaco\ 8
-
-" Max line width before text wrapping
-set textwidth=80
-" Ensure modelines are enabled
-set modelines=1
-" Smart command line completion
+set textwidth=80                      " Max line width before auto wrapping.
+set modelines=1                       " Check 1 line for mode lines
 set wildmenu
-" More powerful backspacing
-set backspace=indent,eol,start
-" High history, default is stupidly small
-set history=500
-" Show relative line numbers
-set relativenumber
-" Show the line position
-set ruler
-" Show (partial) command in status line
-set showcmd
-" Highlight matching brackets
-set showmatch
-" Prefer unix file format over everything else
-set fileformats=unix,dos,mac
-" Get rid of those horrible dings and flashes.
-set noerrorbells
-" Show tar bar at top if more than 1 tab.
-set showtabline=1
-" Always use UTF8
+set wildmode=longest,full,list
+set backspace=indent,eol,start        " Move powerful/smarter backspacing
+set history=500                       " High history, default is stupidly small
+set relativenumber                    " Show relative line numbers
+set ruler                             " Show line position
+set showcmd                           " Show partial command in status line
+set showmatch                         " Highlight matching brackets
+set fileformats=unix,dos,mac          " Prefer Unix line endings
+set noerrorbells                      " Get rid of the horrible dings and flashings
+set showtabline=1                     " Show tab bar at the top if >1 tab
 set encoding=utf8
 set termencoding=utf8
-" Do not create backups, they just clutter the filesystem.
-" You're using source control anyhow right?
 set nobackup
 set nowritebackup
-" Persistent undo
-set undodir=~/.vim_runtime/undodir
+set undodir=~/.vim_runtime/undodir    " Persistent backup between Vim sessions
 set undofile
-" Set dictionary for spellcheck
-set spelllang=en_gb
-" Toggle spelling
-map <leader>ss :setlocal spell!<cr>
-" Vimwiki
-let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/', 'auto_export': 1 }]
-" Keep at least 5 lines above/below
-set scrolloff=5
-" Keep at least 5 lines left/right
-set sidescrolloff=5
-" Suffixes that get lower priority when tab using tab completion on filenames.
+set spelllang=en_gb                   " Language to use for spell check dictionary
+set scrolloff=5                       " Keep at last 5 lines above/below when scrolling
+set sidescrolloff=5                   " Keep at least 5 lines each side when scrolling
+set foldcolumn=1                      " Show folds on the left hand side column
+set foldmethod=marker                 " Fold where markers are placed
+set ignorecase
+set smartcase
+set nohlsearch
+set incsearch
+set expandtab                         " Expand tabs into spaces
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set smarttab
+set autoindent
+set nosmartindent                     " Disable as cindent is more reliable
+set cindent                           " Auto indent according to C identation rules
+
+" Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+" }}}
+
+" Key Bindings {{{
+let mapleader=","
+let maplocalleader=","
+
+" Shortcut to turn spell check on and off
+map <leader>ss :setlocal spell!<cr>
 
 " Map keys so Ctrl-W isn't required to move around windows
 map <C-j> <C-W>j
@@ -112,46 +107,24 @@ map <leader>tn :tabnew<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
+" }}}
 
-" Show folds on the left hand side column
-set foldcolumn=1
-" Fold where markers are placed
-set foldmethod=marker
+" Auto remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
 
-" Ignore case when searching
-set ignorecase
-" Make search case sensitive if it contains capitals
-set smartcase
-" Do not highlight search matches
-set nohlsearch
-" Highlight search matches as you type
-set incsearch
-
-" Expand all tabs to spaces
-set expandtab
-" Set tab width to 2 spaces
-set shiftwidth=2
-set tabstop=2
-set softtabstop=2
-" TODO: Document
-set smarttab
-set autoindent
-" Disable smartident, cindent is more reliable.
-set nosmartindent
-set cindent
-" Indent Guides - ,ig to trigger
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
+" Vim wiki
+let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/', 'auto_export': 1 }]
 
 " Remember vim status on exit
 set viminfo='50,\"1000,:100,n~/.viminfo
 
+" Indent Guides - ,ig to trigger
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+
 " Command-T
 let g:CommandTMaxHeight=30
 set wildignore+=*.o,*.obj,.git,*.pyc
-
-" Auto remove trailing whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
 
 "statusline setup
 set statusline=%f       "tail of the filename
