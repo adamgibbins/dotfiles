@@ -102,6 +102,7 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
 " Map handy tab keys
 map <leader>tn :tabnew<cr>
 map <leader>te :tabedit
@@ -111,6 +112,10 @@ map <leader>tm :tabmove
 
 " Auto remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+" Make the directory that contains the file in the current buffer.
+" Useful for editing files in a not-yet existant directory.
+nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
 " Vim wiki
 let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/', 'auto_export': 1 }]
