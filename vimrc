@@ -38,6 +38,7 @@ Bundle 'vimoutliner/vimoutliner'
 Bundle 'wincent/Command-T'
 Bundle 'xolox/vim-session'
 Bundle 'YankRing.vim'
+Bundle 'scrooloose/syntastic'
 " }}}
 
 " General Settings {{{
@@ -89,7 +90,7 @@ set title
 set colorcolumn=+1                 " Draw a line at textwidth+1
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
 
-" Suffixes that get lower priority when tab using tab completion on file names.
+" Suffixes that get lower priority when using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 " }}}
 
@@ -186,9 +187,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " NerdTREE
 let NERDTreeChDirMode=2     " Change working directory as we navigate with nerdtree
 let NERDTreeShowBookmarks=1 " Show bookmarks
-
-" Vim wiki
-let g:vimwiki_list = [{ 'path': '~/Dropbox/vimwiki/', 'path_html': '~/www/vimwiki/public/', 'auto_export': 1 }]
 
 " Remember vim status on exit
 set viminfo='50,\"1000,:100,n~/.viminfo
