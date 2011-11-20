@@ -122,6 +122,9 @@ nmap <silent> <F5> :set list!<CR>
 
 " Toggle highlight search
 nmap <silent> ,h :set invhls<CR>:set hls?<CR>
+
+" Toggle NERDTree
+map <F3> :NERDTreeToggle<CR>
 " }}}
 
 " Auto remove trailing whitespace on save
