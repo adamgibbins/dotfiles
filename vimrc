@@ -43,54 +43,51 @@ Bundle 'YankRing.vim'
 " General Settings {{{
 filetype on
 filetype plugin indent on
-set ttyfast                           " I'm using a fast terminal, its not the 90s
-set shortmess=at                      " Short error messages
-set cursorline                        " Highlight the current line
-set textwidth=80                      " Max line width before auto wrapping.
-set modelines=1                       " Check 1 line for mode lines
-set backspace=indent,eol,start        " Move powerful/smarter backspacing
-set history=500                       " High history, default is stupidly small
-set relativenumber                    " Show relative line numbers
-set ruler                             " Show line position
+set ttyfast                        " I'm using a fast terminal, its not the 90s
+set shortmess=at                   " Short error messages
+set cursorline                     " Highlight the current line
+set textwidth=80                   " Max line width before auto wrapping.
+set modelines=1                    " Check 1 line for mode lines
+set backspace=indent,eol,start     " Move powerful/smarter backspacing
+set history=500                    " High history, default is stupidly small
+set relativenumber                 " Show relative line numbers
+set ruler                          " Show line position
 set showmode
-set showcmd                           " Show partial command in status line
-set showmatch                         " Highlight matching brackets
-set matchtime=3                       " Amount of time to show matching brackets
-set fileformats=unix,dos,mac          " Prefer Unix line endings
-set noerrorbells                      " Get rid of the horrible dings and flashings
-set showtabline=1                     " Show tab bar at the top if >1 tab
-set encoding=utf8
-set termencoding=utf8
+set showcmd                        " Show partial command in status line
+set showmatch                      " Highlight matching brackets
+set matchtime=3                    " Amount of time to show matching brackets
+set noerrorbells                   " Get rid of the horrible dings and flashings
+set showtabline=1                  " Show tab bar at the top if >1 tab
 set nobackup
 set nowritebackup
-set undodir=~/.vim_runtime/undodir    " Persistent backup between Vim sessions
+set undodir=~/.vim_runtime/undodir " Persistent backup between Vim sessions
 set undofile
-set spelllang=en_gb                   " Language to use for spell check dictionary
-set scrolloff=5                       " Keep at last 5 lines above/below when scrolling
-set sidescroll=1                      " Minimum number of columns to scroll sideways
-set sidescrolloff=5                   " Keep at least 5 lines each side when scrolling
-set expandtab                         " Expand tabs into spaces
-set shiftwidth=2                      " Number of spaces to use for indents
-set shiftround                        " Round to multiple of 'shiftwidth'
-set tabstop=2                         " Number of spaces a tab is equivilent to
+set spelllang=en_gb                " Language to use for spell check dictionary
+set scrolloff=5                    " Keep at last 5 lines above/below when scrolling
+set sidescroll=1                   " Minimum number of columns to scroll sideways
+set sidescrolloff=5                " Keep at least 5 lines each side when scrolling
+set expandtab                      " Expand tabs into spaces
+set shiftwidth=2                   " Number of spaces to use for indents
+set shiftround                     " Round to multiple of 'shiftwidth'
+set tabstop=2                      " Number of spaces a tab is equivilent to
 set softtabstop=2
 set smarttab
 set autoindent
-set nosmartindent                     " Disable as cindent is more reliable
-set cindent                           " Auto indent according to C indentation rules
-set listchars=tab:>\ ,eol:<           " Chars shown when invisible chars are turned on
-set showbreak=↪                       " Character to show when lines have been wrapped
-set fillchars=diff:⣿                  " Character to show in diffs for deleted lines
-set cpoptions+=J                      " Two spaces should follow sentences, not one
-set splitbelow                        " Put split windows below the current one
-set splitright                        " Put split windows to the right of the current
+set nosmartindent                  " Disable as cindent is more reliable
+set cindent                        " Auto indent according to C indentation rules
+set listchars=tab:>\ ,eol:<        " Chars shown when invisible chars are turned on
+set showbreak=↪                    " Character to show when lines have been wrapped
+set fillchars=diff:⣿               " Character to show in diffs for deleted lines
+set cpoptions+=J                   " Two spaces should follow sentences, not one
+set splitbelow                     " Put split windows below the current one
+set splitright                     " Put split windows to the right of the current
 set notimeout
 set nottimeout
 set autowrite
-set autoread                          " Auto re-read files if they've been externally modified
+set autoread                       " Auto re-read files if they've been externally modified
 set title
-set colorcolumn=+1                    " Draw a line at textwidth+1
-set virtualedit+=block                " Ability to move *anywhere* while in visual mode
+set colorcolumn=+1                 " Draw a line at textwidth+1
+set virtualedit+=block             " Ability to move *anywhere* while in visual mode
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -99,7 +96,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.o
 " Syntax and Colouring {{{
 syntax on
 set background=dark
-set t_Co=256                          " More than 8 colours
+set t_Co=256                       " More than 8 colours
 colorscheme molokai
 " }}}
 
@@ -112,8 +109,15 @@ set incsearch
 
 " Folding {{{
 set foldlevel=0
-set foldcolumn=1                      " Show folds on the left hand side column
-set foldmethod=marker                 " Fold where markers are placed
+set foldcolumn=1                   " Show folds on the left hand side column
+set foldmethod=marker              " Fold where markers are placed
+" }}}
+
+" Encoding {{{
+set encoding=utf-8                 " Text is UTF-8
+set fileencoding=utf-8             " File is UTF-8
+set termencoding=utf-8             " Terminal is UTF-8
+set fileformats=unix,dos,mac       " Prefer Unix line endings
 " }}}
 
 " Wild Completion {{{
@@ -132,11 +136,11 @@ set wildignore+=*.pyc                            " Python byt
 
 " GUI {{{
 if has('gui_running')
-  set guioptions-=T                     " No toolbar
-  set guioptions-=                      " No menu
-  set guioptions-=r                     " No scrollbar
-  set guicursor+=a:blinkon0             " Stop annoying blinking cursor
-  set gfn=Monaco\ 8                     " GUI Font
+  set guioptions-=T                " No toolbar
+  set guioptions-=                 " No menu
+  set guioptions-=r                " No scrollbar
+  set guicursor+=a:blinkon0        " Stop annoying blinking cursor
+  set gfn=Monaco\ 8                " GUI Font
 endif
 " }}}
 
