@@ -1,8 +1,8 @@
-" Need this first as it alters vim behaviour
+" Preamble {{{
 set nocompatible
 autocmd!
-" Need to turn this off prior to running pathogen
 filetype off
+" }}}
 
 " Vundle {{{
 if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
@@ -40,6 +40,7 @@ Bundle 'xolox/vim-session'
 " General Settings {{{
 filetype on
 filetype plugin indent on
+set ttyfast                           " I'm using a fast terminal, its not the 90s
 set shortmess=at                      " Short error messages
 set cursorline                        " Highlight the current line
 syntax on
@@ -54,8 +55,10 @@ set backspace=indent,eol,start        " Move powerful/smarter backspacing
 set history=500                       " High history, default is stupidly small
 set relativenumber                    " Show relative line numbers
 set ruler                             " Show line position
+set showmode
 set showcmd                           " Show partial command in status line
 set showmatch                         " Highlight matching brackets
+set matchtime=3                       " Amount of time to show matching brackets
 set fileformats=unix,dos,mac          " Prefer Unix line endings
 set noerrorbells                      " Get rid of the horrible dings and flashings
 set showtabline=1                     " Show tab bar at the top if >1 tab
@@ -75,7 +78,8 @@ set smartcase
 set nohlsearch
 set incsearch
 set expandtab                         " Expand tabs into spaces
-set shiftwidth=2
+set shiftwidth=2                      " Number of spaces to use for indents
+set shiftround                        " Round to multiple of 'shiftwidth'
 set tabstop=2
 set softtabstop=2
 set smarttab
@@ -83,6 +87,16 @@ set autoindent
 set nosmartindent                     " Disable as cindent is more reliable
 set cindent                           " Auto indent according to C indentation rules
 set listchars=tab:>\ ,eol:<           " Chars shown when invisible chars are turned on
+set showbreak=↪                       " Character to show when lines have been wrapped
+set fillchars=diff:⣿                  " Character to show in diffs for deleted lines
+set cpoptions+=J                      " Two spaces should follow sentences, not one
+set splitbelow                        " Put split windows below the current one
+set splitright                        " Put split windows to the right of the current
+set notimeout
+set nottimeout
+set autowrite
+set autoread                          " Auto re-read files if they've been externally modified
+set title
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
