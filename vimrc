@@ -46,10 +46,6 @@ filetype plugin indent on
 set ttyfast                           " I'm using a fast terminal, its not the 90s
 set shortmess=at                      " Short error messages
 set cursorline                        " Highlight the current line
-syntax on
-set background=dark
-set t_Co=256                          " More than 8 colours
-colorscheme tir_black
 set textwidth=80                      " Max line width before auto wrapping.
 set modelines=1                       " Check 1 line for mode lines
 set backspace=indent,eol,start        " Move powerful/smarter backspacing
@@ -101,6 +97,13 @@ set title
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+" }}}
+
+" Syntax and Colouring {{{
+syntax on
+set background=dark
+set t_Co=256                          " More than 8 colours
+colorscheme molokai
 " }}}
 
 " Wild Completion {{{
