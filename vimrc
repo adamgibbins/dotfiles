@@ -43,6 +43,7 @@ filetype plugin indent on
 set shortmess=at                      " Short error messages
 set guioptions-=T                     " No tool bar in GUI
 set guioptions-=r                     " No scrollbar in GUI
+set guicursor+=a:blinkon0             " Stop annoying blinking cursor
 set gfn=Monaco\ 8                     " GUI Font
 set cursorline                        " Highlight the current line
 syntax on
