@@ -41,10 +41,6 @@ Bundle 'xolox/vim-session'
 filetype on
 filetype plugin indent on
 set shortmess=at                      " Short error messages
-set guioptions-=T                     " No tool bar in GUI
-set guioptions-=r                     " No scrollbar in GUI
-set guicursor+=a:blinkon0             " Stop annoying blinking cursor
-set gfn=Monaco\ 8                     " GUI Font
 set cursorline                        " Highlight the current line
 syntax on
 set background=dark
@@ -89,6 +85,16 @@ set cindent                           " Auto indent according to C identation ru
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+" }}}
+
+" GUI {{{
+if has('gui_running')
+  set guioptions-=T                     " No toolbar
+  set guioptions-=                      " No menu
+  set guioptions-=r                     " No scrollbar
+  set guicursor+=a:blinkon0             " Stop annoying blinking cursor
+  set gfn=Monaco\ 8                     " GUI Font
+endif
 " }}}
 
 " Key Bindings {{{
