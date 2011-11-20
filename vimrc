@@ -81,7 +81,8 @@ set softtabstop=2
 set smarttab
 set autoindent
 set nosmartindent                     " Disable as cindent is more reliable
-set cindent                           " Auto indent according to C identation rules
+set cindent                           " Auto indent according to C indentation rules
+set listchars=tab:>\ ,eol:<           " Chars shown when invisible chars are turned on
 
 " Suffixes that get lower priority when tab using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -115,6 +116,9 @@ map <leader>tn :tabnew<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
+
+" Show invisible characters
+nmap <silent> <F5> :set list!<CR>
 " }}}
 
 " Auto remove trailing whitespace on save
