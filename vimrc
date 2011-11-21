@@ -55,7 +55,6 @@ set textwidth=80                   " Max line width before auto wrapping.
 set modelines=1                    " Check 1 line for mode lines
 set backspace=indent,eol,start     " Move powerful/smarter backspacing
 set history=500                    " High history, default is stupidly small
-set relativenumber                 " Show relative line numbers
 set ruler                          " Show line position
 set showmode
 set showcmd                        " Show partial command in status line
