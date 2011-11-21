@@ -1,3 +1,6 @@
+" With thanks to all those I've borrowed stuff from.
+" Credits include but not limited to Martin Grenfell and Steve Losh.
+
 " Preamble {{{
 set nocompatible
 autocmd!
@@ -16,8 +19,8 @@ Bundle 'ervandew/supertab'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'garbas/vim-snipmate'
 Bundle 'gmarik/vundle'
-Bundle 'gnupg'
-Bundle 'go.vim'
+Bundle 'gnupg.vim'
+Bundle 'anzaika/go.vim'
 Bundle 'godlygeek/tabular'
 Bundle 'honza/snipmate-snippets'
 Bundle 'lunaru/vim-less'
@@ -39,6 +42,7 @@ Bundle 'wincent/Command-T'
 Bundle 'xolox/vim-session'
 Bundle 'YankRing.vim'
 Bundle 'scrooloose/syntastic'
+Bundle 'rson/vim-conque'
 " }}}
 
 " General Settings {{{
@@ -79,6 +83,7 @@ set cindent                        " Auto indent according to C indentation rule
 set listchars=tab:>\ ,eol:<        " Chars shown when invisible chars are turned on
 set showbreak=↪                    " Character to show when lines have been wrapped
 set fillchars=diff:⣿               " Character to show in diffs for deleted lines
+set diffopt+=iwhite                " Ignore whitespace in diffs
 set cpoptions+=J                   " Two spaces should follow sentences, not one
 set splitbelow                     " Put split windows below the current one
 set splitright                     " Put split windows to the right of the current
@@ -87,7 +92,9 @@ set nottimeout
 set autowrite
 set autoread                       " Auto re-read files if they've been externally modified
 set title
-set colorcolumn=+1                 " Draw a line at textwidth+1
+" TODO Turn this back on once the colour is configured - it defaults to bright
+" red - which is very distracting.
+"set colorcolumn=+1                " Draw a line at textwidth+1
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
 
 " Suffixes that get lower priority when using tab completion on file names.
@@ -106,6 +113,7 @@ set ignorecase
 set smartcase
 set nohlsearch
 set incsearch
+set wrapscan                       " Search past the end of the file
 " }}}
 
 " Folding {{{
@@ -138,10 +146,14 @@ set wildignore+=*.pyc                            " Python byte code
 " GUI {{{
 if has('gui_running')
   set guioptions-=T                " No toolbar
-  set guioptions-=                 " No menu
+  set guioptions-=m                " No menu
   set guioptions-=r                " No scrollbar
   set guicursor+=a:blinkon0        " Stop annoying blinking cursor
-  set gfn=Monaco\ 8                " GUI Font
+  if has('mac')                    " GUI Font
+    set gfn=Monaco\ 8
+  else
+    set gfn=Inconsolata\ 8
+  endif
 endif
 " }}}
 
@@ -170,9 +182,6 @@ nmap <silent> <F5> :set list!<CR>
 " Toggle highlight search
 nmap <silent> ,h :set invhls<CR>:set hls?<CR>
 
-" Toggle NERDTree
-map <F3> :NERDTreeToggle<CR>
-
 " Write using sudo
 cmap w!! w !sudo tee % >/dev/null
 
@@ -184,25 +193,54 @@ nnoremap ; :
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Make the directory that contains the file in the current buffer.
-" Useful for editing files in a not-yet existant directory.
+" Useful for editing files in a not-yet existent directory.
 nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-" NerdTREE
-let NERDTreeChDirMode=2     " Change working directory as we navigate with nerdtree
-let NERDTreeShowBookmarks=1 " Show bookmarks
-
 " Remember vim status on exit
 set viminfo='50,\"1000,:100,n~/.viminfo
 
-" Indent Guides - ,ig to trigger
+" Taglist {{{
+nnoremap <F8> :TlistToggle<CR>
+let Tlist_Auto_Update = 0                " Auto update tags
+let Tlist_Exit_OnlyWindow = 1            " Exit vim if taglist is the only win open
+" }}}
+
+" Gundo {{{
+nnoremap <F6> :GundoToggle<CR>
+let g:gundo_preview_bottom=1    " Show diff under main buffer instead of just the tree
+" }}}
+
+" NERDTree {{{
+map <F3> :NERDTreeToggle<CR>
+let NERDTreeChDirMode=2         " Change working directory as we navigate with nerdtree
+let NERDTreeShowBookmarks=1     " Show bookmarks
+" }}}
+
+" Indent Guides {{{
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
+nmap <Leader>ig :IndentGuidesToggle<CR>
+" }}}
 
 " Command-T
 let g:CommandTMaxHeight=30
+
+" MiniBufExplorer {{{
+let g:miniBufExplMapWindowNavVim = 1     " Navigate windows using Ctrl+direction (hjkl)
+let g:miniBufExplMapWindowNavArrows = 1  " Navigate windows using Ctrl+Arrows
+let g:miniBufExplMapCTabSwitchBufs = 1   " Switch buffers with CTRL-Tab
+let g:miniBufExplUseSingleClick = 1      " Switch buffer with a single click instead of double
+let g:miniBufExplCloseOnSelect = 1       " Close once a buffer has been selected
+let g:miniBufExplForceSyntaxEnable = 1   " Work around vim bug that turns highlighting off
+" }}}
+
+" Ledger {{{
+let g:ledger_maxwidth = 80        " Max width of fold columns
+let g:ledger_fillstring = '»'     " Padding for the fold columns
+" }}}
 
 " Status line {{{
 set statusline=%f "tail of the filename
