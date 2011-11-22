@@ -252,7 +252,8 @@ let g:yankring_max_element_length = 524288  " 0.5M max
 " }}}
 
 " Conque {{{
-let g:ConqueTerm_Color=1   " Use colours for the most recent 200 lines
+let g:ConqueTerm_Color=1       " Use colours for the most recent 200 lines
+let g:ConqueTerm_TERM='xterm'  " Use xterm instead of vt100
 " }}}
 
 " Syntastic {{{
