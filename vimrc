@@ -55,7 +55,6 @@ set textwidth=80                   " Max line width before auto wrapping.
 set modelines=1                    " Check 1 line for mode lines
 set backspace=indent,eol,start     " Move powerful/smarter backspacing
 set history=500                    " High history, default is stupidly small
-set relativenumber                 " Show relative line numbers
 set ruler                          " Show line position
 set showmode
 set showcmd                        " Show partial command in status line
@@ -225,8 +224,11 @@ let g:indent_guides_guide_size=1
 nmap <Leader>ig :IndentGuidesToggle<CR>
 " }}}
 
-" Command-T
-let g:CommandTMaxHeight=30
+" Command-T {{{
+let g:CommandTMaxHeight=30            " Max height of the Command-T window
+let g:CommandTMaxCachedDirectories=0  " Cache an unlimited amount of directories
+let g:CommandTMatchWindowReverse=1    " Ensure the best match is always at the bottom
+" }}}
 
 " MiniBufExplorer {{{
 let g:miniBufExplMapWindowNavVim = 1     " Navigate windows using Ctrl+direction (hjkl)
@@ -241,6 +243,23 @@ let g:miniBufExplCloseOnSelect = 1       " Close once a buffer has been selected
 " Ledger {{{
 let g:ledger_maxwidth = 80        " Max width of fold columns
 let g:ledger_fillstring = '»'     " Padding for the fold columns
+" }}}
+
+" YankRing {{{
+nnoremap <F11> :YRShow<CR>
+let g:yankring_min_element_length = 2       " Do not retain single letter deletes
+let g:yankring_max_element_length = 524288  " 0.5M max
+" }}}
+
+" Conque {{{
+let g:ConqueTerm_Color=1   " Use colours for the most recent 200 lines
+" }}}
+
+" Syntastic {{{
+let g:syntastic_enable_signs=1     " Make errors more visible
+let g:syntastic_auto_jump=1        " Auto jump to errors on save/open
+let g:syntastic_auto_loc_list=1    " Open an error console when an error is detected
+let g:syntastic_quiet_warnings=0   " Show warnings also
 " }}}
 
 " Status line {{{
