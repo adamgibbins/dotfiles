@@ -237,8 +237,7 @@ let g:miniBufExplMapWindowNavArrows = 1  " Navigate windows using Ctrl+Arrows
 let g:miniBufExplMapCTabSwitchBufs = 1   " Switch buffers with CTRL-Tab
 let g:miniBufExplUseSingleClick = 1      " Switch buffer with a single click instead of double
 let g:miniBufExplCloseOnSelect = 1       " Close once a buffer has been selected
-" Turned this off as it causes vim to flicker on every write and other common occurances.
-"let g:miniBufExplForceSyntaxEnable = 1   " Work around vim bug that turns highlighting off
+let g:miniBufExplForceSyntaxEnable = 1   " Work around vim bug that turns highlighting off
 " }}}
 
 " Ledger {{{
