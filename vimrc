@@ -43,6 +43,7 @@ Bundle 'xolox/vim-session'
 Bundle 'YankRing.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'rson/vim-conque'
+Bundle 'iptables'
 " }}}
 
 " General Settings {{{
