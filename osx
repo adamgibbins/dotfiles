@@ -34,6 +34,9 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 # Disable window animations
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 
+# Speed up expose animation
+defaults write com.apple.dock expose-animation-duration -float 0.20
+
 # Enable disk image verification
 defaults write com.apple.frameworks.diskimages skip-verify -bool false
 defaults write com.apple.frameworks.diskimages skip-verify-locked -bool false
