@@ -65,8 +65,10 @@ set noerrorbells                   " Get rid of the horrible dings and flashings
 set showtabline=1                  " Show tab bar at the top if >1 tab
 set nobackup
 set nowritebackup
-set undodir=~/.vim_runtime/undodir " Persistent backup between Vim sessions
-set undofile
+if has("persistant_undo")
+  set undodir=~/.vim_runtime/undodir " Persistent backup between Vim sessions
+  set undofile
+endif
 set spelllang=en_gb                " Language to use for spell check dictionary
 set scrolloff=5                    " Keep at last 5 lines above/below when scrolling
 set sidescroll=1                   " Minimum number of columns to scroll sideways
