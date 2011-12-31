@@ -249,8 +249,9 @@ let g:ledger_fillstring = '»'     " Padding for the fold columns
 
 " YankRing {{{
 nnoremap <F11> :YRShow<CR>
-let g:yankring_min_element_length = 2       " Do not retain single letter deletes
-let g:yankring_max_element_length = 524288  " 0.5M max
+let g:yankring_min_element_length = 2         " Do not retain single letter deletes
+let g:yankring_max_element_length = 524288    " 0.5M max
+let g:yankring_history_dir = '~/.vim_runtime' " Don't put the history in $HOME
 " }}}
 
 " Conque {{{
