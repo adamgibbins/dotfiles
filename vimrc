@@ -204,6 +204,12 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Remember vim status on exit
 set viminfo='50,\"1000,:100,n~/.viminfo
 
+" Open file at last opened place
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
 " Taglist {{{
 nnoremap <F8> :TlistToggle<CR>
 let Tlist_Auto_Update = 0                " Auto update tags
