@@ -48,11 +48,11 @@ layouts =
 tags = {
   settings = {
     {
-      names  = { "1 www", "2 email", "3 irc", "4 skype", "5 music", "6", "7", "8", "9" },
+      names  = { "1 jump", "2", "3", "4", "5", "6", "7", "8", "9" },
       layout = { layouts[2] }
     },
     {
-      names  = { "1 jump", "2", "3", "4", "5", "6", "7", "8", "9" },
+      names  = { "1 www", "2 email", "3 irc", "4 skype", "5 music", "6", "7", "8", "9" },
       layout = { layouts[2] }
     }
   }
@@ -354,11 +354,11 @@ awful.rules.rules = {
     { rule = { class = "gimp" },
       properties = { floating = true } },
     { rule = { class = "Skype" },
-      properties = { tag = tags[1][4] } },
+      properties = { tag = tags[2][4] } },
     { rule = { class = "Firefox" },
-      properties = { tag = tags[1][1] } },
+      properties = { tag = tags[2][1] } },
     { rule = { class = "Spotify" },
-      properties = { tag = tags[1][5] } },
+      properties = { tag = tags[2][5] } },
 }
 -- }}}
 
