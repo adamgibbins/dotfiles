@@ -45,6 +45,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'rson/vim-conque'
 Bundle 'iptables'
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'Lokaltog/vim-easymotion'
 " }}}
 
 " General Settings {{{
