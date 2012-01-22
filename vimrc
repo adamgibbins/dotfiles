@@ -96,6 +96,7 @@ set autowrite
 set autoread                       " Auto re-read files if they've been externally modified
 set title
 set laststatus=2
+set hidden                         " Sane buffer management
 " TODO Turn this back on once the colour is configured - it defaults to bright
 " red - which is very distracting.
 "set colorcolumn=+1                " Draw a line at textwidth+1
