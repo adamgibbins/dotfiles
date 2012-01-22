@@ -14,6 +14,7 @@ endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'ZoomWin'
 Bundle 'cypok/vim-ledger'
 Bundle 'ervandew/supertab'
 Bundle 'garbas/vim-snipmate'
