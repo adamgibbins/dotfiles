@@ -101,6 +101,8 @@ set hidden                         " Sane buffer management
 " red - which is very distracting.
 "set colorcolumn=+1                " Draw a line at textwidth+1
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
+set directory=~/.vim_runtime/swapdir
+set backupdir=~/.vim_runtime/backupdir
 
 " Suffixes that get lower priority when using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
