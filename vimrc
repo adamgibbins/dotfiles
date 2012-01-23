@@ -280,3 +280,7 @@ let g:syntastic_auto_jump=0        " Auto jump to errors on save/open
 let g:syntastic_auto_loc_list=1    " Open an error console when an error is detected
 let g:syntastic_quiet_warnings=0   " Show warnings also
 " }}}
+
+" Powerline {{{
+let g:Powerline_symbols="unicode"
+" }}}
