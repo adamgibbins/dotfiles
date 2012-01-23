@@ -52,7 +52,7 @@ Bundle 'Lokaltog/vim-easymotion'
 filetype on
 filetype plugin indent on
 set ttyfast                        " I'm using a fast terminal, its not the 90s
-set shortmess=at                   " Short error messages
+set shortmess=atToOI               " Short error messages
 set cursorline                     " Highlight the current line
 set textwidth=80                   " Max line width before auto wrapping.
 set modelines=1                    " Check 1 line for mode lines
@@ -96,7 +96,7 @@ set nottimeout
 set autowrite
 set autoread                       " Auto re-read files if they've been externally modified
 set title
-set laststatus=2
+set laststatus=2                   " Always show status line
 set hidden                         " Sane buffer management
 " TODO Turn this back on once the colour is configured - it defaults to bright
 " red - which is very distracting.
@@ -104,6 +104,9 @@ set hidden                         " Sane buffer management
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
 set directory=~/.vim_runtime/swapdir
 set backupdir=~/.vim_runtime/backupdir
+set formatoptions+=tcqn
+set report=0                      " Always prompt for changes
+set undolevels=1000               " Max number of changes that can be undone
 
 " Suffixes that get lower priority when using tab completion on file names.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
