@@ -30,7 +30,6 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'sjl/gundo.vim'
-Bundle 'taglist.vim'
 Bundle 'tir_black'
 Bundle 'tmatilai/gitolite.vim'
 Bundle 'tomtom/tlib_vim'
@@ -47,6 +46,7 @@ Bundle 'iptables'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'oscarh/vimerl'
+Bundle 'majutsushi/tagbar'
 " }}}
 
 " General Settings {{{
@@ -220,12 +220,6 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal! g`\"" |
   \ endif
-
-" Taglist {{{
-nnoremap <F8> :TlistToggle<CR>
-let Tlist_Auto_Update = 0                " Auto update tags
-let Tlist_Exit_OnlyWindow = 1            " Exit vim if taglist is the only win open
-" }}}
 
 " Gundo {{{
 nnoremap <F6> :GundoToggle<CR>
