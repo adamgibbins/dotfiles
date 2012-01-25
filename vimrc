@@ -46,6 +46,7 @@ Bundle 'rson/vim-conque'
 Bundle 'iptables'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'oscarh/vimerl'
 " }}}
 
 " General Settings {{{
@@ -152,6 +153,7 @@ set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store                       " OSX Rubbish
 set wildignore+=*.luac                           " Lua byte code
 set wildignore+=*.pyc                            " Python byte code
+set wildignore+=doc
 " }}}
 
 " GUI {{{
