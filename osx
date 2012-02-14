@@ -49,6 +49,9 @@ defaults write com.apple.frameworks.diskimages skip-verify-remote -bool false
 defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
 defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 
+# Allow quitting the finder - useful for starting TotalFinder etc
+defaults write com.apple.finder QuitMenuItem -bool true
+
 # Avoid creating .DS_Store files on network volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
