@@ -7,6 +7,9 @@ defaults write com.apple.dock no-glass -bool true
 # Move dock to the right
 defaults write com.apple.dock orientation right
 
+# Auto hide dock
+defaults write com.apple.dock autohide -bool true
+
 # Disable menu bar transparency
 defaults write -g AppleEnableMenuBarTransparency -bool false
 
