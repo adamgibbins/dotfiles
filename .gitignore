@@ -1,5 +1,5 @@
 vim/.netrwhist
-*.swp
+.*.swp[a-z]
 *.bkp
 *~
-vim/autoload/pathogen.vim
+.DS_Store
