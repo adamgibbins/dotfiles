@@ -30,7 +30,6 @@ end
 
 files = File.new(File.join(pwd, "files"), "r").read.split("\n")
 
-
 task :install => [:init_submodules, :update_submodules] do
   files.each do |file|
     symlink(File.join(pwd, file), target_path(file))

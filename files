@@ -1,6 +1,7 @@
 bash_aliases
 bashrc
 digrc
+gemrc
 gitconfig
 screenrc
 tmux.conf
