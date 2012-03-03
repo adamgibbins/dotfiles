@@ -100,7 +100,7 @@ set laststatus=2                   " Always show status line
 set hidden                         " Sane buffer management
 " TODO Turn this back on once the colour is configured - it defaults to bright
 " red - which is very distracting.
-"set colorcolumn=+1                " Draw a line at textwidth+1
+set colorcolumn=80
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
 set directory=~/.vim_runtime/swapdir
 set backupdir=~/.vim_runtime/backupdir
