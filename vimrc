@@ -98,9 +98,9 @@ set autoread                       " Auto re-read files if they've been external
 set title
 set laststatus=2                   " Always show status line
 set hidden                         " Sane buffer management
-" TODO Turn this back on once the colour is configured - it defaults to bright
-" red - which is very distracting.
-set colorcolumn=80
+if version >= 730
+  set colorcolumn=80
+endif
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
 set directory=~/.vim_runtime/swapdir
 set backupdir=~/.vim_runtime/backupdir
