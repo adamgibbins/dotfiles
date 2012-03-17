@@ -19,6 +19,18 @@ export CC=gcc-4.2
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
+# Task Warrior Completion {{{
+fpath=($fpath /usr/local/share/doc/task/scripts/zsh)
+autoload -Uz compinit
+compinit
+
+# be verbose, i.e. show descriptions
+# zstyle ':completion:*' verbose yes
+# zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
+#
+# # group by tag names
+# zstyle ':completion:*' group-name ''
+# }}}
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:~/.rvm/bin
 
 ## Settings for umask
