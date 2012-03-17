@@ -4,6 +4,7 @@ digrc
 gemrc
 gitconfig
 screenrc
+taskrc
 tmux.conf
 vim
 vim_runtime
