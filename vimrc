@@ -283,4 +283,5 @@ let g:Powerline_symbols="unicode"
 
 " Notes {{{
 let g:notes_directory = '~/Dropbox/thoughts'
+let g:notes_suffix = '.txt'
 " }}}
