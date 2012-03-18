@@ -48,6 +48,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'oscarh/vimerl'
 Bundle 'majutsushi/tagbar'
 Bundle 'xolox/vim-notes'
+Bundle 'xolox/vim-easytags'
 " }}}
 
 " General Settings {{{
