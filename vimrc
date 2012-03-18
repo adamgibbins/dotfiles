@@ -47,6 +47,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'oscarh/vimerl'
 Bundle 'majutsushi/tagbar'
+Bundle 'xolox/vim-notes'
 " }}}
 
 " General Settings {{{
@@ -278,4 +279,8 @@ let g:syntastic_quiet_warnings=0   " Show warnings also
 
 " Powerline {{{
 let g:Powerline_symbols="unicode"
+" }}}
+
+" Notes {{{
+let g:notes_directory = '~/Dropbox/thoughts'
 " }}}
