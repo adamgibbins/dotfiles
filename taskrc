@@ -25,9 +25,7 @@ include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-256.theme
 #include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-yellow-green.theme
 #include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-gray-256.theme
 locale=en_GB.UTF8
-dateformat=d/m/Y
-dateformat.annotation=d/m/Y
-dateformat.report=d/m/Y
+dateformat=d/m/Y H:M:S
 verbose=blank,header,footnote,label,new-id,affected,edit,special
 regex=on
 urgency.tags.coefficient=0
