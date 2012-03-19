@@ -49,4 +49,7 @@
 [merge]
   summary = true
 
+[push]
+  default = upstream
+
 # vim: st=2:ts=2:et:ft=gitconfig
