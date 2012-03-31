@@ -10,8 +10,15 @@ defaults write com.apple.dock orientation right
 # Auto hide dock
 defaults write com.apple.dock autohide -bool true
 
+# Show indicator light for open applications in the dock
+defaults write com.apple.dock show-process-indicators -bool true
+
 # Disable menu bar transparency
 defaults write -g AppleEnableMenuBarTransparency -bool false
+
+# Show remaining battery percentage.
+defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+defaults write com.apple.menuextra.battery ShowTime -string "NO"
 
 # Expand save panel by default
 defaults write -g NSNavPanelExpandedStateForSaveMode -bool true
@@ -30,6 +37,12 @@ defaults write enable-spring-load-actions-on-all-items -bool true
 
 # Disable press-and-hold for keys in favor of key repeat
 defaults write -g ApplePressAndHoldEnabled -bool false
+
+# Speed up key repeat
+defaults write NSGlobalDomain KeyRepeat -int 0.02
+
+# Shorter delay for key repeat
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -52,8 +65,29 @@ defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 # Allow quitting the finder - useful for starting TotalFinder etc
 defaults write com.apple.finder QuitMenuItem -bool true
 
+# Show all file extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Don't warn when changing file extensions
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Show the path bar
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Show full POSIX path in title
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+# Show the status bar
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Use current working directory as search path
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
 # Avoid creating .DS_Store files on network volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Disable empty trash warning
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
 # Disable Safari’s thumbnail cache for History and Top Sites
 defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
@@ -70,6 +104,16 @@ defaults write com.apple.Mail DisableSendAnimations -bool true
 
 # Disable Resume system-wide
 defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
+
+# Instantly require password on sleep/screensaver
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Enable tap to click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+
+# Use UTF-8 in terminal
+defaults write com.apple.terminal StringEncodings -array 4
 
 # Enable Dashboard dev mode (allows keeping widgets on the desktop)
 defaults write com.apple.dashboard devmode -bool true
@@ -93,7 +137,7 @@ defaults write com.apple.iCal IncludeDebugMenu 1
 defaults write com.apple.DiskUtility advanced-image-options -bool true
 
 # Kill affected applications
-for app in Safari Finder Dock Mail; do killall "$app"; done
+for app in Safari Finder Dock Mail SystemUIServer; do killall "$app"; done
 
 # Fix for the ancient UTF-8 bug in QuickLook (http://mths.be/bbo)
 echo "0x08000100:0" > ~/.CFUserTextEncoding
