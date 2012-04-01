@@ -37,7 +37,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-surround'
 Bundle 'vimoutliner/vimoutliner'
-Bundle 'wincent/Command-T'
+Bundle 'kien/ctrlp.vim'
 Bundle 'xolox/vim-session'
 Bundle 'YankRing.vim'
 Bundle 'scrooloose/syntastic'
@@ -239,10 +239,13 @@ let g:indent_guides_guide_size=1
 nmap <Leader>ig :IndentGuidesToggle<CR>
 " }}}
 
-" Command-T {{{
-let g:CommandTMaxHeight=30            " Max height of the Command-T window
-let g:CommandTMaxCachedDirectories=0  " Cache an unlimited amount of directories
-let g:CommandTMatchWindowReverse=1    " Ensure the best match is always at the bottom
+" CtrlP {{{
+" Remap CtrlP as it clashes with YankRing
+let g:ctrlp_map = '<leader>,'
+let g:ctrlp_max_height = 30
+" Retain cache between sessions
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_extensions = ['tag']
 " }}}
 
 " MiniBufExplorer {{{
