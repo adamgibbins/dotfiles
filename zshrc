@@ -1846,7 +1846,6 @@ grmlcomp() {
         $(hostname)
         "$_ssh_hosts[@]"
         "$_etc_hosts[@]"
-        grml.org
         localhost
     )
     zstyle ':completion:*:hosts' hosts $hosts

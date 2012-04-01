@@ -1,0 +1,13 @@
+bash_aliases
+bashrc
+digrc
+gemrc
+gitconfig
+screenrc
+taskrc
+tmux.conf
+vim
+vim_runtime
+vimrc
+zshrc
+zshrc.local
