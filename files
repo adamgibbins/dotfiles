@@ -3,6 +3,7 @@ bashrc
 digrc
 gemrc
 gitconfig
+profile
 screenrc
 taskrc
 tmux.conf
