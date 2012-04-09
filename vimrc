@@ -243,8 +243,8 @@ nmap <Leader>ig :IndentGuidesToggle<CR>
 " Remap CtrlP as it clashes with YankRing
 let g:ctrlp_map = '<leader>,'
 let g:ctrlp_max_height = 30
-" Retain cache between sessions
-let g:ctrlp_clear_cache_on_exit = 0
+" Do not retain cache between sessions
+let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_extensions = ['tag']
 " }}}
 
