@@ -7,6 +7,23 @@ autocmd!
 filetype off
 " }}}
 
+" Setup {{{
+" Create various directories, else vim will error due to various swap dirs etc
+" missing.
+if !isdirectory(expand("~/.vim_runtime"))
+  !mkdir ~/.vim_runtime
+endif
+if !isdirectory(expand("~/.vim_runtime/undodir"))
+  !mkdir ~/.vim_runtime/undodir
+endif
+if !isdirectory(expand("~/.vim_runtime/swapdir"))
+  !mkdir ~/.vim_runtime/swapdir
+endif
+if !isdirectory(expand("~/.vim_runtime/backupdir"))
+  !mkdir ~/.vim_runtime/backupdir
+endif
+" }}}
+
 " Vundle {{{
 if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
   !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
