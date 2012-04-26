@@ -110,19 +110,19 @@ set diffopt+=iwhite                " Ignore whitespace in diffs
 set cpoptions+=J                   " Two spaces should follow sentences, not one
 set splitbelow                     " Put split windows below the current one
 set splitright                     " Put split windows to the right of the current
-set notimeout
+set notimeout                      " Do not timeout waiting for key combinations, wait forever
 set nottimeout
-set autowrite
+set autowrite                      " Auto save when running :next and other commands
 set autoread                       " Auto re-read files if they've been externally modified
-set title
+set title                          " Modify window title to match vim filename
 set laststatus=2                   " Always show status line
 set hidden                         " Sane buffer management
-if version >= 730
-  set colorcolumn=80
+if version >= 703
+  set colorcolumn=80               " Display a vertical line on line 80
 endif
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
-set directory=~/.vim_runtime/swapdir
-set backupdir=~/.vim_runtime/backupdir
+set directory=~/.vim_runtime/swapdir   " Write swap files to a central location
+set backupdir=~/.vim_runtime/backupdir " Write backup files to a central location
 set formatoptions+=tcqn
 set report=0                      " Always prompt for changes
 set undolevels=1000               " Max number of changes that can be undone
