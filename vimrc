@@ -75,7 +75,7 @@ set ttyfast                        " I'm using a fast terminal, its not the 90s
 set shortmess=atToOI               " Short error messages
 set cursorline                     " Highlight the current line
 set modelines=1                    " Check 1 line for mode lines
-set backspace=indent,eol,start     " Move powerful/smarter backspacing
+set backspace=indent,eol,start     " More powerful/smarter backspacing
 set history=500                    " High history, default is stupidly small
 set ruler                          " Show line position
 set showmode
