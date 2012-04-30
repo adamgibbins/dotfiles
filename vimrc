@@ -42,12 +42,10 @@ Bundle 'godlygeek/tabular'
 Bundle 'honza/snipmate-snippets'
 Bundle 'lunaru/vim-less'
 Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomasr/molokai'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'sjl/gundo.vim'
-Bundle 'tir_black'
 Bundle 'tmatilai/gitolite.vim'
 Bundle 'tomtom/tlib_vim'
 Bundle 'tpope/vim-fugitive'
@@ -66,6 +64,11 @@ Bundle 'oscarh/vimerl'
 Bundle 'majutsushi/tagbar'
 Bundle 'xolox/vim-notes'
 Bundle 'xolox/vim-easytags'
+" Colors {{{
+Bundle 'tomasr/molokai'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'tir_black'
+" }}}
 " }}}
 
 " General Settings {{{
