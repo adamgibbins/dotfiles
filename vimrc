@@ -243,6 +243,9 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
+" Automatically make shell scripts executable
+au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod +x <afile> | endif | endif
+
 " Gundo {{{
 nnoremap <F6> :GundoToggle<CR>
 let g:gundo_preview_bottom=1    " Show diff under main buffer instead of just the tree
