@@ -49,9 +49,6 @@
 [merge]
 	summary = true
 
-[push]
-	default = upstream
-
 [mergetool]
 	keepBackup = true
 
