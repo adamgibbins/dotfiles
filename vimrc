@@ -140,9 +140,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.o
 " Syntax and Colouring {{{
 syntax on
 set background=dark
-if has('gui_running') || &t_Co >= 256
-  set t_Co=256                       " More than 8 colours
-endif
+set t_Co=256                       " More than 8 colours
 colorscheme molokai
 " }}}
 
