@@ -52,7 +52,4 @@
 [mergetool]
 	keepBackup = true
 
-[help]
-	autocorrect = 1
-
 # vim: st=2:ts=2:noet:ft=gitconfig
