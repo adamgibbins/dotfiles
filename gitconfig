@@ -52,4 +52,7 @@
 [mergetool]
 	keepBackup = true
 
+[branch]
+	autosetuprebase = always
+
 # vim: st=2:ts=2:noet:ft=gitconfig
