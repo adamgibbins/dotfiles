@@ -272,6 +272,8 @@ let g:ctrlp_max_height = 30
 " Do not retain cache between sessions
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_extensions = ['tag']
+" Do not make searches case sensitive
+let g:ctrlp_mruf_case_sensitive = 0
 " }}}
 
 " MiniBufExplorer {{{
