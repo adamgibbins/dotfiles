@@ -224,6 +224,16 @@ cmap w!! w !sudo tee % >/dev/null
 
 " Saves holding shift all the time
 nnoremap ; :
+
+" use Ctrl+L to toggle the line number counting method
+function! g:ToggleNuMode()
+  if &nu == 1
+    set rnu
+  else
+    set nu
+  endif
+endfunction
+nnoremap <silent><C-L> :call g:ToggleNuMode()<cr>
 " }}}
 
 " Auto remove trailing whitespace on save
