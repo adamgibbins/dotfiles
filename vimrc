@@ -57,6 +57,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
+Bundle 'spolu/dwm.vim'
 Bundle 'tmatilai/gitolite.vim'
 Bundle 'tomtom/tlib_vim'
 Bundle 'tpope/vim-fugitive'
@@ -233,7 +234,7 @@ function! g:ToggleNuMode()
     set nu
   endif
 endfunction
-nnoremap <silent><C-L> :call g:ToggleNuMode()<cr>
+nnoremap <leader>l :call g:ToggleNuMode()<cr>
 " }}}
 
 " Auto remove trailing whitespace on save
