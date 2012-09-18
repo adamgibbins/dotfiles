@@ -31,7 +31,7 @@ endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-"Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'YankRing.vim'
@@ -324,4 +324,9 @@ let g:Powerline_symbols="unicode"
 " Notes {{{
 let g:notes_directory = '~/Dropbox/thoughts'
 let g:notes_suffix = '.txt'
+" }}}
+
+" EasyMotion {{{
+" Remap to <leader> else it clashes with CtrlP
+let g:EasyMotion_leader_key = '<Leader>'
 " }}}
