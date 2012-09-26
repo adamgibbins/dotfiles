@@ -10,20 +10,11 @@
 
 # Use the command 'task show' to see all defaults and overrides
 
+include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/holidays.en-GB.rc
+include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-red-256.theme
+
 # Files
 data.location=~/Dropbox/task
-
-# Color theme (uncomment one to use)
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/light-16.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/light-256.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-16.theme
-include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-256.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-red-256.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-green-256.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-blue-256.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-violets-256.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-yellow-green.theme
-#include /usr/local/Cellar/task/2.0.0/share/doc/task/rc/dark-gray-256.theme
 locale=en_GB.UTF8
 dateformat=d/m/Y H:N
 dateformat.annotation=d/m/Y H:M:S
@@ -31,3 +22,10 @@ dateformat.report=d/m/Y H:M
 verbose=blank,header,footnote,label,new-id,affected,edit,special
 regex=on
 urgency.tags.coefficient=0
+calendar.holidays=full
+default.priority=M
+default.project=inbox
+shadow.file=~/Dropbox/tasks.txt
+shadow.command=rc.verbose=label next
+report.next.columns=id,project,priority,due,start.active,entry.age,urgency,description,tags
+report.next.labels=ID,Project,Pri,Due,A,Age,Urgency,Description,Tags
