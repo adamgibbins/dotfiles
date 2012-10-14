@@ -15,10 +15,14 @@ include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-red-256.theme
 
 # Files
 data.location=~/Dropbox/task
+
+dateformat=d/M/Y H:M:S
+dateformat.annotation=d/M/Y H:M:S
+dateformat.report=d/M/Y H:M:S
+dateformat.edit=d/M/Y H:M:S
+dateformat.info=d/M/Y H:M:S
+
 locale=en_GB.UTF8
-dateformat=d/m/Y H:N
-dateformat.annotation=d/m/Y H:M:S
-dateformat.report=d/m/Y H:M
 verbose=blank,header,footnote,label,new-id,affected,edit,special
 regex=on
 urgency.tags.coefficient=0
