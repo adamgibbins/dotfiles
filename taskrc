@@ -35,3 +35,5 @@ report.next.columns=id,project,priority,due,start.active,entry.age,urgency,estim
 report.next.labels=ID,Project,Pri,Due,A,Age,Urgency,Est,Description,Tags
 uda.estimate.type=numeric
 uda.estimate.label=Est
+exit.on.missing.db=yes
+search.case.sensitive=no
