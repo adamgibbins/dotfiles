@@ -38,12 +38,14 @@ Bundle 'YankRing.vim'
 Bundle 'ZoomWin'
 Bundle 'anzaika/go.vim'
 Bundle 'beyondwords/vim-twig'
+Bundle 'chrisbra/NrrwRgn'
 Bundle 'cypok/vim-ledger'
 Bundle 'garbas/vim-snipmate'
 Bundle 'gmarik/vundle'
 Bundle 'gnupg.vim'
 Bundle 'godlygeek/tabular'
 Bundle 'honza/snipmate-snippets'
+Bundle 'hsitz/VimOrganizer'
 Bundle 'iptables'
 Bundle 'kien/ctrlp.vim'
 Bundle 'lunaru/vim-less'
@@ -55,6 +57,7 @@ Bundle 'rson/vim-conque'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+Bundle 'sjl/badwolf'
 Bundle 'sjl/gundo.vim'
 Bundle 'spolu/dwm.vim'
 Bundle 'tmatilai/gitolite.vim'
@@ -62,6 +65,7 @@ Bundle 'tomtom/tlib_vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-surround'
+Bundle 'troydm/easybuffer.vim'
 Bundle 'vim-scripts/closetag.vim'
 Bundle 'vimoutliner/vimoutliner'
 Bundle 'xolox/vim-easytags'
@@ -323,6 +327,11 @@ let g:Powerline_symbols="unicode"
 " Notes {{{
 let g:notes_directory = '~/Dropbox/thoughts'
 let g:notes_suffix = '.txt'
+" }}}
+
+" VimOrganizer {{{
+au! BufRead,BufWrite,BufWritePost,BufNewFile *.org
+au BufEnter *.org            call org#SetOrgFileType()
 " }}}
 
 " EasyMotion {{{
