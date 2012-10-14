@@ -29,7 +29,7 @@ urgency.tags.coefficient=0
 calendar.holidays=full
 default.priority=M
 default.project=inbox
-shadow.file=~/Dropbox/tasks.txt
-shadow.command=rc.verbose=label next
 report.next.columns=id,project,priority,due,start.active,entry.age,urgency,description,tags
 report.next.labels=ID,Project,Pri,Due,A,Age,Urgency,Description,Tags
+#shadow.file=~/Dropbox/tasks.txt
+#shadow.command=rc.verbose=label next
