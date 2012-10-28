@@ -4,11 +4,14 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 # Enable subpixel font rendering on non-Apple LCDs
 defaults write NSGlobalDomain AppleFontSmoothing -int 3
 
-# Enable the 2D Dock
-defaults write com.apple.dock no-glass -bool true
+# Disable the 2D Dock
+defaults write com.apple.dock no-glass -bool false
 
-# Move dock to the right
-defaults write com.apple.dock orientation right
+# Move dock to the bottom
+defaults write com.apple.dock orientation bottom
+
+# Pin Dock to the right
+defaults write com.apple.dock pinning -string end
 
 # Auto hide dock
 defaults write com.apple.dock autohide -bool true
@@ -138,6 +141,9 @@ defaults write com.apple.iCal IncludeDebugMenu 1
 
 # Enable all image formats
 defaults write com.apple.DiskUtility advanced-image-options -bool true
+
+# Allow test extensions, used by selfspy etc in X11
+defaults write org.macosforge.xquartz.X11 enable_test_extensions -boolean true
 
 # Kill affected applications
 for app in Safari Finder Dock Mail SystemUIServer; do killall "$app"; done
