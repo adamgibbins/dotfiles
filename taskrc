@@ -14,7 +14,7 @@ include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/holidays.en-GB.rc
 include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-red-256.theme
 
 # Files
-data.location=~/Dropbox/task
+data.location=~/AeroFS/task
 
 dateformat=d/M/Y H:M:S
 dateformat.annotation=d/M/Y H:M:S
