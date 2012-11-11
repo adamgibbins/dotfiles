@@ -31,8 +31,8 @@ default.priority=M
 default.project=inbox
 #shadow.file=~/Dropbox/tasks.txt
 #shadow.command=rc.verbose=label next
-report.next.columns=id,project,priority,due,start.active,entry.age,urgency,estimate,description,tags
-report.next.labels=ID,Project,Pri,Due,A,Age,Urgency,Est,Description,Tags
+report.next.columns=id,project,priority,due,entry.age,urgency,estimate,description,tags
+report.next.labels=ID,Proj,P,Due,Age,Urg,Est,Description,Tags
 uda.estimate.type=numeric
 uda.estimate.label=Est
 exit.on.missing.db=yes
