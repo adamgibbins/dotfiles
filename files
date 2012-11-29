@@ -5,6 +5,7 @@ gemrc
 gitconfig
 profile
 screenrc
+slate
 taskrc
 tmux.conf
 vim
