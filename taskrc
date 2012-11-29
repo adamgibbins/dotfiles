@@ -16,7 +16,7 @@ include /usr/local/Cellar/task/2.1.2/share/doc/task/rc/dark-red-256.theme
 # Files
 data.location=~/AeroFS/task
 
-dateformat=d/M/Y H:M:S
+dateformat=d/M/Y
 dateformat.annotation=d/M/Y H:M:S
 dateformat.report=d/M/Y H:M:S
 dateformat.edit=d/M/Y H:M:S
