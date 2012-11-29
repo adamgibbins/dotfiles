@@ -10,9 +10,6 @@ defaults write com.apple.dock no-glass -bool false
 # Move dock to the bottom
 defaults write com.apple.dock orientation bottom
 
-# Pin Dock to the right
-defaults write com.apple.dock pinning -string end
-
 # Auto hide dock
 defaults write com.apple.dock autohide -bool true
 
