@@ -1,0 +1,4 @@
+.*.sw[a-z]
+.DS_Store
+desktop.ini
+Thumbs.db
