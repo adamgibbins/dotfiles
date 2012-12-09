@@ -13,7 +13,6 @@
 	status      = true
 	show-branch = true
 
-# Remove empty directories if cloning from SVN (which can commit directories)
 [svn]
 	rmdir = true
 
@@ -42,7 +41,7 @@
 [core]
 	legacyheaders      = false
 	usedeltabaseoffset = true
-	excludesfile       = /home/aeg/.gitignore
+	excludesfile       = ~/.gitignore
 
 [diff]
 	tool = vimdiff
@@ -55,5 +54,8 @@
 
 [branch]
 	autosetuprebase = always
+
+[push]
+	default = current
 
 # vim: st=2:ts=2:noet:ft=gitconfig
