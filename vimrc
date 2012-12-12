@@ -341,3 +341,10 @@ au BufEnter *.org            call org#SetOrgFileType()
 " Remap to <leader> else it clashes with CtrlP
 let g:EasyMotion_leader_key = '<Leader>'
 " }}}
+
+" gist-vim {{{
+let g:gist_open_browser_after_post = 1
+let g:gist_show_privates = 1
+let g:gist_post_private = 1
+let g:gist_get_multiplefile = 1
+" }}}
