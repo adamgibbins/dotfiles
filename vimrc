@@ -31,6 +31,7 @@ endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'airblade/vim-gitgutter'
 Bundle 'anzaika/go.vim'
 Bundle 'beyondwords/vim-twig'
 Bundle 'chrisbra/NrrwRgn'
