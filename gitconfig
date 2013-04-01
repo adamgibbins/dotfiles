@@ -35,6 +35,7 @@
 	unstage  = reset HEAD
 	uncommit = reset --soft HEAD^
 	branch-touched = for-each-ref --sort=-authorname refs/remotes/ --format='%(refname:short) %(committerdate:short) %(authorname)'
+	pp = !git pull --rebase && git push
 
 [format]
 	numbered = auto
