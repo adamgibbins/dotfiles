@@ -78,7 +78,6 @@ Bundle 'VimClojure'
 Bundle 'vimoutliner/vimoutliner'
 Bundle 'xolox/vim-easytags'
 Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-notes'
 Bundle 'xolox/vim-session'
 Bundle 'YankRing.vim'
 Bundle 'ZoomWin'
@@ -333,11 +332,6 @@ let g:syntastic_quiet_warnings=0   " Show warnings also
 
 " Powerline {{{
 let g:Powerline_symbols="unicode"
-" }}}
-
-" Notes {{{
-let g:notes_directory = '~/Dropbox/thoughts'
-let g:notes_suffix = '.txt'
 " }}}
 
 " VimOrganizer {{{
