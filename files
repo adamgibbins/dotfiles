@@ -12,5 +12,6 @@ tmux.conf
 vim
 vim_runtime
 vimrc
+zsh
 zshrc
 zshrc.local
