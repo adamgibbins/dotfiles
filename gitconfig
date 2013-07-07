@@ -63,4 +63,9 @@
 [github]
   user = adamgibbins
 
+[instaweb]
+  httpd = webrick
+  port  = 4000
+  browser = open
+
 # vim: st=2:ts=2:noet:ft=gitconfig
