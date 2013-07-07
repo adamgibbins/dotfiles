@@ -138,7 +138,7 @@ set title                          " Modify window title to match vim filename
 set laststatus=2                   " Always show status line
 set hidden                         " Sane buffer management
 if version >= 703
-  set colorcolumn=80               " Display a vertical line on line 80
+  set colorcolumn=120              " Display a vertical line on line 120
 endif
 set virtualedit+=block             " Ability to move *anywhere* while in visual mode
 set directory=~/.vim_runtime/swapdir   " Write swap files to a central location
