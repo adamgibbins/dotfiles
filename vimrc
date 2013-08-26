@@ -201,7 +201,8 @@ set wildignore+=doc
 if has('gui_running')
   set guioptions-=T                " No toolbar
   set guioptions-=m                " No menu
-  set guioptions-=r                " No scrollbar
+  set guioptions-=r                " No right scrollbar
+  set guioptions-=L                " No left scrollbar
   set guicursor+=a:blinkon0        " Stop annoying blinking cursor
   if has('mac')                    " GUI Font
     set gfn=Monaco\ 8
