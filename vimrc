@@ -63,6 +63,8 @@ Bundle 'rodjek/vim-puppet'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+Bundle 'Shougo/neocomplcache.vim'
+Bundle 'Shougo/vimproc.vim'
 Bundle 'sjl/badwolf'
 Bundle 'sjl/gundo.vim'
 Bundle 'sjl/vitality.vim'
@@ -406,4 +408,15 @@ let g:gist_open_browser_after_post = 1
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
 let g:gist_get_multiplefile = 1
+" }}}
+
+" neocompletion {{{
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Fuzzy completion
+let g:neocomplcache_enable_fuzzy_completion = 1
 " }}}
