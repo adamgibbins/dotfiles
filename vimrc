@@ -82,9 +82,10 @@ Bundle 'xolox/vim-session'
 Bundle 'YankRing.vim'
 Bundle 'ZoomWin'
 " Colors {{{
-Bundle 'tomasr/molokai'
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'tir_black'
+Bundle 'tomasr/molokai'
 " }}}
 " }}}
 
@@ -155,7 +156,9 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.o
 syntax on
 set background=dark
 set t_Co=256                       " More than 8 colours
-colorscheme molokai
+colorscheme solarized
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
 " }}}
 
 " Searching {{{
