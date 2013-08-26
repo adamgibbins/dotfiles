@@ -270,9 +270,9 @@ set viminfo='50,\"1000,:100,n~/.viminfo
 
 " Open file at last opened place
 autocmd BufReadPost *
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 
 " Gundo {{{
 nnoremap <F6> :GundoToggle<CR>
