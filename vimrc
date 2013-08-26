@@ -257,6 +257,9 @@ endfunction
 nnoremap <leader>l :call g:ToggleNuMode()<cr>
 " }}}
 
+" Do not auto load sessions, this gets annoying
+let g:session_autoload = 'no'
+
 " Auto remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
