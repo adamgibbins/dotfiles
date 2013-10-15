@@ -227,6 +227,6 @@ alias -g V='| vim -'
 #vimpm ()      { vim `perldoc -l $1 | sed -e 's/pod$/pm/'` }
 #vimhelp ()    { vim -c "help $1" -c on -c "au! VimEnter *" }
 
-source .zsh/antigen.zsh
+source ~/.zsh/antigen.zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
 ## END OF FILE #################################################################
