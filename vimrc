@@ -88,6 +88,7 @@ Bundle 'YankRing.vim'
 Bundle 'ZoomWin'
 " Colors {{{
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'MaxSt/FlatColor'
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'tir_black'
 Bundle 'tomasr/molokai'
