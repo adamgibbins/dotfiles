@@ -25,9 +25,12 @@ endif
 " }}}
 
 " Vundle {{{
-if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
-  !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+let vundle_initialised=1
+if !filereadable(expand('~/.vim/bundle/vundle/README.md'))
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  let vundle_initialised=0
 endif
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -94,6 +97,10 @@ Bundle 'nanotech/jellybeans.vim'
 Bundle 'tir_black'
 Bundle 'tomasr/molokai'
 " }}}
+
+if vundle_initialised == 0
+  BundleInstall
+endif
 " }}}
 
 " General Settings {{{
