@@ -211,11 +211,7 @@ if has('gui_running')
   set guioptions-=r                " No right scrollbar
   set guioptions-=L                " No left scrollbar
   set guicursor+=a:blinkon0        " Stop annoying blinking cursor
-  if has('mac')                    " GUI Font
-    set gfn=Monaco\ 8
-  else
-    set gfn=Inconsolata\ 8
-  endif
+  set guifont=Source\ Code\ Pro:h10
 endif
 " }}}
 
