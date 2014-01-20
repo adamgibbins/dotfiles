@@ -10,7 +10,7 @@
 
 # Use the command 'task show' to see all defaults and overrides
 
-include /usr/local/Cellar/task/2.2.0/share/doc/task/rc/holidays.en-GB.rc
+include /usr/local/Cellar/task/HEAD/share/doc/task/rc/holidays.en-GB.rc
 include ~/doc/task/default.theme
 
 # Files
