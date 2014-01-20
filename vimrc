@@ -355,6 +355,7 @@ let g:lightline = {
       \   'mode': 'MyMode',
       \ },
       \ }
+" }}}
 
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
