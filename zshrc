@@ -1181,29 +1181,6 @@ fi # is433
 
 # }}}
 
-# {{{ display battery status on right side of prompt via running 'BATTERY=1 zsh'
-if [[ $BATTERY -gt 0 ]] ; then
-    if ! check_com -c acpi ; then
-        BATTERY=0
-    fi
-fi
-
-battery() {
-if [[ $BATTERY -gt 0 ]] ; then
-    PERCENT="${${"$(acpi 2>/dev/null)"}/(#b)[[:space:]]#Battery <->: [^0-9]##, (<->)%*/${match[1]}}"
-    if [[ -z "$PERCENT" ]] ; then
-        PERCENT='acpi not present'
-    else
-        if [[ "$PERCENT" -lt 20 ]] ; then
-            PERCENT="warning: ${PERCENT}%%"
-        else
-            PERCENT="${PERCENT}%%"
-        fi
-    fi
-fi
-}
-# }}}
-
 # set colors for use in prompts {{{
 if zrcautoload colors && colors 2>/dev/null ; then
     BLUE="%{${fg[blue]}%}"
@@ -1264,19 +1241,6 @@ else
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat "%b${RED}:${YELLOW}%r"
 fi
 
-
-# }}}
-
-# command not found handling {{{
-
-(( ${COMMAND_NOT_FOUND} == 1 )) &&
-function command_not_found_handler() {
-    emulate -L zsh
-    if [[ -x ${GRML_ZSH_CNF_HANDLER} ]] ; then
-        ${GRML_ZSH_CNF_HANDLER} $1
-    fi
-    return 1
-}
 
 # }}}
 
@@ -1405,20 +1369,6 @@ if [[ -n "$GRML_CHROOT" ]] ; then
 fi
 # }}}
 
-# {{{ 'hash' some often used directories
-#d# start
-hash -d deb=/var/cache/apt/archives
-hash -d doc=/usr/share/doc
-hash -d linux=/lib/modules/$(command uname -r)/build/
-hash -d log=/var/log
-hash -d slog=/var/log/syslog
-hash -d src=/usr/src
-hash -d templ=/usr/share/doc/grml-templates
-hash -d tt=/usr/share/doc/texttools-doc
-hash -d www=/var/www
-#d# end
-# }}}
-
 # {{{ some aliases
 if check_com -c screen ; then
     if [[ $UID -eq 0 ]] ; then
@@ -1454,7 +1404,6 @@ else
     alias l='ls -lF'
 fi
 
-alias mdstat='cat /proc/mdstat'
 alias ...='cd ../../'
 
 # generate alias named "$KERNELVERSION-reboot" so you can use boot with kexec:
@@ -1471,30 +1420,6 @@ alias rm='nocorrect rm'         # no spelling correction on rm
 alias rd='rmdir'
 #a1# Execute \kbd{mkdir}
 alias md='mkdir'
-
-# see http://www.cl.cam.ac.uk/~mgk25/unicode.html#term for details
-alias term2iso="echo 'Setting terminal to iso mode' ; print -n '\e%@'"
-alias term2utf="echo 'Setting terminal to utf-8 mode'; print -n '\e%G'"
-
-# make sure it is not assigned yet
-[[ -n ${aliases[utf2iso]} ]] && unalias utf2iso
-utf2iso() {
-    if isutfenv ; then
-        for ENV in $(env | command grep -i '.utf') ; do
-            eval export "$(echo $ENV | sed 's/UTF-8/iso885915/ ; s/utf8/iso885915/')"
-        done
-    fi
-}
-
-# make sure it is not assigned yet
-[[ -n ${aliases[iso2utf]} ]] && unalias iso2utf
-iso2utf() {
-    if ! isutfenv ; then
-        for ENV in $(env | command grep -i '\.iso') ; do
-            eval export "$(echo $ENV | sed 's/iso.*/UTF-8/ ; s/ISO.*/UTF-8/')"
-        done
-    fi
-}
 
 # I like clean prompt, so provide simple way to get that
 check_com 0 || alias 0='return 0'
@@ -1591,110 +1516,10 @@ Please report wishes + bugs to the grml-team: http://grml.org/bugs/
 Enjoy your grml system with the zsh!$reset_color"
 }
 
-# debian stuff
-if [[ -r /etc/debian_version ]] ; then
-    #a3# Execute \kbd{apt-cache search}
-    alias acs='apt-cache search'
-    #a3# Execute \kbd{apt-cache show}
-    alias acsh='apt-cache show'
-    #a3# Execute \kbd{apt-cache policy}
-    alias acp='apt-cache policy'
-    #a3# Execute \kbd{apt-get dist-upgrade}
-    salias adg="apt-get dist-upgrade"
-    #a3# Execute \kbd{apt-get install}
-    salias agi="apt-get install"
-    #a3# Execute \kbd{aptitude install}
-    salias ati="aptitude install"
-    #a3# Execute \kbd{apt-get upgrade}
-    salias ag="apt-get upgrade"
-    #a3# Execute \kbd{apt-get update}
-    salias au="apt-get update"
-    #a3# Execute \kbd{aptitude update ; aptitude safe-upgrade}
-    salias -a up="aptitude update ; aptitude safe-upgrade"
-    #a3# Execute \kbd{dpkg-buildpackage}
-    alias dbp='dpkg-buildpackage'
-    #a3# Execute \kbd{grep-excuses}
-    alias ge='grep-excuses'
-
-    # debian upgrade
-    #f3# Execute \kbd{apt-get update \&\& }\\&\quad \kbd{apt-get dist-upgrade}
-    upgrade() {
-        emulate -L zsh
-        if [[ -z $1 ]] ; then
-            $SUDO apt-get update
-            $SUDO apt-get -u upgrade
-        else
-            ssh $1 $SUDO apt-get update
-            # ask before the upgrade
-            local dummy
-            ssh $1 $SUDO apt-get --no-act upgrade
-            echo -n 'Process the upgrade?'
-            read -q dummy
-            if [[ $dummy == "y" ]] ; then
-                ssh $1 $SUDO apt-get -u upgrade --yes
-            fi
-        fi
-    }
-
-    # get a root shell as normal user in live-cd mode:
-    if isgrmlcd && [[ $UID -ne 0 ]] ; then
-       alias su="sudo su"
-     fi
-
-    #a1# Take a look at the syslog: \kbd{\$PAGER /var/log/syslog}
-    salias llog="$PAGER /var/log/syslog"     # take a look at the syslog
-    #a1# Take a look at the syslog: \kbd{tail -f /var/log/syslog}
-    salias tlog="tail -f /var/log/syslog"    # follow the syslog
-fi
-
 # sort installed Debian-packages by size
 if check_com -c grep-status ; then
     #a3# List installed Debian-packages sorted by size
     alias debs-by-size='grep-status -FStatus -sInstalled-Size,Package -n "install ok installed" | paste -sd "  \n" | sort -rn'
-fi
-
-# if cdrecord is a symlink (to wodim) or isn't present at all warn:
-if [[ -L /usr/bin/cdrecord ]] || ! check_com -c cdrecord; then
-    if check_com -c wodim; then
-        cdrecord() {
-            cat <<EOMESS
-cdrecord is not provided under its original name by Debian anymore.
-See #377109 in the BTS of Debian for more details.
-
-Please use the wodim binary instead
-EOMESS
-            return 1
-        }
-    fi
-fi
-
-# get_tw_cli has been renamed into get_3ware
-if check_com -c get_3ware ; then
-    get_tw_cli() {
-        echo 'Warning: get_tw_cli has been renamed into get_3ware. Invoking get_3ware for you.'>&2
-        get_3ware
-    }
-fi
-
-# I hate lacking backward compatibility, so provide an alternative therefore
-if ! check_com -c apache2-ssl-certificate ; then
-
-    apache2-ssl-certificate() {
-
-    print 'Debian does not ship apache2-ssl-certificate anymore (see #398520). :('
-    print 'You might want to take a look at Debian the package ssl-cert as well.'
-    print 'To generate a certificate for use with apache2 follow the instructions:'
-
-    echo '
-
-export RANDFILE=/dev/random
-mkdir /etc/apache2/ssl/
-openssl req $@ -new -x509 -days 365 -nodes -out /etc/apache2/ssl/apache.pem -keyout /etc/apache2/ssl/apache.pem
-chmod 600 /etc/apache2/ssl/apache.pem
-
-Run "grml-tips ssl-certificate" if you need further instructions.
-'
-    }
 fi
 # }}}
 
@@ -2491,29 +2316,11 @@ fi
 
 # aliases {{{
 
-# Xterm resizing-fu.
-# Based on http://svn.kitenet.net/trunk/home-full/.zshrc?rev=11710&view=log (by Joey Hess)
-alias hide='echo -en "\033]50;nil2\007"'
-alias tiny='echo -en "\033]50;-misc-fixed-medium-r-normal-*-*-80-*-*-c-*-iso8859-15\007"'
-alias small='echo -en "\033]50;6x10\007"'
-alias medium='echo -en "\033]50;-misc-fixed-medium-r-normal--13-120-75-75-c-80-iso8859-15\007"'
-alias default='echo -e "\033]50;-misc-fixed-medium-r-normal-*-*-140-*-*-c-*-iso8859-15\007"'
-alias large='echo -en "\033]50;-misc-fixed-medium-r-normal-*-*-150-*-*-c-*-iso8859-15\007"'
-alias huge='echo -en "\033]50;-misc-fixed-medium-r-normal-*-*-210-*-*-c-*-iso8859-15\007"'
-alias smartfont='echo -en "\033]50;-artwiz-smoothansi-*-*-*-*-*-*-*-*-*-*-*-*\007"'
-alias semifont='echo -en "\033]50;-misc-fixed-medium-r-semicondensed-*-*-120-*-*-*-*-iso8859-15\007"'
-
 # general
 #a2# Execute \kbd{du -sch}
 alias da='du -sch'
 #a2# Execute \kbd{jobs -l}
 alias j='jobs -l'
-
-# compile stuff
-#a2# Execute \kbd{./configure}
-alias CO="./configure"
-#a2# Execute \kbd{./configure --help}
-alias CH="./configure --help"
 
 # listing stuff
 #a2# Execute \kbd{ls -lSrah}
@@ -2557,14 +2364,6 @@ alias r-x='chmod 755'
 #a2# Execute \kbd{mkdir -o}
 alias md='mkdir -p'
 
-# console stuff
-#a2# Execute \kbd{mplayer -vo fbdev}
-alias cmplayer='mplayer -vo fbdev'
-#a2# Execute \kbd{mplayer -vo fbdev -fs -zoom}
-alias fbmplayer='mplayer -vo fbdev -fs -zoom'
-#a2# Execute \kbd{links2 -driver fb}
-alias fblinks='links2 -driver fb'
-
 #a2# ssh with StrictHostKeyChecking=no \\&\quad and UserKnownHostsFile unset
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
 alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
@@ -2595,102 +2394,6 @@ fi
 # }}}
 
 # useful functions {{{
-
-# searching
-#f4# Search for newspostings from authors
-agoogle() { ${=BROWSER} "http://groups.google.com/groups?as_uauthors=$*" ; }
-#f4# Search Debian Bug Tracking System
-debbug()  {
-    emulate -L zsh
-    setopt extendedglob
-    if [[ $# -eq 1 ]]; then
-        case "$1" in
-            ([0-9]##)
-            ${=BROWSER} "http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=$1"
-            ;;
-            (*@*)
-            ${=BROWSER} "http://bugs.debian.org/cgi-bin/pkgreport.cgi?submitter=$1"
-            ;;
-            (*)
-            ${=BROWSER} "http://bugs.debian.org/$*"
-            ;;
-        esac
-    else
-        print "$0 needs one argument"
-        return 1
-    fi
-}
-#f4# Search Debian Bug Tracking System in mbox format
-debbugm() {
-    emulate -L zsh
-    bts show --mbox $1
-}
-#f4# Search DMOZ
-dmoz()    {
-    emulate -L zsh
-    ${=BROWSER} http://search.dmoz.org/cgi-bin/search\?search=${1// /_}
-}
-#f4# Search German   Wiktionary
-dwicti()  {
-    emulate -L zsh
-    ${=BROWSER} http://de.wiktionary.org/wiki/${(C)1// /_}
-}
-#f4# Search English  Wiktionary
-ewicti()  {
-    emulate -L zsh
-    ${=BROWSER} http://en.wiktionary.org/wiki/${(C)1// /_}
-}
-#f4# Search Google Groups
-ggogle()  {
-    emulate -L zsh
-    ${=BROWSER} "http://groups.google.com/groups?q=$*"
-}
-#f4# Search Google
-google()  {
-    emulate -L zsh
-    ${=BROWSER} "http://www.google.com/search?&num=100&q=$*"
-}
-#f4# Search Google Groups for MsgID
-mggogle() {
-    emulate -L zsh
-    ${=BROWSER} "http://groups.google.com/groups?selm=$*"
-}
-#f4# Search Netcraft
-netcraft(){
-    emulate -L zsh
-    ${=BROWSER} "http://toolbar.netcraft.com/site_report?url=$1"
-}
-#f4# Use German Wikipedia's full text search
-swiki()   {
-    emulate -L zsh
-    ${=BROWSER} http://de.wikipedia.org/wiki/Spezial:Search/${(C)1}
-}
-#f4# search \kbd{dict.leo.org}
-oleo()    {
-    emulate -L zsh
-    ${=BROWSER} "http://dict.leo.org/?search=$*"
-}
-#f4# Search German   Wikipedia
-wikide()  {
-    emulate -L zsh
-    ${=BROWSER} http://de.wikipedia.org/wiki/"${(C)*}"
-}
-#f4# Search English  Wikipedia
-wikien()  {
-    emulate -L zsh
-    ${=BROWSER} http://en.wikipedia.org/wiki/"${(C)*}"
-}
-#f4# Search official debs
-wodeb()   {
-    emulate -L zsh
-    ${=BROWSER} "http://packages.debian.org/search?keywords=$1&searchon=contents&suite=${2:=unstable}&section=all"
-}
-
-#m# f4 gex() Exact search via Google
-check_com google && gex () {
-    google "\"[ $1]\" $*"
-}
-
 # misc
 #f5# Backup \kbd{file {\rm to} file\_timestamp}
 bk() {
@@ -2707,48 +2410,10 @@ cl() {
     emulate -L zsh
     cd $1 && ls -a
 }
-#f5# Cvs add
-cvsa() {
-    emulate -L zsh
-    cvs add $* && cvs com -m 'initial checkin' $*
-}
-#f5# Cvs diff
-cvsd() {
-    emulate -L zsh
-    cvs diff -N $* |& $PAGER
-}
-#f5# Cvs log
-cvsl() {
-    emulate -L zsh
-    cvs log $* |& $PAGER
-}
-#f5# Cvs update
-cvsq() {
-    emulate -L zsh
-    cvs -nq update
-}
-#f5# Rcs2log
-cvsr() {
-    emulate -L zsh
-    rcs2log $* | $PAGER
-}
-#f5# Cvs status
-cvss() {
-    emulate -L zsh
-    cvs status -v $*
-}
 #f5# Disassemble source files using gcc and as
 disassemble(){
     emulate -L zsh
     gcc -pipe -S -o - -O -g $* | as -aldh -o /dev/null
-}
-#f5# Firefox remote control - open given URL
-fir() {
-    if [ -e /etc/debian_version ]; then
-        firefox -a iceweasel -remote "openURL($1)" || firefox ${1}&
-    else
-        firefox -a firefox -remote "openURL($1)" || firefox ${1}&
-    fi
 }
 # smart cd function, allows switching to /etc when running 'cd /etc/fstab'
 cd() {
@@ -2836,37 +2501,6 @@ viless() {
     vim --cmd 'let no_plugin_maps = 1' -c "so \$VIMRUNTIME/macros/less.vim" "${@:--}"
 }
 
-# Function Usage: uopen $URL/$file
-#f5# Download a file and display it locally
-uopen() {
-    emulate -L zsh
-    if ! [[ -n "$1" ]] ; then
-        print "Usage: uopen \$URL/\$file">&2
-        return 1
-    else
-        FILE=$1
-        MIME=$(curl --head $FILE | grep Content-Type | cut -d ' ' -f 2 | cut -d\; -f 1)
-        MIME=${MIME%$'\r'}
-        curl $FILE | see ${MIME}:-
-    fi
-}
-
-# Function Usage: doc packagename
-#f5# \kbd{cd} to /usr/share/doc/\textit{package}
-doc() {
-    emulate -L zsh
-    cd /usr/share/doc/$1 && ls
-}
-_doc() { _files -W /usr/share/doc -/ }
-check_com compdef && compdef _doc doc
-
-#f5# Make screenshot
-sshot() {
-    [[ ! -d ~/shots  ]] && mkdir ~/shots
-    #cd ~/shots ; sleep 5 ; import -window root -depth 8 -quality 80 `date "+%Y-%m-%d--%H:%M:%S"`.png
-    cd ~/shots ; sleep 5; import -window root shot_`date --iso-8601=m`.jpg
-}
-
 # list images only
 limg() {
     local -a images
@@ -2877,15 +2511,6 @@ limg() {
     else
         ls "$images[@]"
     fi
-}
-
-#f5# Create PDF file from source code
-makereadable() {
-    emulate -L zsh
-    output=$1
-    shift
-    a2ps --medium A4dj -E -o $output $*
-    ps2pdf $output
 }
 
 # zsh with perl-regex - use it e.g. via:
@@ -2988,32 +2613,6 @@ rundirs() {
   local d CMD STARTDIR=$PWD
   CMD=$1; shift
   ( for d ($@) {cd -q $d && { print cd $d; ${(z)CMD} ; cd -q $STARTDIR }} )
-}
-
-# Translate DE<=>EN
-# 'translate' looks up fot a word in a file with language-to-language
-# translations (field separator should be " : "). A typical wordlist looks
-# like at follows:
-#  | english-word : german-transmission
-# It's also only possible to translate english to german but not reciprocal.
-# Use the following oneliner to turn back the sort order:
-#  $ awk -F ':' '{ print $2" : "$1" "$3 }' \
-#    /usr/local/lib/words/en-de.ISO-8859-1.vok > ~/.translate/de-en.ISO-8859-1.vok
-#f5# Translates a word
-trans() {
-    emulate -L zsh
-    case "$1" in
-        -[dD]*)
-            translate -l de-en $2
-            ;;
-        -[eE]*)
-            translate -l en-de $2
-            ;;
-        *)
-            echo "Usage: $0 { -D | -E }"
-            echo "         -D == German to English"
-            echo "         -E == English to German"
-    esac
 }
 
 #f5# List all occurrences of programm in current PATH
@@ -3323,90 +2922,6 @@ dirspace() {
     fi
 }
 
-# % slow_print `cat /etc/passwd`
-#f5# Slowly print out parameters
-slow_print() {
-    for argument in "$@" ; do
-        for ((i = 1; i <= ${#1} ;i++)) ; do
-            print -n "${argument[i]}"
-            sleep 0.08
-        done
-        print -n " "
-    done
-    print ""
-}
-
-#f5# Show some status info
-status() {
-    print
-    print "Date..: "$(date "+%Y-%m-%d %H:%M:%S")
-    print "Shell.: Zsh $ZSH_VERSION (PID = $$, $SHLVL nests)"
-    print "Term..: $TTY ($TERM), ${BAUD:+$BAUD bauds, }$COLUMNS x $LINES chars"
-    print "Login.: $LOGNAME (UID = $EUID) on $HOST"
-    print "System: $(cat /etc/[A-Za-z]*[_-][rv]e[lr]*)"
-    print "Uptime:$(uptime)"
-    print
-}
-
-# Rip an audio CD
-#f5# Rip an audio CD
-audiorip() {
-    mkdir -p ~/ripps
-    cd ~/ripps
-    cdrdao read-cd --device $DEVICE --driver generic-mmc audiocd.toc
-    cdrdao read-cddb --device $DEVICE --driver generic-mmc audiocd.toc
-    echo " * Would you like to burn the cd now? (yes/no)"
-    read input
-    if [[ "$input" = "yes" ]] ; then
-        echo " ! Burning Audio CD"
-        audioburn
-        echo " * done."
-    else
-        echo " ! Invalid response."
-    fi
-}
-
-# and burn it
-#f5# Burn an audio CD (in combination with audiorip)
-audioburn() {
-    cd ~/ripps
-    cdrdao write --device $DEVICE --driver generic-mmc audiocd.toc
-    echo " * Should I remove the temporary files? (yes/no)"
-    read input
-    if [[ "$input" = "yes" ]] ; then
-        echo " ! Removing Temporary Files."
-        cd ~
-        rm -rf ~/ripps
-        echo " * done."
-    else
-        echo " ! Invalid response."
-    fi
-}
-
-#f5# Make an audio CD from all mp3 files
-mkaudiocd() {
-    # TODO: do the renaming more zshish, possibly with zmv()
-    emulate -L zsh
-    cd ~/ripps
-    for i in *.[Mm][Pp]3; do mv "$i" `echo $i | tr '[A-Z]' '[a-z]'`; done
-    for i in *.mp3; do mv "$i" `echo $i | tr ' ' '_'`; done
-    for i in *.mp3; do mpg123 -w `basename $i .mp3`.wav $i; done
-    normalize -m *.wav
-    for i in *.wav; do sox $i.wav -r 44100 $i.wav resample; done
-}
-
-#f5# Create an ISO image. You are prompted for\\&\quad volume name, filename and directory
-mkiso() {
-    emulate -L zsh
-    echo " * Volume name "
-    read volume
-    echo " * ISO Name (ie. tmp.iso)"
-    read iso
-    echo " * Directory or File"
-    read files
-    mkisofs -o ~/$iso -A $volume -allow-multidot -J -R -iso-level 3 -V $volume -R $files
-}
-
 #f5# Simple thumbnails generator
 genthumbs() {
     rm -rf thumb-* index.html
@@ -3435,53 +2950,6 @@ allulimit() {
     ulimit -s unlimited
     ulimit -t unlimited
 }
-
-# 2mp3 transcodes flac and ogg to mp3 with bitrate of 192 while preserving basic tags
-if check_com lame; then
-    2mp3_192() {
-        emulate -L zsh
-        setopt extendedglob
-        unsetopt ksharrays
-
-        local -a DECODE id3tags
-        local -A tagmap
-        local tagdata
-        local RC=0
-        tagmap=("(#l)title" --tt "(#l)artist" --ta "(#l)tracknumber" --tn "(#l)genre" --tg "(#l)album" --tl)
-
-        if [[ ${@[(i)*.ogg]} -le ${#@} ]] && ! check_com oggdec; then
-            echo "ERROR: please install oggdec" >&2
-            return 1
-        fi
-        if [[ ${@[(i)*.flac]} -le ${#@} ]] && ! check_com flac; then
-            echo "ERROR: please install flac" >&2
-            return 1
-        fi
-
-        for af in "$@"; do
-            id3tags=()
-            case "$af" in
-                (*.flac)
-                    DECODE=(flac -d -c "$af")
-                    tagdata="$(metaflac --export-tags-to=- "$af")"
-                    ;;
-                (*.ogg)
-                    DECODE=(oggdec -Q -o - "$af")
-                    tagdata="$(ogginfo "$af")"
-                    ;;
-                (*) continue ;;
-            esac
-            for line (${(f)tagdata}) \
-                [[ "$line" == (#s)[[:space:]]#(#b)([^=]##)=(*)(#e) && -n $tagmap[(k)$match[1]] ]] && \
-                id3tags+=($tagmap[(k)$match[1]] "$match[2]")
-            [[ ${#id3tags} -gt 0 ]] && id3tags=(--add-id3v2 --ignore-tag-errors $id3tags)
-            $DECODE[*] | lame -b 192 -v -h --replaygain-fast  "${id3tags[@]}" - "${af:r}.mp3" || {RC=$?; print "Error transcoding" "${af}"; }
-        done
-        # return 0 if no error or exit code if at least one error happened
-        return $RC
-    }
-    alias ogg2mp3_192 2mp3_192
-fi
 
 #f5# RFC 2396 URL encoding in Z-Shell
 urlencode() {
@@ -3526,29 +2994,6 @@ exirename() {
             echo 'failed - exiting.'
         fi
     fi
-}
-
-# get_ic() - queries imap servers for capabilities; real simple. no imaps
-ic_get() {
-    emulate -L zsh
-    local port
-    if [[ ! -z $1 ]] ; then
-        port=${2:-143}
-        print "querying imap server on $1:${port}...\n";
-        print "a1 capability\na2 logout\n" | nc $1 ${port}
-    else
-        print "usage:\n  $0 <imap-server> [port]"
-    fi
-}
-
-# creates a Maildir/ with its {new,cur,tmp} subdirs
-mkmaildir() {
-    emulate -L zsh
-    local root subdir
-    root=${MAILDIR_ROOT:-${HOME}/Mail}
-    if [[ -z ${1} ]] ; then print "Usage:\n $0 <dirname>" ; return 1 ; fi
-    subdir=${1}
-    mkdir -p ${root}/${subdir}/{cur,new,tmp}
 }
 
 #f5# Change the xterm title from within GNU-screen
@@ -3633,47 +3078,6 @@ if check_com -c highlight ; then
     compdef _hl_complete hl
 fi
 
-# TODO:
-# Rewrite this by either using tinyurl.com's API
-# or using another shortening service to comply with
-# tinyurl.com's policy.
-#
-# Create small urls via http://tinyurl.com using wget(1).
-#function zurl() {
-#    emulate -L zsh
-#    [[ -z $1 ]] && { print "USAGE: zurl <URL>" ; return 1 }
-#
-#    local PN url tiny grabber search result preview
-#    PN=$0
-#    url=$1
-##   Check existence of given URL with the help of ping(1).
-##   N.B. ping(1) only works without an eventual given protocol.
-#    ping -c 1 ${${url#(ftp|http)://}%%/*} >& /dev/null || \
-#        read -q "?Given host ${${url#http://*/}%/*} is not reachable by pinging. Proceed anyway? [y|n] "
-#
-#    if (( $? == 0 )) ; then
-##           Prepend 'http://' to given URL where necessary for later output.
-#            [[ ${url} != http(s|)://* ]] && url='http://'${url}
-#            tiny='http://tinyurl.com/create.php?url='
-#            if check_com -c wget ; then
-#                grabber='wget -O- -o/dev/null'
-#            else
-#                print "wget is not available, but mandatory for ${PN}. Aborting."
-#            fi
-##           Looking for i.e.`copy('http://tinyurl.com/7efkze')' in TinyURL's HTML code.
-#            search='copy\(?http://tinyurl.com/[[:alnum:]]##*'
-#            result=${(M)${${${(f)"$(${=grabber} ${tiny}${url})"}[(fr)${search}*]}//[()\';]/}%%http:*}
-##           TinyURL provides the rather new feature preview for more confidence. <http://tinyurl.com/preview.php>
-#            preview='http://preview.'${result#http://}
-#
-#            printf '%s\n\n' "${PN} - Shrinking long URLs via webservice TinyURL <http://tinyurl.com>."
-#            printf '%s\t%s\n\n' 'Given URL:' ${url}
-#            printf '%s\t%s\n\t\t%s\n' 'TinyURL:' ${result} ${preview}
-#    else
-#        return 1
-#    fi
-#}
-
 #f2# Print a specific line of file(s).
 linenr () {
 # {{{
@@ -3749,73 +3153,6 @@ whatwhen()  {
 # }}}
 }
 
-# change fluxbox keys from 'Alt-#' to 'Alt-F#' and vice versa
-fluxkey-change() {
-    emulate -L zsh
-    [[ -n "$FLUXKEYS" ]] || local FLUXKEYS="$HOME/.fluxbox/keys"
-    if ! [[ -r "$FLUXKEYS" ]] ; then
-        echo "Sorry, \$FLUXKEYS file $FLUXKEYS could not be read - nothing to be done."
-        return 1
-    else
-        if grep -q 'Mod1 F[0-9] :Workspace [0-9]' $FLUXKEYS ; then
-            echo -n 'Switching to Alt-# mode in ~/.fluxbox/keys: '
-            sed -i -e 's|^\(Mod[0-9]\+[: space :]\+\)F\([0-9]\+[: space :]\+:Workspace.*\)|\1\2|' $FLUXKEYS && echo done || echo failed
-        elif grep -q 'Mod1 [0-9] :Workspace [0-9]' $FLUXKEYS ; then
-            echo -n 'Switching to Alt-F# mode in ~/.fluxbox/keys: '
-            sed -i -e 's|^\(Mod[0-9]\+[: space :]\+\)\([0-9]\+[: space :]\+:Workspace.*\)|\1F\2|' $FLUXKEYS && echo done || echo failed
-        else
-            echo 'Sorry, do not know what to do.'
-            return 1
-        fi
-    fi
-}
-
-# retrieve weather information on the console
-# Usage example: 'weather LOWG'
-weather() {
-    emulate -L zsh
-    [[ -n "$1" ]] || {
-        print 'Usage: weather <station_id>' >&2
-        print 'List of stations: http://en.wikipedia.org/wiki/List_of_airports_by_ICAO_code'>&2
-        return 1
-    }
-
-    local VERBOSE="yes"    # TODO: Make this a command line switch
-
-    local ODIR=`pwd`
-    local PLACE="${1:u}"
-    local DIR="${HOME}/.weather"
-    local LOG="${DIR}/log"
-
-    [[ -d ${DIR} ]] || {
-        print -n "Creating ${DIR}: "
-        mkdir ${DIR}
-        print 'done'
-    }
-
-    print "Retrieving information for ${PLACE}:"
-    print
-    cd ${DIR} && wget -T 10 --no-verbose --output-file=$LOG --timestamping http://weather.noaa.gov/pub/data/observations/metar/decoded/$PLACE.TXT
-
-    if [[ $? -eq 0 ]] ; then
-        if [[ -n "$VERBOSE" ]] ; then
-            cat ${PLACE}.TXT
-        else
-            DATE=$(grep 'UTC' ${PLACE}.TXT | sed 's#.* /##')
-            TEMPERATURE=$(awk '/Temperature/ { print $4" degree Celcius / " $2" degree Fahrenheit" }' ${PLACE}.TXT | tr -d '(')
-            echo "date: $DATE"
-            echo "temp:  $TEMPERATURE"
-        fi
-    else
-        print "There was an error retrieving the weather information for $PLACE" >&2
-        cat $LOG
-        cd $ODIR
-        return 1
-    fi
-    cd $ODIR
-}
-# }}}
-
 # mercurial related stuff {{{
 if check_com -c hg ; then
     # gnu like diff for mercurial
@@ -3846,51 +3183,6 @@ fi # end of check whether we have the 'hg'-executable
 
 # }}}
 
-# some useful commands often hard to remember - let's grep for them {{{
-# actually use our zg() function now. :)
-
-# Work around ion/xterm resize bug.
-#if [[ "$SHLVL" -eq 1 ]]; then
-#       if check_com -c resize ; then
-#               eval `resize </dev/null`
-#       fi
-#fi
-
-# enable jackd:
-#  /usr/bin/jackd -dalsa -dhw:0 -r48000 -p1024 -n2
-# now play audio file:
-#  alsaplayer -o jack foobar.mp3
-
-# send files via netcat
-# on sending side:
-#  send() {j=$*; tar cpz ${j/%${!#}/}|nc -w 1 ${!#} 51330;}
-#  send dir* $HOST
-#  alias receive='nc -vlp 51330 | tar xzvp'
-
-# debian stuff:
-# dh_make -e foo@localhost -f $1
-# dpkg-buildpackage -rfakeroot
-# lintian *.deb
-# dpkg-scanpackages ./ /dev/null | gzip > Packages.gz
-# dpkg-scansources . | gzip > Sources.gz
-# grep-dctrl --field Maintainer $* /var/lib/apt/lists/*
-
-# other stuff:
-# convert -geometry 200x200 -interlace LINE -verbose
-# ldapsearch -x -b "OU=Bedienstete,O=tug" -h ldap.tugraz.at sn=$1
-# ps -ao user,pcpu,start,command
-# gpg --keyserver blackhole.pca.dfn.de --recv-keys
-# xterm -bg black -fg yellow -fn -misc-fixed-medium-r-normal--14-140-75-75-c-90-iso8859-15 -ah
-# nc -vz $1 1-1024   # portscan via netcat
-# wget --mirror --no-parent --convert-links
-# pal -d `date +%d`
-# autoload -U tetris; zle -N tetris; bindkey '...' ; echo "press ... for playing tennis"
-#
-# modify console cursor
-# see http://www.tldp.org/HOWTO/Framebuffer-HOWTO-5.html
-# print $'\e[?96;0;64c'
-# }}}
-
 # grml-small cleanups {{{
 
 # The following is used to remove zsh-config-items that do not work
@@ -3916,16 +3208,6 @@ fi
 #}}}
 
 zrclocal
-
-## genrefcard.pl settings {{{
-
-### doc strings for external functions from files
-#m# f5 grml-wallpaper() Sets a wallpaper (try completion for possible values)
-
-### example: split functions-search 8,16,24,32
-#@# split functions-search 8
-
-## }}}
 
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
