@@ -315,15 +315,6 @@ let g:ctrlp_extensions = ['tag']
 let g:ctrlp_mruf_case_sensitive = 0
 " }}}
 
-" MiniBufExplorer {{{
-let g:miniBufExplMapWindowNavVim = 1     " Navigate windows using Ctrl+direction (hjkl)
-let g:miniBufExplMapWindowNavArrows = 1  " Navigate windows using Ctrl+Arrows
-let g:miniBufExplMapCTabSwitchBufs = 1   " Switch buffers with CTRL-Tab
-let g:miniBufExplUseSingleClick = 1      " Switch buffer with a single click instead of double
-let g:miniBufExplCloseOnSelect = 1       " Close once a buffer has been selected
-let g:miniBufExplForceSyntaxEnable = 1   " Work around vim bug that turns highlighting off
-" }}}
-
 " Ledger {{{
 let g:ledger_maxwidth = 80        " Max width of fold columns
 let g:ledger_fillstring = '»'     " Padding for the fold columns
