@@ -22,86 +22,35 @@ endif
 if !isdirectory(expand("~/.vim_runtime/backupdir"))
   !mkdir ~/.vim_runtime/backupdir
 endif
+
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
 " }}}
 
-" Vundle {{{
-let vundle_initialised=1
-if !filereadable(expand('~/.vim/bundle/vundle/README.md'))
-  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-  let vundle_initialised=0
-endif
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-Bundle 'anzaika/go.vim'
-Bundle 'beyondwords/vim-twig'
-Bundle 'chrisbra/NrrwRgn'
-Bundle 'cwoac/nvim'
-Bundle 'farseer90718/vim-taskwarrior'
-Bundle 'garbas/vim-snipmate'
-Bundle 'gmarik/vundle'
-Bundle 'gnupg.vim'
-Bundle 'godlygeek/tabular'
-Bundle 'groenewege/vim-less'
-Bundle 'honza/vim-snippets'
-Bundle 'hsitz/VimOrganizer'
-Bundle 'iptables'
-Bundle 'itchyny/lightline.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'ledger/vim-ledger'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'majutsushi/tagbar'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'mattn/gist-vim'
-Bundle 'mattn/webapi-vim'
-Bundle 'mhinz/vim-signify'
-Bundle 'mileszs/ack.vim'
-Bundle 'mrtazz/simplenote.vim'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'openssl.vim'
-Bundle 'oscarh/vimerl'
-Bundle 'rizzatti/dash.vim'
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rking/ag.vim'
-Bundle 'rodjek/vim-puppet'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'Shougo/neocomplcache.vim'
-Bundle 'Shougo/vimproc.vim'
-Bundle 'sjl/badwolf'
-Bundle 'sjl/gundo.vim'
-Bundle 'sjl/vitality.vim'
-Bundle 'skwp/vim-ruby-conque'
-Bundle 'spolu/dwm.vim'
-Bundle 'tmatilai/gitolite.vim'
-Bundle 'tomtom/tlib_vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-surround'
-Bundle 'troydm/easybuffer.vim'
-Bundle 'vim-scripts/closetag.vim'
-Bundle 'vim-scripts/Conque-Shell'
-Bundle 'VimClojure'
-Bundle 'vimoutliner/vimoutliner'
-Bundle 'xolox/vim-easytags'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-session'
-Bundle 'YankRing.vim'
-Bundle 'ZoomWin'
-" Colors {{{
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'MaxSt/FlatColor'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'tir_black'
-Bundle 'tomasr/molokai'
-" }}}
-
-if vundle_initialised == 0
-  BundleInstall
-endif
-" }}}
+"Bundle 'benmills/vimux'
+"Bundle 'chrisbra/NrrwRgn'
+"Bundle 'cwoac/nvim'
+"Bundle 'hsitz/VimOrganizer'
+"Bundle 'majutsushi/tagbar'
+"Bundle 'mattn/webapi-vim'
+"Bundle 'mrtazz/simplenote.vim'
+"Bundle 'scrooloose/nerdcommenter'
+"Bundle 'scrooloose/nerdtree'
+"Bundle 'Shougo/neocomplcache.vim'
+"Bundle 'Shougo/unite.vim'
+"Bundle 'Shougo/vimproc.vim'
+"Bundle 'sjl/gundo.vim'
+"Bundle 'sjl/vitality.vim'
+"Bundle 'skwp/vim-ruby-conque'
+"Bundle 'spolu/dwm.vim'
+"Bundle 'szw/vim-ctrlspace'
+"Bundle 'troydm/easybuffer.vim'
+"Bundle 'vim-scripts/closetag.vim'
+"Bundle 'vim-scripts/Conque-Shell'
+"Bundle 'VimClojure'
+"Bundle 'vimoutliner/vimoutliner'
+"Bundle 'xolox/vim-session'
+"Bundle 'YankRing.vim'
 
 " General Settings {{{
 filetype on
@@ -170,7 +119,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.o
 syntax on
 set background=dark
 set t_Co=256                       " More than 8 colours
-colorscheme molokai
+colorscheme solarized
 let g:solarized_contrast="high"
 let g:solarized_visibility="high"
 " }}}
