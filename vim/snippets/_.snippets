@@ -1,0 +1,10 @@
+snippet mcagent
+	module MCollective
+	  module Agent
+	    class ${1:Agentname}<RPC::Agent
+	      action "${2:action name}" do
+	        ${3}
+	      end
+	    end
+	  end
+	end
