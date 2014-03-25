@@ -371,3 +371,9 @@ let g:neocomplcache_enable_smart_case = 1
 " Fuzzy completion
 let g:neocomplcache_enable_fuzzy_completion = 1
 " }}}
+
+" UltiSnips {{{
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" }}}
