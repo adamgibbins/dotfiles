@@ -361,17 +361,6 @@ let g:gist_post_private = 1
 let g:gist_get_multiplefile = 1
 " }}}
 
-" neocompletion {{{
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Fuzzy completion
-let g:neocomplcache_enable_fuzzy_completion = 1
-" }}}
-
 " UltiSnips {{{
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
