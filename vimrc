@@ -366,3 +366,11 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " }}}
+
+" EasyTags {{{
+" Look for and update tags in the relative directory on a per-project basis
+set tags=./tags
+let g:easytags_dynamic_files = 2
+" Stop warning of low update time, this is caused by some other plugin
+let g:easytags_updatetime_warn = 0
+" }}}
