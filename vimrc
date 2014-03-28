@@ -119,9 +119,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.brf,.cb,.ind,.idx,.ilg,.inx,.o
 syntax on
 set background=dark
 set t_Co=256                       " More than 8 colours
-colorscheme solarized
-let g:solarized_contrast="high"
-let g:solarized_visibility="high"
+colorscheme molokai
 " }}}
 
 " Searching {{{
