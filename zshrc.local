@@ -228,6 +228,15 @@ alias -g V='| vim -'
 #vimpm ()      { vim `perldoc -l $1 | sed -e 's/pod$/pm/'` }
 #vimhelp ()    { vim -c "help $1" -c on -c "au! VimEnter *" }
 
+alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+alias dkd="docker run -d -P"
+alias dki="docker run -t -i -P"
+
+function drm() { docker rm $(docker ps -q -a); }
+function dri() { docker rmi $(docker images -q); }
+function db() { docker build -t="$1" .; }
+function dssh { sudo lxc-attach -n $(docker ps -notrunc -q | awk "NR == ${1:-1}"); };
+
 source ~/.zsh/antigen.zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
 ## END OF FILE #################################################################
