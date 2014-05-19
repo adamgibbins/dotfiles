@@ -96,7 +96,7 @@ PATH=~/bin:~/.gem/ruby/1.8/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr
 #setopt histallowclobber
 
 ## warning if file exists ('cat /dev/null > ~/.zshrc')
-setopt NO_clobber
+#setopt NO_clobber
 
 ## don't warn me about bg processes when exiting
 #setopt nocheckjobs
