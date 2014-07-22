@@ -27,31 +27,6 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 " }}}
 
-"Bundle 'benmills/vimux'
-"Bundle 'chrisbra/NrrwRgn'
-"Bundle 'cwoac/nvim'
-"Bundle 'hsitz/VimOrganizer'
-"Bundle 'majutsushi/tagbar'
-"Bundle 'mattn/webapi-vim'
-"Bundle 'mrtazz/simplenote.vim'
-"Bundle 'scrooloose/nerdcommenter'
-"Bundle 'scrooloose/nerdtree'
-"Bundle 'Shougo/neocomplcache.vim'
-"Bundle 'Shougo/unite.vim'
-"Bundle 'Shougo/vimproc.vim'
-"Bundle 'sjl/gundo.vim'
-"Bundle 'sjl/vitality.vim'
-"Bundle 'skwp/vim-ruby-conque'
-"Bundle 'spolu/dwm.vim'
-"Bundle 'szw/vim-ctrlspace'
-"Bundle 'troydm/easybuffer.vim'
-"Bundle 'vim-scripts/closetag.vim'
-"Bundle 'vim-scripts/Conque-Shell'
-"Bundle 'VimClojure'
-"Bundle 'vimoutliner/vimoutliner'
-"Bundle 'xolox/vim-session'
-"Bundle 'YankRing.vim'
-
 " General Settings {{{
 filetype on
 filetype plugin indent on
