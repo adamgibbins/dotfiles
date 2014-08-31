@@ -6,8 +6,8 @@ gitconfig
 gitignore
 profile
 screenrc
-slate
 taskrc
+tmux
 tmux.conf
 vim
 vim_runtime
