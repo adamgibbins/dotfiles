@@ -124,3 +124,9 @@
 [submodule "vim/bundle/vim-expand-region"]
 	path = vim/bundle/vim-expand-region
 	url = https://github.com/terryma/vim-expand-region.git
+[submodule "z"]
+	path = z
+	url = https://github.com/rupa/z.git
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm.git
