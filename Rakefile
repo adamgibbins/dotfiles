@@ -30,7 +30,7 @@ end
 
 files = File.new(File.join(pwd, "files"), "r").read.split("\n")
 
-task :install => [:init_submodules, :update_submodules] do
+task :install => [:init_submodules] do
   files.each do |file|
     symlink(File.join(pwd, file), target_path(file))
   end
@@ -44,12 +44,7 @@ end
 
 task :init_submodules do
   puts "Installing submodules"
-  `git submodule init`
-end
-
-task :update_submodules do
-  puts "Updating submodules"
-  `git submodule update`
+  `git submodule update --init --recursive`
 end
 
 task :default => [:uninstall, :install]
