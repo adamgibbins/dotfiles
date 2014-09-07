@@ -231,6 +231,8 @@ alias -g V='| vim -'
 alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 alias dkd="docker run -d -P"
 alias dki="docker run -t -i -P"
+alias tmn='tmux new -s $(basename $(pwd))'
+alias tma='tmux attach -d -t'
 
 function drm() { docker rm $(docker ps -q -a); }
 function dri() { docker rmi $(docker images -q); }
