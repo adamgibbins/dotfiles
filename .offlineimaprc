@@ -1,0 +1,37 @@
+[general]
+accounts = TG
+ui = TTY.TTYUI
+fsync = False
+socktimeout = 120
+
+[Account TG]
+localrepository = TG-Local
+remoterepository = TG-Remote
+status_backend = sqlite
+#postsynchook = notmuch new
+
+[Repository TG-Local]
+type = Maildir
+localfolders = ~/Mail/TG
+
+[Repository TG-Remote]
+maxconnections = 1
+realdelete = yes
+type = IMAP
+ssl = yes
+sslcacertfile = ~/.mutt/certs/cacert.pem
+
+folderfilter = lambda folder: folder not in [
+                                              'Calendar',
+                                              'Contacts',
+                                              'Deleted Items'
+                                              'INBOX/Journal',
+                                              'INBOX/Junk Email',
+                                              'INBOX/News Feed',
+                                              'INBOX/Notes',
+                                              'INBOX/RSS Feeds',
+                                              'INBOX/Suggested Contacts'
+                                              'Sync Issues',
+                                              'RSS Feeds',
+                                              'Trash',
+                                            ]

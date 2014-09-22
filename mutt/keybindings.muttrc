@@ -1,0 +1,30 @@
+macro index,pager A "<save-message>=TG/Archive/<enter>" "Move to Archive"
+
+# Attachments {{{
+bind attach <return> view-mailcap
+macro pager \Cu "|urlview<enter>" "Call urlview to open links"
+# }}}
+
+# Moving between folders {{{
+macro index Si "<change-folder>=TG/INBOX/<enter>"
+macro index SA "<change-folder>=TG/Archive/<enter>"
+# }}}
+
+# Threads {{{
+bind index - collapse-thread
+bind index _ collapse-all
+# }}}
+
+# Vim Bindings {{{
+bind pager k previous-line
+bind pager j next-line
+bind index k previous-entry
+bind index j next-entry
+bind index gg first-entry
+bind index G last-entry
+# }}}
+
+# Drafts {{{
+bind compose p postpone-message
+bind index p recall-message
+# }}}

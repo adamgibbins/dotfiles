@@ -4,11 +4,15 @@ digrc
 gemrc
 gitconfig
 gitignore
+mutt
+muttrc
+offlineimaprc
 profile
 screenrc
 taskrc
 tmux
 tmux.conf
+urlview
 vim
 vim_runtime
 vimrc

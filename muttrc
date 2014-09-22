@@ -1,0 +1,83 @@
+reset all
+
+# Paths {{{
+set my_mutt_home     = ~/.mutt
+set folder           = ~/Mail
+set alias_file       = $my_mutt_home/alias
+set certificate_file = $my_mutt_home/certs
+set mailcap_path     = $my_mutt_home/mailcap
+set tmpdir           = $my_mutt_home/tmp
+set header_cache     = $tmpdir/cache/headers
+set message_cachedir = $tmpdir/cache/bodies
+set signature        = $my_mutt_home/sig
+# }}}
+
+# Includes {{{
+source $my_mutt_home/mutt-colors-solarized-dark-256.muttrc
+source $my_mutt_home/colors.muttrc
+source $my_mutt_home/keybindings.muttrc
+# }}}
+
+set wait_key   = no
+set mbox_type  = Maildir
+set timeout    = 3
+set mail_check = 0
+set charset    = 'utf8'
+set beep_new   = yes
+set net_inc    = 5
+
+set sort = 'date-sent'
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set strict_threads = yes
+unset collapse_unread
+set uncollapse_jump # Do not collapse unread messages
+unset mark_old
+
+set realname = 'Adam Gibbins'
+
+auto_view text/html # Display HTML inline
+set implicit_autoview = no
+alternative_order text/plain * # Prefer plain text over everything
+
+set confirmappend = no
+set delete = yes
+
+set use_from = yes
+set envelope_from = yes
+set fast_reply = yes
+set askcc = yes
+unset metoo
+set ispell = no
+unset ignore_list_reply_to
+set abort_nosubject="ask-yes"
+set abort_unmodified="ask-yes"
+set include="yes"
+set reply_to="ask-yes"
+set reverse_name
+set attribution="\n\nOn %d, %n wrote:"
+set forward_format="[%a: %s]"
+set indent_string=">"
+set sig_dashes # --- before a signature
+
+
+# GPG {{{
+set pgp_good_sign="^gpg: Good signature from"
+set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u % a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_import_command="gpg --no-verbose --import -v %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+
+set pgp_sign_as=779546DB
+set pgp_autosign=no
+set pgp_timeout=1800
+set pgp_replyencrypt=yes
+# }}}
