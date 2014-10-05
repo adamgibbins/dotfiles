@@ -86,6 +86,8 @@ antigen-bundle () {
     # Expand short github url syntax: `username/reponame`.
     if [[ $url != git://* &&
             $url != https://* &&
+            $url != http://* &&
+            $url != ssh://* &&
             $url != /* &&
             $url != git@github.com:*/*
             ]]; then
@@ -316,10 +318,15 @@ antigen-revert () {
 # "what's new" message.
 antigen-selfupdate () {
     ( cd $_ANTIGEN_INSTALL_DIR
-        if [[ ! -d .git ]]; then
+        if [[ ! ( -d .git || -f .git ) ]]; then
             echo "Your copy of antigen doesn't appear to be a git clone. " \
                 "The 'selfupdate' command cannot work in this case."
             return 1
+        fi
+        local head="$(git rev-parse --abbrev-ref HEAD)"
+        if [[ $head == "HEAD" ]]; then
+            # If current head is detached HEAD, checkout to master branch.
+            git checkout master
         fi
         git pull
     )
@@ -489,7 +496,9 @@ antigen-snapshot () {
         echo -n " created_on='$(date)';"
 
         # Add a checksum with the md5 checksum of all the snapshot lines.
-        local checksum="$(echo "$snapshot_content" | md5sum)"
+        chksum() { (md5sum; test $? = 127 && md5) 2>/dev/null | cut -d' ' -f1 }
+        local checksum="$(echo "$snapshot_content" | chksum)"
+        unset -f chksum;
         echo -n " checksum='${checksum%% *}';"
 
         # A newline after the metadata and then the snapshot lines.
@@ -522,10 +531,10 @@ antigen-restore () {
             local clone_dir="$(-antigen-get-clone-dir "$url")"
 
             if [[ ! -d $clone_dir ]]; then
-                git clone "$url" "$clone_dir" > /dev/null
+                git clone "$url" "$clone_dir" &> /dev/null
             fi
 
-            (cd "$clone_dir" && git checkout $version_hash) 2> /dev/null
+            (cd "$clone_dir" && git checkout $version_hash) &> /dev/null
 
         done
 
