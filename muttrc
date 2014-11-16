@@ -3,6 +3,7 @@ reset all
 # Paths {{{
 set my_mutt_home     = ~/.mutt
 set folder           = ~/Mail
+set spoolfile        = ~/Mail/TG/INBOX
 set alias_file       = $my_mutt_home/alias
 set certificate_file = $my_mutt_home/certs
 set mailcap_path     = $my_mutt_home/mailcap
