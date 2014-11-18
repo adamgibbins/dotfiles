@@ -85,9 +85,6 @@
 [submodule "vim/bundle/vim-gnupg"]
 	path = vim/bundle/vim-gnupg
 	url = https://github.com/jamessan/vim-gnupg
-[submodule "vim/bundle/vim-taskwarrior"]
-	path = vim/bundle/vim-taskwarrior
-	url = https://github.com/farseer90718/vim-taskwarrior
 [submodule "vim/bundle/vim-twig"]
 	path = vim/bundle/vim-twig
 	url = https://github.com/beyondwords/vim-twig
