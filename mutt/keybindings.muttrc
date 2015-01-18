@@ -28,3 +28,8 @@ bind index G last-entry
 bind compose p postpone-message
 bind index p recall-message
 # }}}
+
+# Sending {{{
+bind pager R group-reply
+bind index R group-reply
+# }}}
