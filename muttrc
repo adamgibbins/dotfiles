@@ -36,6 +36,9 @@ set uncollapse_jump # Do not collapse unread messages
 unset mark_old
 
 set realname = 'Adam Gibbins'
+set from = 'Adam Gibbins <adam.gibbins@timgroup.com>'
+set sendmail = '/usr/local/bin/msmtp -a timgroup'
+set sendmail_wait = 0
 
 auto_view text/html # Display HTML inline
 set implicit_autoview = no
@@ -44,6 +47,7 @@ alternative_order text/plain * # Prefer plain text over everything
 set confirmappend = no
 set delete = yes
 
+set edit_headers = yes
 set use_from = yes
 set envelope_from = yes
 set fast_reply = yes
