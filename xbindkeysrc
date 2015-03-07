@@ -1,2 +1,0 @@
-'xdotool search "Mozilla Firefox" windowactivate --sync key --clearmodifiers ctrl+l'
-  Mod4+f

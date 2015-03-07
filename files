@@ -4,12 +4,12 @@ digrc
 gemrc
 gitconfig
 gitignore
+msmtprc
 mutt
 muttrc
 offlineimaprc
 profile
 screenrc
-taskrc
 tmux
 tmux.conf
 urlview
