@@ -1,108 +1,3 @@
-# Filename:      /etc/zsh/zshrc
-# Purpose:       config file for zsh (z shell)
-# Authors:       grml-team (grml.org), (c) Michael Prokop <mika@grml.org>
-# Bug-Reports:   see http://grml.org/bugs/
-# License:       This file is licensed under the GPL v2.
-################################################################################
-# This file is sourced only for interactive shells. It
-# should contain commands to set up aliases, functions,
-# options, key bindings, etc.
-#
-# Global Order: zshenv, zprofile, zshrc, zlogin
-################################################################################
-
-# USAGE
-# If you are using this file as your ~/.zshrc file, please use ~/.zshrc.pre
-# and ~/.zshrc.local for your own customisations. The former file is read
-# before ~/.zshrc, the latter is read after it. Also, consider reading the
-# refcard and the reference manual for this setup, both available from:
-#     <http://grml.org/zsh/>
-
-# Contributing:
-# If you want to help to improve grml's zsh setup, clone the grml-etc-core
-# repository from git.grml.org:
-#   git clone git://git.grml.org/grml-etc-core.git
-#
-# Make your changes, commit them; use 'git format-patch' to create a series
-# of patches and send those to the following address via 'git send-email':
-#   grml-etc-core@grml.org
-#
-# Doing so makes sure the right people get your patches for review and
-# possibly inclusion.
-
-# zsh-refcard-tag documentation: {{{
-#   You may notice strange looking comments in this file.
-#   These are there for a purpose. grml's zsh-refcard can now be
-#   automatically generated from the contents of the actual configuration
-#   file. However, we need a little extra information on which comments
-#   and what lines of code to take into account (and for what purpose).
-#
-# Here is what they mean:
-#
-# List of tags (comment types) used:
-#   #a#     Next line contains an important alias, that should
-#           be included in the grml-zsh-refcard.
-#           (placement tag: @@INSERT-aliases@@)
-#   #f#     Next line contains the beginning of an important function.
-#           (placement tag: @@INSERT-functions@@)
-#   #v#     Next line contains an important variable.
-#           (placement tag: @@INSERT-variables@@)
-#   #k#     Next line contains an important keybinding.
-#           (placement tag: @@INSERT-keybindings@@)
-#   #d#     Hashed directories list generation:
-#               start   denotes the start of a list of 'hash -d'
-#                       definitions.
-#               end     denotes its end.
-#           (placement tag: @@INSERT-hasheddirs@@)
-#   #A#     Abbreviation expansion list generation:
-#               start   denotes the beginning of abbreviations.
-#               end     denotes their end.
-#           Lines within this section that end in '#d .*' provide
-#           extra documentation to be included in the refcard.
-#           (placement tag: @@INSERT-abbrev@@)
-#   #m#     This tag allows you to manually generate refcard entries
-#           for code lines that are hard/impossible to parse.
-#               Example:
-#                   #m# k ESC-h Call the run-help function
-#               That would add a refcard entry in the keybindings table
-#               for 'ESC-h' with the given comment.
-#           So the syntax is: #m# <section> <argument> <comment>
-#   #o#     This tag lets you insert entries to the 'other' hash.
-#           Generally, this should not be used. It is there for
-#           things that cannot be done easily in another way.
-#           (placement tag: @@INSERT-other-foobar@@)
-#
-#   All of these tags (except for m and o) take two arguments, the first
-#   within the tag, the other after the tag:
-#
-#   #<tag><section># <comment>
-#
-#   Where <section> is really just a number, which are defined by the
-#   @secmap array on top of 'genrefcard.pl'. The reason for numbers
-#   instead of names is, that for the reader, the tag should not differ
-#   much from a regular comment. For zsh, it is a regular comment indeed.
-#   The numbers have got the following meanings:
-#         0 -> "default"
-#         1 -> "system"
-#         2 -> "user"
-#         3 -> "debian"
-#         4 -> "search"
-#         5 -> "shortcuts"
-#         6 -> "services"
-#
-#   So, the following will add an entry to the 'functions' table in the
-#   'system' section, with a (hopefully) descriptive comment:
-#       #f1# Edit an alias via zle
-#       edalias() {
-#
-#   It will then show up in the @@INSERT-aliases-system@@ replacement tag
-#   that can be found in 'grml-zsh-refcard.tex.in'.
-#   If the section number is omitted, the 'default' section is assumed.
-#   Furthermore, in 'grml-zsh-refcard.tex.in' @@INSERT-aliases@@ is
-#   exactly the same as @@INSERT-aliases-default@@. If you want a list of
-#   *all* aliases, for example, use @@INSERT-aliases-all@@.
-#}}}
-
 # zsh profiling {{{
 # just execute 'ZSH_PROFILE_RC=1 zsh' and run 'zprof' to get the details
 if [[ $ZSH_PROFILE_RC -gt 0 ]] ; then
@@ -150,27 +45,6 @@ is439(){
     return 1
 }
 
-#f1# Checks whether or not you're running grml
-isgrml(){
-    [[ -f /etc/grml_version ]] && return 0
-    return 1
-}
-
-#f1# Checks whether or not you're running a grml cd
-isgrmlcd(){
-    [[ -f /etc/grml_cd ]] && return 0
-    return 1
-}
-
-if isgrml ; then
-#f1# Checks whether or not you're running grml-small
-    isgrmlsmall() {
-        [[ ${${${(f)"$(</etc/grml_version)"}%% *}##*-} == 'small' ]] && return 0 ; return 1
-    }
-else
-    isgrmlsmall() { return 1 }
-fi
-
 isdarwin(){
     [[ $OSTYPE == darwin* ]] && return 0
     return 1
@@ -187,16 +61,6 @@ isutfenv() {
 
 # check for user, if not running as root set $SUDO to sudo
 (( EUID != 0 )) && SUDO='sudo' || SUDO=''
-
-# change directory to home on first invocation of zsh
-# important for rungetty -> autologin
-# Thanks go to Bart Schaefer!
-isgrml && checkhome() {
-    if [[ -z "$ALREADY_DID_CD_HOME" ]] ; then
-        export ALREADY_DID_CD_HOME=$HOME
-        cd
-    fi
-}
 
 # check for zsh v3.1.7+
 
@@ -290,11 +154,7 @@ setopt unset                # don't error out when unset parameters are used
 NOCOR=${NOCOR:-0}
 NOMENU=${NOMENU:-0}
 NOPRECMD=${NOPRECMD:-0}
-COMMAND_NOT_FOUND=${COMMAND_NOT_FOUND:-0}
-GRML_ZSH_CNF_HANDLER=${GRML_ZSH_CNF_HANDLER:-/usr/share/command-not-found/command-not-found}
 BATTERY=${BATTERY:-0}
-GRMLSMALL_SPECIFIC=${GRMLSMALL_SPECIFIC:-1}
-GRML_ALWAYS_LOAD_ALL=${GRML_ALWAYS_LOAD_ALL:-0}
 ZSH_NO_DEFAULT_LOCALE=${ZSH_NO_DEFAULT_LOCALE:-0}
 
 # }}}
@@ -473,19 +333,9 @@ TZ=$(xcat /etc/timezone)
 # }}}
 
 # {{{ set some variables
-if check_com -c vim ; then
-#v#
-    export EDITOR=${EDITOR:-vim}
-else
-    export EDITOR=${EDITOR:-vi}
-fi
-
-#v#
+export EDITOR=${EDITOR:-vim}
 export PAGER=${PAGER:-less}
-
-#v#
 export MAIL=${MAIL:-/var/mail/$USER}
-
 # if we don't set $SHELL then aterm, rxvt,.. will use /bin/sh or /bin/bash :-/
 export SHELL='/bin/zsh'
 
@@ -494,20 +344,10 @@ check_com -c dircolors && eval $(dircolors -b)
 # color setup for ls on OS X:
 isdarwin && export CLICOLOR=1
 
-# do MacPorts setup on darwin
-if isdarwin && [[ -d /opt/local ]]; then
-    # Note: PATH gets set in /etc/zprofile on Darwin, so this can't go into
-    # zshenv.
-    PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-    MANPATH="/opt/local/share/man:$MANPATH"
-fi
-# do Fink setup on darwin
-isdarwin && xsource /sw/bin/init.sh
-
 # load our function and completion directories
-for fdir in /usr/share/grml/zsh/completion /usr/share/grml/zsh/functions; do
+for fdir in ~/.zsh/completion ~/.zsh/functions; do
     fpath=( ${fdir} ${fdir}/**/*(/N) ${fpath} )
-    if [[ ${fpath} == '/usr/share/grml/zsh/functions' ]] ; then
+    if [[ ${fpath} == '~/.zsh/functions' ]] ; then
         for func in ${fdir}/**/[^_]*[^~](N.) ; do
             zrcautoload ${func:t}
         done
@@ -526,7 +366,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 MAILCHECK=30       # mailchecks
 REPORTTIME=5       # report about cpu-/system-/user-time of command if running longer than 5 seconds
-watch=(notme root) # watch for everyone but me and root
+watch=(${USER} root) # watch for everyone but me and root
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
@@ -653,17 +493,6 @@ fi
 #                 0 - enabled (default)
 #                 1 - disabled
 NOABBREVIATION=${NOABBREVIATION:-0}
-
-grml_toggle_abbrev() {
-    if (( ${NOABBREVIATION} > 0 )) ; then
-        NOABBREVIATION=0
-    else
-        NOABBREVIATION=1
-    fi
-}
-
-zle -N grml_toggle_abbrev
-bindkey '^xA' grml_toggle_abbrev
 
 # add a command line to the shells history without executing it
 commit-to-history() {
@@ -977,20 +806,6 @@ zle -N insert-last-typed-word;
 #k# Insert last typed word
 bindkey "\em" insert-last-typed-word
 
-function grml-zsh-fg() {
-  if (( ${#jobstates} )); then
-    zle .push-input
-    [[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
-    BUFFER="${BUFFER}fg"
-    zle .accept-line
-  else
-    zle -M 'No background jobs. Doing nothing.'
-  fi
-}
-zle -N grml-zsh-fg
-#k# A smart shortcut for \kbd{fg<enter>}
-bindkey '^z' grml-zsh-fg
-
 # run command line as user root via sudo:
 sudo-command-line() {
     [[ -z $BUFFER ]] && zle up-history
@@ -1064,8 +879,8 @@ ZSHDIR=$HOME/.zsh
 
 #v#
 HISTFILE=$HOME/.zsh_history
-isgrmlcd && HISTSIZE=500  || HISTSIZE=5000
-isgrmlcd && SAVEHIST=1000 || SAVEHIST=10000 # useful for setopt append_history
+HISTSIZE=5000
+SAVEHIST=10000 # useful for setopt append_history
 
 # }}}
 
@@ -1346,27 +1161,16 @@ fi
 if [[ "$TERM" == dumb ]] ; then
     PROMPT="${EXITCODE}${debian_chroot:+($debian_chroot)}%n@%m %40<...<%B%~%b%<< "
 else
-    # only if $GRMLPROMPT is set (e.g. via 'GRMLPROMPT=1 zsh') use the extended prompt
-    # set variable identifying the chroot you work in (used in the prompt below)
-    if [[ $GRMLPROMPT -gt 0 ]] ; then
-        PROMPT="${RED}${EXITCODE}${CYAN}[%j running job(s)] ${GREEN}{history#%!} ${RED}%(3L.+.) ${BLUE}%* %D
-${BLUE}%n${NO_COLOUR}@%m %40<...<%B%~%b%<< "
-    else
-        # This assembles the primary prompt string
-        if (( EUID != 0 )); then
-            PROMPT="${RED}${EXITCODE}${WHITE}${debian_chroot:+($debian_chroot)}${BLUE}%n${NO_COLOUR}@%m %40<...<%B%~%b%<< "
-        else
-            PROMPT="${BLUE}${EXITCODE}${WHITE}${debian_chroot:+($debian_chroot)}${RED}%n${NO_COLOUR}@%m %40<...<%B%~%b%<< "
-        fi
-    fi
+  # This assembles the primary prompt string
+  if (( EUID != 0 )); then
+      PROMPT="${RED}${EXITCODE}${WHITE}${debian_chroot:+($debian_chroot)}${BLUE}%n${NO_COLOUR}@%m %40<...<%B%~%b%<< "
+  else
+      PROMPT="${BLUE}${EXITCODE}${WHITE}${debian_chroot:+($debian_chroot)}${RED}%n${NO_COLOUR}@%m %40<...<%B%~%b%<< "
+  fi
 fi
 
 PROMPT="${PROMPT}"'${vcs_info_msg_0_}'"%# "
 
-# if we are inside a grml-chroot set a specific prompt theme
-if [[ -n "$GRML_CHROOT" ]] ; then
-    PROMPT="%{$fg[red]%}(CHROOT) %{$fg_bold[red]%}%n%{$fg_no_bold[white]%}@%m %40<...<%B%~%b%<< %\# "
-fi
 # }}}
 
 # {{{ some aliases
@@ -1446,76 +1250,6 @@ if check_com -c truecrypt ; then
     fi
 fi
 
-#f1# Hints for the use of zsh on grml
-zsh-help() {
-    print "$bg[white]$fg[black]
-zsh-help - hints for use of zsh on grml
-=======================================$reset_color"
-
-    print '
-Main configuration of zsh happens in /etc/zsh/zshrc.
-That file is part of the package grml-etc-core, if you want to
-use them on a non-grml-system just get the tar.gz from
-http://deb.grml.org/ or (preferably) get it from the git repository:
-
-  http://git.grml.org/f/grml-etc-core/etc/zsh/zshrc
-
-This version of grml'\''s zsh setup does not use skel/.zshrc anymore.
-The file is still there, but it is empty for backwards compatibility.
-
-For your own changes use these two files:
-    $HOME/.zshrc.pre
-    $HOME/.zshrc.local
-
-The former is sourced very early in our zshrc, the latter is sourced
-very lately.
-
-System wide configuration without touching configuration files of grml
-can take place in /etc/zsh/zshrc.local.
-
-Normally, the root user (EUID == 0) does not get the whole grml setup.
-If you want to force the whole setup for that user, too, set
-GRML_ALWAYS_LOAD_ALL=1 in .zshrc.pre in root'\''s home directory.
-
-For information regarding zsh start at http://grml.org/zsh/
-
-Take a look at grml'\''s zsh refcard:
-% xpdf =(zcat /usr/share/doc/grml-docs/zsh/grml-zsh-refcard.pdf.gz)
-
-Check out the main zsh refcard:
-% '$BROWSER' http://www.bash2zsh.com/zsh_refcard/refcard.pdf
-
-And of course visit the zsh-lovers:
-% man zsh-lovers
-
-You can adjust some options through environment variables when
-invoking zsh without having to edit configuration files.
-Basically meant for bash users who are not used to the power of
-the zsh yet. :)
-
-  "NOCOR=1    zsh" => deactivate automatic correction
-  "NOMENU=1   zsh" => do not use auto menu completion (note: use ctrl-d for completion instead!)
-  "NOPRECMD=1 zsh" => disable the precmd + preexec commands (set GNU screen title)
-  "NOTITLE=1  zsh" => disable setting the title of xterms without disabling
-                      preexec() and precmd() completely
-  "BATTERY=1  zsh" => activate battery status (via acpi) on right side of prompt
-  "COMMAND_NOT_FOUND=1 zsh"
-                   => Enable a handler if an external command was not found
-                      The command called in the handler can be altered by setting
-                      the GRML_ZSH_CNF_HANDLER variable, the default is:
-                      "/usr/share/command-not-found/command-not-found"
-
-A value greater than 0 is enables a feature; a value equal to zero
-disables it. If you like one or the other of these settings, you can
-add them to ~/.zshrc.pre to ensure they are set when sourcing grml'\''s
-zshrc.'
-
-    print "
-$bg[white]$fg[black]
-Please report wishes + bugs to the grml-team: http://grml.org/bugs/
-Enjoy your grml system with the zsh!$reset_color"
-}
-
 # sort installed Debian-packages by size
 if check_com -c grep-status ; then
     #a3# List installed Debian-packages sorted by size
@@ -1526,7 +1260,6 @@ fi
 # {{{ Use hard limits, except for a smaller stack and no core dumps
 unlimit
 is425 && limit stack 8192
-isgrmlcd && limit core 0 # important for a live-cd-system
 limit -s
 # }}}
 
@@ -1687,40 +1420,7 @@ grmlcomp() {
     # see upgrade function in this file
     compdef _hosts upgrade
 }
-# }}}
-
-# {{{ grmlstuff
-grmlstuff() {
-# people should use 'grml-x'!
-    if check_com -c 915resolution; then
-        855resolution() {
-            echo "Please use 915resolution as resolution modifying tool for Intel \
-graphic chipset."
-            return -1
-        }
-    fi
-
-    #a1# Output version of running grml
-    alias grml-version='cat /etc/grml_version'
-
-    if check_com -c rebuildfstab ; then
-        #a1# Rebuild /etc/fstab
-        alias grml-rebuildfstab='rebuildfstab -v -r -config'
-    fi
-
-    if check_com -c grml-debootstrap ; then
-        debian2hd() {
-            echo "Installing debian to harddisk is possible by using grml-debootstrap."
-            return 1
-        }
-    fi
-}
-# }}}
-
-# {{{ now run the functions
-isgrml && checkhome
-is4    && isgrml    && grmlstuff
-is4    && grmlcomp
+is4 && grmlcomp
 # }}}
 
 # {{{ keephack
@@ -2172,62 +1872,7 @@ bk() {
     cp -a "$1" "${1}_$(date --iso-8601=seconds)"
 }
 
-#f1# grep for patterns in grml's zsh setup
-zg() {
-#{{{
-    LANG=C perl -e '
-
-sub usage {
-    print "usage: zg -[anr] <pattern>\n";
-    print " Search for patterns in grml'\''s zshrc.\n";
-    print " zg takes no or exactly one option plus a non empty pattern.\n\n";
-    print "   options:\n";
-    print "     --  no options (use if your pattern starts in with a dash.\n";
-    print "     -a  search for the pattern in all code regions\n";
-    print "     -n  search for the pattern in non-root code only\n";
-    print "     -r  search in code for everyone (also root) only\n\n";
-    print "   The default is -a for non-root users and -r for root.\n\n";
-    print " If you installed the zshrc to a non-default locations (ie *NOT*\n";
-    print " in /etc/zsh/zshrc) do: export GRML_ZSHRC=\$HOME/.zshrc\n";
-    print " ...in case you copied the file to that location.\n\n";
-    exit 1;
-}
-
-if ($ENV{GRML_ZSHRC} ne "") {
-    $RC = $ENV{GRML_ZSHRC};
-} else {
-    $RC = "/etc/zsh/zshrc";
-}
-
-usage if ($#ARGV < 0 || $#ARGV > 1);
-if ($> == 0) { $mode = "allonly"; }
-else { $mode = "all"; }
-
-$opt = $ARGV[0];
-if ($opt eq "--")     { shift; }
-elsif ($opt eq "-a")  { $mode = "all"; shift; }
-elsif ($opt eq "-n")  { $mode = "nonroot"; shift; }
-elsif ($opt eq "-r" ) { $mode = "allonly"; shift; }
-elsif ($opt =~ m/^-/ || $#ARGV > 0) { usage(); }
-
-$pattern = $ARGV[0];
-usage() if ($pattern eq "");
-
-open FH, "<$RC" or die "zg: Could not open $RC: $!\n";
-while ($line = <FH>) {
-    chomp $line;
-    if ($line =~ m/^#:grep:marker:for:mika:/) { $markerfound = 1; next; }
-    next if ($mode eq "nonroot" && markerfound == 0);
-    break if ($mode eq "allonly" && markerfound == 1);
-    print $line, "\n" if ($line =~ /$pattern/);
-}
-close FH;
-exit 0;
-
-    ' -- "$@"
 #}}}
-    return $?
-}
 
 ssl_hashes=( sha512 sha256 sha1 md5 )
 
@@ -2283,11 +1928,6 @@ zrcautoload lookupinit && lookupinit
 #:grep:marker:for:mika: :-)
 ### non-root (EUID != 0) code below
 ###
-
-if (( GRML_ALWAYS_LOAD_ALL == 0 )) && (( $EUID == 0 )) ; then
-    zrclocal
-    return 0
-fi
 
 # variables {{{
 
@@ -3151,64 +2791,6 @@ whatwhen()  {
         ;;
     esac
 # }}}
-}
-
-# mercurial related stuff {{{
-if check_com -c hg ; then
-    # gnu like diff for mercurial
-    # http://www.selenic.com/mercurial/wiki/index.cgi/TipsAndTricks
-    #f5# GNU like diff for mercurial
-    hgdi() {
-        emulate -L zsh
-        for i in $(hg status -marn "$@") ; diff -ubwd <(hg cat "$i") "$i"
-    }
-
-    # build debian package
-    #a2# Alias for \kbd{hg-buildpackage}
-    alias hbp='hg-buildpackage'
-
-    # execute commands on the versioned patch-queue from the current repos
-    alias mq='hg -R $(readlink -f $(hg root)/.hg/patches)'
-
-    # diffstat for specific version of a mercurial repository
-    #   hgstat      => display diffstat between last revision and tip
-    #   hgstat 1234 => display diffstat between revision 1234 and tip
-    #f5# Diffstat for specific version of a mercurial repos
-    hgstat() {
-        emulate -L zsh
-        [[ -n "$1" ]] && hg diff -r $1 -r tip | diffstat || hg export tip | diffstat
-    }
-
-fi # end of check whether we have the 'hg'-executable
-
-# }}}
-
-# grml-small cleanups {{{
-
-# The following is used to remove zsh-config-items that do not work
-# in grml-small by default.
-# If you do not want these adjustments (for whatever reason), set
-# $GRMLSMALL_SPECIFIC to 0 in your .zshrc.pre file (which this configuration
-# sources if it is there).
-
-if (( GRMLSMALL_SPECIFIC > 0 )) && isgrmlsmall ; then
-
-    unset abk[V]
-    unalias    'V'      &> /dev/null
-    unfunction vman     &> /dev/null
-    unfunction viless   &> /dev/null
-    unfunction 2html    &> /dev/null
-
-    # manpages are not in grmlsmall
-    unfunction manzsh   &> /dev/null
-    unfunction man2     &> /dev/null
-
-fi
-
-#}}}
-
-urlenc () {
-  echo -n "$@" | perl -pe's/([^-_.~A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg'
 }
 
 # Open argument in Dash
