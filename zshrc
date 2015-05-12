@@ -474,7 +474,7 @@ bindkey "\e[6~" history-beginning-search-forward-end  # PageDown
 # bindkey -s '^B' " &\n"                # ctrl-B runs it in the background
 
 # insert unicode character
-# usage example: 'ctrl-x i' 00A7 'ctrl-x i' will give you an ง
+# usage example: 'ctrl-x i' 00A7 'ctrl-x i' will give you an ยง
 # See for example http://unicode.org/charts/ for unicode characters code
 zrcautoload insert-unicode-char
 zle -N insert-unicode-char
