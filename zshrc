@@ -2809,3 +2809,5 @@ zrclocal
 # Local variables:
 # mode: sh
 # End:
+
+source /Users/aeg/.iterm2_shell_integration.zsh
