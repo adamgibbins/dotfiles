@@ -16,6 +16,7 @@ application/pdf; ~/.mutt/view_attachment.sh %s pdf
 #text/html; ~/.mutt/view_attachment.sh %s html
 text/html; w3m %s; nametemplate=%s.html
 text/html; w3m -dump %s; nametemplate=%s.html; copiousoutput
+message/rfc822; w3m -dump %s; nametemplate=%s.html; copiousoutput
 
 text/plain; less
 
