@@ -239,6 +239,8 @@ function dri() { docker rmi $(docker images -q); }
 function db() { docker build -t="$1" .; }
 function dssh { sudo lxc-attach -n $(docker ps -notrunc -q | awk "NR == ${1:-1}"); };
 
+eval "$(hub alias -s)"
+
 source ~/.zsh/antigen.zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
 ## END OF FILE #################################################################
