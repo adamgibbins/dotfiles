@@ -139,3 +139,6 @@
 [submodule "config/nvim/bundle/pathogen"]
 	path = config/nvim/bundle/pathogen
 	url = git://github.com/tpope/vim-pathogen.git
+[submodule "config/nvim/bundle/fugitive"]
+	path = config/nvim/bundle/fugitive
+	url = git://github.com/tpope/vim-fugitive.git
