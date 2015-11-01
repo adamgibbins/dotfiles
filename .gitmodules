@@ -130,3 +130,12 @@
 [submodule "vim/bundle/indentline"]
 	path = vim/bundle/indentline
 	url = https://github.com/Yggdroot/indentLine.git
+[submodule "vim/bundle/vim-superman"]
+	path = vim/bundle/vim-superman
+	url = https://github.com/jez/vim-superman.git
+[submodule "config/nvim/bundle/sensible"]
+	path = config/nvim/bundle/sensible
+	url = git://github.com/tpope/vim-sensible.git
+[submodule "config/nvim/bundle/pathogen"]
+	path = config/nvim/bundle/pathogen
+	url = git://github.com/tpope/vim-pathogen.git
