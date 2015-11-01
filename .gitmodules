@@ -142,3 +142,9 @@
 [submodule "config/nvim/bundle/fugitive"]
 	path = config/nvim/bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
+[submodule "config/nvim/bundle/molokai"]
+	path = config/nvim/bundle/molokai
+	url = git://github.com/tomasr/molokai.git
+[submodule "config/nvim/bundle/lightline"]
+	path = config/nvim/bundle/lightline
+	url = git://github.com/itchyny/lightline.vim.git
