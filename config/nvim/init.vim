@@ -13,6 +13,13 @@ colorscheme molokai
 
 set noshowmode " Lightline includes the mode, stop the duplicate info
 set spelllang=en_gb
+set colorcolumn=121
+
+set expandtab
+set shiftwidth=2
+set shiftround
+set tabstop=2
+set softtabstop=2
 
 set directory=~/.config/nvim/swap
 set backupdir=~/.config/nvim/backup
