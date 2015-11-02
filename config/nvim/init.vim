@@ -15,6 +15,11 @@ set noshowmode " Lightline includes the mode, stop the duplicate info
 set spelllang=en_gb
 set colorcolumn=121
 
+set encoding=utf-8
+set fileencoding=utf-8
+set termencoding=utf-8
+set fileformats=unix,dos,mac
+
 set expandtab
 set shiftwidth=2
 set shiftround
