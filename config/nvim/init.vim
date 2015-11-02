@@ -14,6 +14,7 @@ colorscheme molokai
 set noshowmode " Lightline includes the mode, stop the duplicate info
 set spelllang=en_gb
 set colorcolumn=121
+set shortmess=atTI
 
 set encoding=utf-8
 set fileencoding=utf-8
