@@ -1,5 +1,7 @@
 runtime bundle/pathogen/autoload/pathogen.vim
 execute pathogen#infect()
+call pathogen#helptags()
+
 source /usr/local/Cellar/fzf/0.10.8/plugin/fzf.vim
 
 syntax on
