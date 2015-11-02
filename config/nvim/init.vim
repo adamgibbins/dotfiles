@@ -8,7 +8,12 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
 colorscheme molokai
 
-set noshowmode
+set noshowmode " Lightline includes the mode, stop the duplicate info
+set spelllang=en_gb
+
+let mapleader=','
+let maplocalleader=','
+map <leader>ss :setlocal spell!<cr>
 
 let g:lightline =
   \ {
