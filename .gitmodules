@@ -157,3 +157,6 @@
 [submodule "config/nvim/bundle/ledger"]
 	path = config/nvim/bundle/ledger
 	url = git://github.com/ledger/vim-ledger
+[submodule "config/nvim/bundle/neomake"]
+	path = config/nvim/bundle/neomake
+	url = git://github.com/benekastah/neomake.git
