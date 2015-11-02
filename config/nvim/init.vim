@@ -27,6 +27,9 @@ set shiftround
 set tabstop=2
 set softtabstop=2
 
+set ignorecase " Ignore case when searching
+set smartcase  " Don't ignore case when searching, if upper-case chars are used
+
 set directory=~/.config/nvim/swap
 set backupdir=~/.config/nvim/backup
 
