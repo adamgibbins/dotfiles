@@ -1,5 +1,6 @@
 bash_aliases
 bashrc
+config/nvim
 digrc
 gemrc
 gitconfig
