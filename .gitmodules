@@ -148,3 +148,6 @@
 [submodule "config/nvim/bundle/lightline"]
 	path = config/nvim/bundle/lightline
 	url = git://github.com/itchyny/lightline.vim.git
+[submodule "config/nvim/bundle/fzf"]
+	path = config/nvim/bundle/fzf
+	url = git://github.com/junegunn/fzf.vim.git

@@ -1,5 +1,6 @@
 runtime bundle/pathogen/autoload/pathogen.vim
 execute pathogen#infect()
+source /usr/local/Cellar/fzf/0.10.8/plugin/fzf.vim
 
 syntax on
 filetype plugin indent on
@@ -14,6 +15,7 @@ set spelllang=en_gb
 let mapleader=','
 let maplocalleader=','
 map <leader>ss :setlocal spell!<cr>
+map <leader>, :FZF<cr>
 
 let g:lightline =
   \ {
