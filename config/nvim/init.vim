@@ -15,6 +15,8 @@ set noshowmode " Lightline includes the mode, stop the duplicate info
 set spelllang=en_gb
 set colorcolumn=121
 set shortmess=atTI
+set scrolloff=5 " Keep 5 lines above/below when scrolling
+set sidescrolloff=5 " Keep 5 lines left/right when scrolling
 
 set encoding=utf-8
 set fileencoding=utf-8
