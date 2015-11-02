@@ -34,6 +34,8 @@ let mapleader=','
 let maplocalleader=','
 map <leader>ss :setlocal spell!<cr>
 map <leader>, :FZF<cr>
+map <leader>tt :Tags<cr>
+map <leader>tn :tabnew<cr>
 
 autocmd! BufWritePost * Neomake
 
