@@ -12,6 +12,9 @@ colorscheme molokai
 set noshowmode " Lightline includes the mode, stop the duplicate info
 set spelllang=en_gb
 
+set directory=~/.config/nvim/swap
+set backupdir=~/.config/nvim/backup
+
 let mapleader=','
 let maplocalleader=','
 map <leader>ss :setlocal spell!<cr>
