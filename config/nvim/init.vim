@@ -35,6 +35,8 @@ let maplocalleader=','
 map <leader>ss :setlocal spell!<cr>
 map <leader>, :FZF<cr>
 
+autocmd! BufWritePost * Neomake
+
 let g:lightline =
   \ {
   \   'colorscheme': 'wombat',
