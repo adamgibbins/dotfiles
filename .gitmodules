@@ -160,3 +160,6 @@
 [submodule "config/nvim/bundle/neomake"]
 	path = config/nvim/bundle/neomake
 	url = git://github.com/benekastah/neomake.git
+[submodule "config/nvim/bundle/gutentags"]
+	path = config/nvim/bundle/gutentags
+	url = git://github.com/ludovicchabant/vim-gutentags
