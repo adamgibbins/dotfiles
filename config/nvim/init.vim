@@ -17,6 +17,7 @@ set colorcolumn=121
 set shortmess+=atTI
 set scrolloff=5 " Keep 5 lines above/below when scrolling
 set sidescrolloff=5 " Keep 5 lines left/right when scrolling
+set showbreak=↪
 
 set encoding=utf-8
 set fileencoding=utf-8
