@@ -19,6 +19,7 @@ set scrolloff=5 " Keep 5 lines above/below when scrolling
 set sidescrolloff=5 " Keep 5 lines left/right when scrolling
 set showbreak=↪
 set updatetime=1000 " Makes gitgutter update quicker
+set formatoptions+=tcqanj
 
 set encoding=utf-8
 set fileencoding=utf-8
