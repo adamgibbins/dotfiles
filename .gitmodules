@@ -163,3 +163,6 @@
 [submodule "config/nvim/bundle/gutentags"]
 	path = config/nvim/bundle/gutentags
 	url = git://github.com/ludovicchabant/vim-gutentags
+[submodule "config/nvim/bundle/gitgutter"]
+	path = config/nvim/bundle/gitgutter
+	url = git://github.com/airblade/vim-gitgutter.git
