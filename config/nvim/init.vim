@@ -21,6 +21,7 @@ set showbreak=↪
 set updatetime=1000 " Makes gitgutter update quicker
 set formatoptions+=tcqnj
 set hidden
+set shada+='50
 
 set encoding=utf-8
 set fileencoding=utf-8
