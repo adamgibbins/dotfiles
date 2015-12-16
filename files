@@ -5,6 +5,7 @@ digrc
 gemrc
 gitconfig
 gitignore
+gnupg/gpg.conf
 msmtprc
 mutt
 muttrc
