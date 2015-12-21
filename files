@@ -2,6 +2,7 @@ bash_aliases
 bashrc
 config/nvim
 digrc
+doingrc
 gemrc
 gitconfig
 gitignore
