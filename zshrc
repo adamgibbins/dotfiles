@@ -159,6 +159,18 @@ ZSH_NO_DEFAULT_LOCALE=${ZSH_NO_DEFAULT_LOCALE:-0}
 
 # }}}
 
+source ~/.zsh/antigen.zsh
+antigen bundle brew
+antigen bundle bundler
+antigen bundle docker
+antigen bundle jamesob/desk
+antigen bundle mosh
+antigen bundle nmap
+antigen bundle rake-fast
+antigen bundle taskwarrior
+antigen bundle vagrant
+antigen bundle zsh-users/zsh-syntax-highlighting
+
 # utility functions {{{
 # this function checks if a command exists and returns either true
 # or false. This avoids using 'which' and 'whence', which will
