@@ -2807,11 +2807,11 @@ whatwhen()  {
 
 # Open argument in Dash
 function dash() {
-	open "dash://$(urlenc $@)"
+	open "dash://$(urlencode $@)"
 }
 
 function dman() {
-	open "dash://man:$(urlenc $@)"
+	open "dash://man:$(urlencode $@)"
 }
 
 zrclocal
