@@ -2,7 +2,7 @@ runtime bundle/pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 call pathogen#helptags()
 
-source /usr/local/Cellar/fzf/0.10.8/plugin/fzf.vim
+source /usr/local/opt/fzf/plugin/fzf.vim
 
 syntax on
 filetype plugin indent on
