@@ -12,13 +12,9 @@ mutt
 muttrc
 offlineimaprc
 profile
-screenrc
 tmux
 tmux.conf
 urlview
-vim
-vim_runtime
-vimrc
 zsh
 zshrc
 zshrc.local
