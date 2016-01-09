@@ -43,3 +43,6 @@
 [submodule "config/nvim/bundle/gitgutter"]
 	path = config/nvim/bundle/gitgutter
 	url = git://github.com/airblade/vim-gitgutter.git
+[submodule "config/nvim/bundle/vim-sleuth"]
+	path = config/nvim/bundle/vim-sleuth
+	url = https://github.com/tpope/vim-sleuth.git
