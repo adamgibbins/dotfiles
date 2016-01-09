@@ -323,20 +323,6 @@ zrclocal() {
 
 #}}}
 
-# locale setup {{{
-if (( ZSH_NO_DEFAULT_LOCALE == 0 )); then
-    xsource "/etc/default/locale"
-fi
-
-for var in LANG LC_ALL LC_MESSAGES ; do
-    [[ -n ${(P)var} ]] && export $var
-done
-
-xsource "/etc/sysconfig/keyboard"
-
-TZ=$(xcat /etc/timezone)
-# }}}
-
 # {{{ set some variables
 export EDITOR=${EDITOR:-vim}
 export PAGER=${PAGER:-less}
@@ -1179,20 +1165,6 @@ PROMPT="${PROMPT}"'${vcs_info_msg_0_}'"%# "
 # }}}
 
 # {{{ some aliases
-if check_com -c screen ; then
-    if [[ $UID -eq 0 ]] ; then
-        [[ -r /etc/grml/screenrc ]] && alias screen="${commands[screen]} -c /etc/grml/screenrc"
-    elif [[ -r $HOME/.screenrc ]] ; then
-        alias screen="${commands[screen]} -c $HOME/.screenrc"
-    else
-        if [[ -r /etc/grml/screenrc_grml ]]; then
-            alias screen="${commands[screen]} -c /etc/grml/screenrc_grml"
-        else
-            [[ -r /etc/grml/screenrc ]] && alias screen="${commands[screen]} -c /etc/grml/screenrc"
-        fi
-    fi
-fi
-
 # do we have GNU ls with color-support?
 if ls --help 2>/dev/null | grep -- --color= >/dev/null && [[ "$TERM" != dumb ]] ; then
     #a1# execute \kbd{@a@}:\quad ls with colors
@@ -1215,11 +1187,6 @@ fi
 
 alias ...='cd ../../'
 
-# generate alias named "$KERNELVERSION-reboot" so you can use boot with kexec:
-if [[ -x /sbin/kexec ]] && [[ -r /proc/cmdline ]] ; then
-    alias "$(uname -r)-reboot"="kexec -l --initrd=/boot/initrd.img-"$(uname -r)" --command-line=\"$(cat /proc/cmdline)\" /boot/vmlinuz-"$(uname -r)""
-fi
-
 alias cp='nocorrect cp'         # no spelling correction on cp
 alias mkdir='nocorrect mkdir'   # no spelling correction on mkdir
 alias mv='nocorrect mv'         # no spelling correction on mv
@@ -1230,36 +1197,8 @@ alias rd='rmdir'
 #a1# Execute \kbd{mkdir}
 alias md='mkdir'
 
-# I like clean prompt, so provide simple way to get that
-check_com 0 || alias 0='return 0'
-
-# for really lazy people like mika:
-check_com S &>/dev/null || alias S='screen'
-check_com s &>/dev/null || alias s='ssh'
-
-# especially for roadwarriors using GNU screen and ssh:
-if ! check_com asc &>/dev/null ; then
-  asc() { autossh -t "$@" 'screen -RdU' }
-  compdef asc=ssh
-fi
-
 # get top 10 shell commands:
 alias top10='print -l ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
-
-# truecrypt; use e.g. via 'truec /dev/ice /mnt/ice' or 'truec -i'
-if check_com -c truecrypt ; then
-    if isutfenv ; then
-        alias truec='truecrypt --mount-options "rw,sync,dirsync,users,uid=1000,gid=users,umask=077,utf8" '
-    else
-        alias truec='truecrypt --mount-options "rw,sync,dirsync,users,uid=1000,gid=users,umask=077" '
-    fi
-fi
-
-# sort installed Debian-packages by size
-if check_com -c grep-status ; then
-    #a3# List installed Debian-packages sorted by size
-    alias debs-by-size='grep-status -FStatus -sInstalled-Size,Package -n "install ok installed" | paste -sd "  \n" | sort -rn'
-fi
 # }}}
 
 # {{{ Use hard limits, except for a smaller stack and no core dumps
@@ -1428,10 +1367,6 @@ grmlcomp() {
 is4 && grmlcomp
 # }}}
 
-# {{{ keephack
-is4 && xsource "/etc/zsh/keephack"
-# }}}
-
 # {{{ wonderful idea of using "e" glob qualifier by Peter Stephenson
 # You use it as follows:
 # $ NTREF=/reference/file
@@ -1456,85 +1391,6 @@ setenv()  { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 compdef _functions freload
 
-#f1# List symlinks in detail (more detailed version of 'readlink -f' and 'whence -s')
-sll() {
-    [[ -z "$1" ]] && printf 'Usage: %s <file(s)>\n' "$0" && return 1
-    for file in "$@" ; do
-        while [[ -h "$file" ]] ; do
-            ls -l $file
-            file=$(readlink "$file")
-        done
-    done
-}
-
-# fast manual access
-if check_com qma ; then
-    #f1# View the zsh manual
-    manzsh()  { qma zshall "$1" }
-    compdef _man qma
-else
-    manzsh()  { /usr/bin/man zshall |  vim -c "se ft=man| se hlsearch" +/"$1" - ; }
-fi
-
-# TODO: Is it supported to use pager settings like this?
-#   PAGER='less -Mr' - If so, the use of $PAGER here needs fixing
-# with respect to wordsplitting. (ie. ${=PAGER})
-if check_com -c $PAGER ; then
-    #f1# View Debian's changelog of a given package
-    dchange() {
-        emulate -L zsh
-        if [[ -r /usr/share/doc/$1/changelog.Debian.gz ]] ; then
-            $PAGER /usr/share/doc/$1/changelog.Debian.gz
-        elif [[ -r /usr/share/doc/$1/changelog.gz ]] ; then
-            $PAGER /usr/share/doc/$1/changelog.gz
-        else
-            if check_com -c aptitude ; then
-                echo "No changelog for package $1 found, using aptitude to retrieve it."
-                if isgrml ; then
-                    aptitude -t unstable changelog $1
-                else
-                    aptitude changelog $1
-                fi
-            else
-                echo "No changelog for package $1 found, sorry."
-                return 1
-            fi
-        fi
-    }
-    _dchange() { _files -W /usr/share/doc -/ }
-    compdef _dchange dchange
-
-    #f1# View Debian's NEWS of a given package
-    dnews() {
-        emulate -L zsh
-        if [[ -r /usr/share/doc/$1/NEWS.Debian.gz ]] ; then
-            $PAGER /usr/share/doc/$1/NEWS.Debian.gz
-        else
-            if [[ -r /usr/share/doc/$1/NEWS.gz ]] ; then
-                $PAGER /usr/share/doc/$1/NEWS.gz
-            else
-                echo "No NEWS file for package $1 found, sorry."
-                return 1
-            fi
-        fi
-    }
-    _dnews() { _files -W /usr/share/doc -/ }
-    compdef _dnews dnews
-
-    #f1# View upstream's changelog of a given package
-    uchange() {
-        emulate -L zsh
-        if [[ -r /usr/share/doc/$1/changelog.gz ]] ; then
-            $PAGER /usr/share/doc/$1/changelog.gz
-        else
-            echo "No changelog for package $1 found, sorry."
-            return 1
-        fi
-    }
-    _uchange() { _files -W /usr/share/doc -/ }
-    compdef _uchange uchange
-fi
-
 # zsh profiling
 profile() {
     ZSH_PROFILE_RC=1 $SHELL "$@"
@@ -1551,90 +1407,6 @@ edfunc() {
     [[ -z "$1" ]] && { echo "Usage: edfunc <function_to_edit>" ; return 1 } || zed -f "$1" ;
 }
 compdef _functions edfunc
-
-# use it e.g. via 'Restart apache2'
-#m# f6 Start() \kbd{/etc/init.d/\em{process}}\quad\kbd{start}
-#m# f6 Restart() \kbd{/etc/init.d/\em{process}}\quad\kbd{restart}
-#m# f6 Stop() \kbd{/etc/init.d/\em{process}}\quad\kbd{stop}
-#m# f6 Reload() \kbd{/etc/init.d/\em{process}}\quad\kbd{reload}
-#m# f6 Force-Reload() \kbd{/etc/init.d/\em{process}}\quad\kbd{force-reload}
-if [[ -d /etc/init.d || -d /etc/service ]] ; then
-    __start_stop() {
-        local action_="${1:l}"  # e.g Start/Stop/Restart
-        local service_="$2"
-        local param_="$3"
-
-        local service_target_="$(readlink /etc/init.d/$service_)"
-        if [[ $service_target_ == "/usr/bin/sv" ]]; then
-            # runit
-            case "${action_}" in
-                start) if [[ ! -e /etc/service/$service_ ]]; then
-                           $SUDO ln -s "/etc/sv/$service_" "/etc/service/"
-                       else
-                           $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
-                       fi ;;
-                # there is no reload in runits sysv emulation
-                reload) $SUDO "/etc/init.d/$service_" "force-reload" "$param_" ;;
-                *) $SUDO "/etc/init.d/$service_" "${action_}" "$param_" ;;
-            esac
-        else
-            # sysvinit
-            $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
-        fi
-    }
-
-    _grmlinitd() {
-        local -a scripts
-        scripts=( /etc/init.d/*(x:t) )
-        _describe "service startup script" scripts
-    }
-
-    for i in Start Restart Stop Force-Reload Reload ; do
-        eval "$i() { __start_stop $i \"\$1\" \"\$2\" ; }"
-        compdef _grmlinitd $i
-    done
-fi
-
-#f1# Provides useful information on globbing
-H-Glob() {
-    echo -e "
-    /      directories
-    .      plain files
-    @      symbolic links
-    =      sockets
-    p      named pipes (FIFOs)
-    *      executable plain files (0100)
-    %      device files (character or block special)
-    %b     block special files
-    %c     character special files
-    r      owner-readable files (0400)
-    w      owner-writable files (0200)
-    x      owner-executable files (0100)
-    A      group-readable files (0040)
-    I      group-writable files (0020)
-    E      group-executable files (0010)
-    R      world-readable files (0004)
-    W      world-writable files (0002)
-    X      world-executable files (0001)
-    s      setuid files (04000)
-    S      setgid files (02000)
-    t      files with the sticky bit (01000)
-
-  print *(m-1)          # Files modified up to a day ago
-  print *(a1)           # Files accessed a day ago
-  print *(@)            # Just symlinks
-  print *(Lk+50)        # Files bigger than 50 kilobytes
-  print *(Lk-50)        # Files smaller than 50 kilobytes
-  print **/*.c          # All *.c files recursively starting in \$PWD
-  print **/*.c~file.c   # Same as above, but excluding 'file.c'
-  print (foo|bar).*     # Files starting with 'foo' or 'bar'
-  print *~*.*           # All Files that do not contain a dot
-  chmod 644 *(.^x)      # make all plain non-executable files publically readable
-  print -l *(.c|.h)     # Lists *.c and *.h
-  print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
-  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
-}
-alias help-zshglob=H-Glob
 
 #v1# set number of lines to display per page
 HELP_LINES_PER_PAGE=20
@@ -1729,234 +1501,19 @@ help_zle_parse_keybindings()
 }
 typeset -g help_zle_sln
 typeset -g -a help_zle_lines
-
-#f1# Provides (partially autogenerated) help on keybindings and the zsh line editor
-help-zle()
-{
-    emulate -L zsh
-    unsetopt ksharrays  #indexing starts at 1
-    #help lines already generated ? no ? then do it
-    [[ ${+functions[help_zle_parse_keybindings]} -eq 1 ]] && {help_zle_parse_keybindings && unfunction help_zle_parse_keybindings}
-    #already displayed all lines ? go back to the start
-    [[ $help_zle_sln -gt ${#help_zle_lines} ]] && help_zle_sln=1
-    local sln=$help_zle_sln
-    #note that help_zle_sln is a global var, meaning we remember the last page we viewed
-    help_zle_sln=$((help_zle_sln + HELP_LINES_PER_PAGE))
-    zle -M "${(F)help_zle_lines[sln,help_zle_sln-1]}"
-}
-#k# display help for keybindings and ZLE (cycle pages with consecutive use)
-zle -N help-zle && bindkey '^Xz' help-zle
-
-check_com -c qma && alias ?='qma zshall'
-
-# grep for running process, like: 'any vim'
-any() {
-    emulate -L zsh
-    unsetopt KSH_ARRAYS
-    if [[ -z "$1" ]] ; then
-        echo "any - grep for process(es) by keyword" >&2
-        echo "Usage: any <keyword>" >&2 ; return 1
-    else
-        ps xauwww | grep -i --color=auto "[${1[1]}]${1[2,-1]}"
-    fi
-}
-
-
-# After resuming from suspend, system is paging heavily, leading to very bad interactivity.
-# taken from $LINUX-KERNELSOURCE/Documentation/power/swsusp.txt
-[[ -r /proc/1/maps ]] && \
-deswap() {
-    print 'Reading /proc/[0-9]*/maps and sending output to /dev/null, this might take a while.'
-    cat $(sed -ne 's:.* /:/:p' /proc/[0-9]*/maps | sort -u | grep -v '^/dev/')  > /dev/null
-    print 'Finished, running "swapoff -a; swapon -a" may also be useful.'
-}
-
-# print hex value of a number
-hex() {
-    emulate -L zsh
-    [[ -n "$1" ]] && printf "%x\n" $1 || { print 'Usage: hex <number-to-convert>' ; return 1 }
-}
-
-# calculate (or eval at all ;-)) with perl => p[erl-]eval
-# hint: also take a look at zcalc -> 'autoload zcalc' -> 'man zshmodules | less -p MATHFUNC'
-peval() {
-    [[ -n "$1" ]] && CALC="$*" || print "Usage: calc [expression]"
-    perl -e "print eval($CALC),\"\n\";"
-}
-functions peval &>/dev/null && alias calc=peval
-
-# just press 'asdf' keys to toggle between dvorak and us keyboard layout
-aoeu() {
-    echo -n 'Switching to us keyboard layout: '
-    [[ -z "$DISPLAY" ]] && $SUDO loadkeys us &>/dev/null || setxkbmap us &>/dev/null
-    echo 'Done'
-}
-asdf() {
-    echo -n 'Switching to dvorak keyboard layout: '
-    [[ -z "$DISPLAY" ]] && $SUDO loadkeys dvorak &>/dev/null || setxkbmap dvorak &>/dev/null
-    echo 'Done'
-}
-# just press 'asdf' key to toggle from neon layout to us keyboard layout
-uiae() {
-    echo -n 'Switching to us keyboard layout: '
-    setxkbmap us && echo 'Done' || echo 'Failed'
-}
-
-# set up an ipv6 tunnel
-ipv6-tunnel() {
-    emulate -L zsh
-    case $1 in
-        start)
-            if ifconfig sit1 2>/dev/null | grep -q 'inet6 addr: 2002:.*:1::1' ; then
-                print 'ipv6 tunnel already set up, nothing to be done.'
-                print 'execute: "ifconfig sit1 down ; ifconfig sit0 down" to remove ipv6-tunnel.' ; return 1
-            else
-                [[ -n "$PUBLIC_IP" ]] || \
-                    local PUBLIC_IP=$(ifconfig $(route -n | awk '/^0\.0\.0\.0/{print $8; exit}') | \
-                                      awk '/inet addr:/ {print $2}' | tr -d 'addr:')
-
-                [[ -n "$PUBLIC_IP" ]] || { print 'No $PUBLIC_IP set and could not determine default one.' ; return 1 }
-                local IPV6ADDR=$(printf "2002:%02x%02x:%02x%02x:1::1" $(print ${PUBLIC_IP//./ }))
-                print -n "Setting up ipv6 tunnel $IPV6ADDR via ${PUBLIC_IP}: "
-                ifconfig sit0 tunnel ::192.88.99.1 up
-                ifconfig sit1 add "$IPV6ADDR" && print done || print failed
-            fi
-            ;;
-        status)
-            if ifconfig sit1 2>/dev/null | grep -q 'inet6 addr: 2002:.*:1::1' ; then
-                print 'ipv6 tunnel available' ; return 0
-            else
-                print 'ipv6 tunnel not available' ; return 1
-            fi
-            ;;
-        stop)
-            if ifconfig sit1 2>/dev/null | grep -q 'inet6 addr: 2002:.*:1::1' ; then
-                print -n 'Stopping ipv6 tunnel (sit0 + sit1): '
-                ifconfig sit1 down ; ifconfig sit0 down && print done || print failed
-            else
-                print 'No ipv6 tunnel found, nothing to be done.' ; return 1
-            fi
-            ;;
-        *)
-            print "Usage: ipv6-tunnel [start|stop|status]">&2 ; return 1
-            ;;
-    esac
-}
-
-# run dhclient for wireless device
-iwclient() {
-    sudo dhclient "$(wavemon -d | awk '/device/{print $3}')"
-}
-
-# spawn a minimally set up mksh - useful if you want to umount /usr/.
-minimal-shell() {
-    emulate -L zsh
-    local shell="/bin/mksh"
-
-    if [[ ! -x ${shell} ]]; then
-        printf '`%s'\'' not available, giving up.\n' ${shell} >&2
-        return 1
-    fi
-
-    exec env -i ENV="/etc/minimal-shellrc" HOME="$HOME" TERM="$TERM" ${shell}
-}
-
-# a wrapper for vim, that deals with title setting
-#   VIM_OPTIONS
-#       set this array to a set of options to vim you always want
-#       to have set when calling vim (in .zshrc.local), like:
-#           VIM_OPTIONS=( -p )
-#       This will cause vim to send every file given on the
-#       commandline to be send to it's own tab (needs vim7).
-vim() {
-    VIM_PLEASE_SET_TITLE='yes' command vim ${VIM_OPTIONS} "$@"
-}
-
-# make a backup of a file
-bk() {
-    cp -a "$1" "${1}_$(date --iso-8601=seconds)"
-}
-
 #}}}
-
-ssl_hashes=( sha512 sha256 sha1 md5 )
-
-for sh in ${ssl_hashes}; do
-    eval 'ssl-cert-'${sh}'() {
-        emulate -L zsh
-        if [[ -z $1 ]] ; then
-            printf '\''usage: %s <file>\n'\'' "ssh-cert-'${sh}'"
-            return 1
-        fi
-        openssl x509 -noout -fingerprint -'${sh}' -in $1
-    }'
-done; unset sh
-
-ssl-cert-fingerprints() {
-    emulate -L zsh
-    local i
-    if [[ -z $1 ]] ; then
-        printf 'usage: ssl-cert-fingerprints <file>\n'
-        return 1
-    fi
-    for i in ${ssl_hashes}
-        do ssl-cert-$i $1;
-    done
-}
-
-ssl-cert-info() {
-    emulate -L zsh
-    if [[ -z $1 ]] ; then
-        printf 'usage: ssl-cert-info <file>\n'
-        return 1
-    fi
-    openssl x509 -noout -text -in $1
-    ssl-cert-fingerprints $1
-}
-
-# }}}
 
 # {{{ make sure our environment is clean regarding colors
 for color in BLUE RED GREEN CYAN YELLOW MAGENTA WHITE ; unset $color
 # }}}
 
-# "persistent history" {{{
-# just write important commands you always need to ~/.important_commands
-if [[ -r ~/.important_commands ]] ; then
-    fc -R ~/.important_commands
-fi
-# }}}
-
 # load the lookup subsystem if it's available on the system
 zrcautoload lookupinit && lookupinit
-
-#:grep:marker:for:mika: :-)
-### non-root (EUID != 0) code below
-###
 
 # variables {{{
 
 # set terminal property (used e.g. by msgid-chooser)
 export COLORTERM="yes"
-
-# set default browser
-if [[ -z "$BROWSER" ]] ; then
-    if [[ -n "$DISPLAY" ]] ; then
-        #v# If X11 is running
-        check_com -c firefox && export BROWSER=firefox
-    else
-        #v# If no X11 is running
-        check_com -c w3m && export BROWSER=w3m
-    fi
-fi
-
-#m# v QTDIR \kbd{/usr/share/qt[34]}\quad [for non-root only]
-[[ -d /usr/share/qt3 ]] && export QTDIR=/usr/share/qt3
-[[ -d /usr/share/qt4 ]] && export QTDIR=/usr/share/qt4
-
-# support running 'jikes *.java && jamvm HelloWorld' OOTB:
-#v# [for non-root only]
-[[ -f /usr/share/classpath/glibj.zip ]] && export JIKESPATH=/usr/share/classpath/glibj.zip
 # }}}
 
 # aliases {{{
@@ -1964,8 +1521,6 @@ fi
 # general
 #a2# Execute \kbd{du -sch}
 alias da='du -sch'
-#a2# Execute \kbd{jobs -l}
-alias j='jobs -l'
 
 # listing stuff
 #a2# Execute \kbd{ls -lSrah}
@@ -2040,11 +1595,6 @@ fi
 
 # useful functions {{{
 # misc
-#f5# Backup \kbd{file {\rm to} file\_timestamp}
-bk() {
-    emulate -L zsh
-    cp -b $1 $1_`date --iso-8601=m`
-}
 #f5# Copied diff
 cdiff() {
     emulate -L zsh
@@ -2087,75 +1637,10 @@ mdiff() {
     diff -udrP "$1" "$2" > diff.`date "+%Y-%m-%d"`."$1"
 }
 
-#f5# Create directory under cursor or the selected area
-# Press ctrl-xM to create the directory under the cursor or the selected area.
-# To select an area press ctrl-@ or ctrl-space and use the cursor.
-# Use case: you type "mv abc ~/testa/testb/testc/" and remember that the
-# directory does not exist yet -> press ctrl-XM and problem solved
-inplaceMkDirs() {
-    local PATHTOMKDIR
-    if ((REGION_ACTIVE==1)); then
-        local F=$MARK T=$CURSOR
-        if [[ $F -gt $T ]]; then
-            F=${CURSOR}
-            T=${MARK}
-        fi
-        # get marked area from buffer and eliminate whitespace
-        PATHTOMKDIR=${BUFFER[F+1,T]%%[[:space:]]##}
-        PATHTOMKDIR=${PATHTOMKDIR##[[:space:]]##}
-    else
-        local bufwords iword
-        bufwords=(${(z)LBUFFER})
-        iword=${#bufwords}
-        bufwords=(${(z)BUFFER})
-        PATHTOMKDIR="$bufwords[iword]"
-    fi
-    [[ -z "${PATHTOMKDIR}" ]] && return 1
-    if [[ -e "${PATHTOMKDIR}" ]]; then
-        zle -M " path already exists, doing nothing"
-    else
-        zle -M "$(mkdir -p -v "${PATHTOMKDIR}")"
-        zle end-of-line
-    fi
-}
-#k# mkdir -p <dir> from string under cursor or marked area
-zle -N inplaceMkDirs && bindkey '^XM' inplaceMkDirs
-
-#f5# Memory overview
-memusage() {
-    ps aux | awk '{if (NR > 1) print $5; if (NR > 2) print "+"} END { print "p" }' | dc
-}
-#f5# Show contents of gzipped tar file
-shtar() {
-    emulate -L zsh
-    gunzip -c $1 | tar -tf - -- | $PAGER
-}
-#f5# Show contents of zip file
-shzip() {
-    emulate -L zsh
-    unzip -l $1 | $PAGER
-}
 #f5# Unified diff
 udiff() {
     emulate -L zsh
     diff -urd $* | egrep -v "^Only in |^Binary files "
-}
-#f5# (Mis)use \kbd{vim} as \kbd{less}
-viless() {
-    emulate -L zsh
-    vim --cmd 'let no_plugin_maps = 1' -c "so \$VIMRUNTIME/macros/less.vim" "${@:--}"
-}
-
-# list images only
-limg() {
-    local -a images
-    images=( *.{jpg,gif,png}(.N) )
-
-    if [[ $#images -eq 0 ]] ; then
-        print "No image files found"
-    else
-        ls "$images[@]"
-    fi
 }
 
 # zsh with perl-regex - use it e.g. via:
@@ -2168,39 +1653,11 @@ regcheck() {
     pcre_match $2 && echo "regex matches" || echo "regex does not match"
 }
 
-#f5# List files which have been accessed within the last {\it n} days, {\it n} defaults to 1
-accessed() {
-    emulate -L zsh
-    print -l -- *(a-${1:-1})
-}
-
-#f5# List files which have been changed within the last {\it n} days, {\it n} defaults to 1
-changed() {
-    emulate -L zsh
-    print -l -- *(c-${1:-1})
-}
-
-#f5# List files which have been modified within the last {\it n} days, {\it n} defaults to 1
-modified() {
-    emulate -L zsh
-    print -l -- *(m-${1:-1})
-}
-# modified() was named new() in earlier versions, add an alias for backwards compatibility
-check_com new || alias new=modified
-
-#f5# Grep in history
-greph() {
-    emulate -L zsh
-    history 0 | grep $1
-}
 # use colors when GNU grep with color-support
 #a2# Execute \kbd{grep -{}-color=auto}
 (grep --help 2>/dev/null |grep -- --color) >/dev/null && alias grep='grep --color=auto'
 #a2# Execute \kbd{grep -i -{}-color=auto}
 alias GREP='grep -i --color=auto'
-
-#f5# Watch manpages in a stretched style
-man2() { PAGER='dash -c "sed G | /usr/bin/less"' command man "$@" ; }
 
 # usage example: 'lcheck strcpy'
 #f5# Find out which libs define a symbol
@@ -2239,255 +1696,11 @@ purge() {
     fi
 }
 
-#f5# show labels and uuids of disk devices
-if is439 && [[ -d /dev/disk/by-id/ ]]; then
-    lsdisk() {
-        emulate -L zsh
-        setopt extendedglob
-        local -a -U disks
-        disks=( /dev/disk/by-id/*(@:A) )
-        for dev in "$disks[@]"; do
-            print ${fg_bold[red]}${dev}${reset_color} /dev/disk/by-label/*(@e/'[[ ${REPLY:A} == $dev ]] && REPLY=${fg[blue]}LABEL=${REPLY:t}${reset_color}'/N) /dev/disk/by-uuid/*(@e/'[[ ${REPLY:A} == $dev ]] && REPLY=${fg[green]}UUID=${REPLY:t}${reset_color}'/N)
-            print -f "  %s\n" /dev/disk/by-id/*(@e/'[[ ${REPLY:A} == $dev ]]'/N:t)
-        done
-    }
-fi
-
 #f5# run command or function in a list of directories
 rundirs() {
   local d CMD STARTDIR=$PWD
   CMD=$1; shift
   ( for d ($@) {cd -q $d && { print cd $d; ${(z)CMD} ; cd -q $STARTDIR }} )
-}
-
-#f5# List all occurrences of programm in current PATH
-plap() {
-    emulate -L zsh
-    if [[ $# = 0 ]] ; then
-        echo "Usage:    $0 program"
-        echo "Example:  $0 zsh"
-        echo "Lists all occurrences of program in the current PATH."
-    else
-        ls -l ${^path}/*$1*(*N)
-    fi
-}
-
-# Found in the mailinglistarchive from Zsh (IIRC ~1996)
-#f5# Select items for specific command(s) from history
-selhist() {
-    emulate -L zsh
-    local TAB=$'\t';
-    (( $# < 1 )) && {
-        echo "Usage: $0 command"
-        return 1
-    };
-    cmd=(${(f)"$(grep -w $1 $HISTFILE | sort | uniq | pr -tn)"})
-    print -l $cmd | less -F
-    echo -n "enter number of desired command [1 - $(( ${#cmd[@]} - 1 ))]: "
-    local answer
-    read answer
-    print -z "${cmd[$answer]#*$TAB}"
-}
-
-# Use vim to convert plaintext to HTML
-#f5# Transform files to html with highlighting
-2html() {
-    emulate -L zsh
-    vim -u NONE -n -c ':syntax on' -c ':so $VIMRUNTIME/syntax/2html.vim' -c ':wqa' $1 &>/dev/null
-}
-
-# Usage: simple-extract <file>
-# Using option -d deletes the original archive file.
-#f5# Smart archive extractor
-simple-extract() {
-    emulate -L zsh
-    setopt extended_glob noclobber
-    local DELETE_ORIGINAL DECOMP_CMD USES_STDIN USES_STDOUT GZTARGET WGET_CMD
-    local RC=0
-    zparseopts -D -E "d=DELETE_ORIGINAL"
-    for ARCHIVE in "${@}"; do
-        case $ARCHIVE in
-            *.(tar.bz2|tbz2|tbz))
-                DECOMP_CMD="tar -xvjf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *.(tar.gz|tgz))
-                DECOMP_CMD="tar -xvzf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *.(tar.xz|txz|tar.lzma))
-                DECOMP_CMD="tar -xvJf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *.tar)
-                DECOMP_CMD="tar -xvf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *.rar)
-                DECOMP_CMD="unrar x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *.lzh)
-                DECOMP_CMD="lha x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *.7z)
-                DECOMP_CMD="7z x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *.(zip|jar))
-                DECOMP_CMD="unzip"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *.deb)
-                DECOMP_CMD="ar -x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *.bz2)
-                DECOMP_CMD="bzip2 -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *.(gz|Z))
-                DECOMP_CMD="gzip -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *.(xz|lzma))
-                DECOMP_CMD="xz -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *)
-                print "ERROR: '$ARCHIVE' has unrecognized archive type." >&2
-                RC=$((RC+1))
-                continue
-                ;;
-        esac
-
-        if ! check_com ${DECOMP_CMD[(w)1]}; then
-            echo "ERROR: ${DECOMP_CMD[(w)1]} not installed." >&2
-            RC=$((RC+2))
-            continue
-        fi
-
-        GZTARGET="${ARCHIVE:t:r}"
-        if [[ -f $ARCHIVE ]] ; then
-
-            print "Extracting '$ARCHIVE' ..."
-            if $USES_STDIN; then
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} < "$ARCHIVE" > $GZTARGET
-                else
-                    ${=DECOMP_CMD} < "$ARCHIVE"
-                fi
-            else
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} "$ARCHIVE" > $GZTARGET
-                else
-                    ${=DECOMP_CMD} "$ARCHIVE"
-                fi
-            fi
-            [[ $? -eq 0 && -n "$DELETE_ORIGINAL" ]] && rm -f "$ARCHIVE"
-
-        elif [[ "$ARCHIVE" == (#s)(https|http|ftp)://* ]] ; then
-            if check_com curl; then
-                WGET_CMD="curl -k -s -o -"
-            elif check_com wget; then
-                WGET_CMD="wget -q -O - --no-check-certificate"
-            else
-                print "ERROR: neither wget nor curl is installed" >&2
-                RC=$((RC+4))
-                continue
-            fi
-            print "Downloading and Extracting '$ARCHIVE' ..."
-            if $USES_STDIN; then
-                if $USES_STDOUT; then
-                    ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD} > $GZTARGET
-                    RC=$((RC+$?))
-                else
-                    ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD}
-                    RC=$((RC+$?))
-                fi
-            else
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE") > $GZTARGET
-                else
-                    ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE")
-                fi
-            fi
-
-        else
-            print "ERROR: '$ARCHIVE' is neither a valid file nor a supported URI." >&2
-            RC=$((RC+8))
-        fi
-    done
-    return $RC
-}
-
-__archive_or_uri()
-{
-    _alternative \
-        'files:Archives:_files -g "*.(#l)(tar.bz2|tbz2|tbz|tar.gz|tgz|tar.xz|txz|tar.lzma|tar|rar|lzh|7z|zip|jar|deb|bz2|gz|Z|xz|lzma)"' \
-        '_urls:Remote Archives:_urls'
-}
-
-_simple_extract()
-{
-    _arguments \
-        '-d[delete original archivefile after extraction]' \
-        '*:Archive Or Uri:__archive_or_uri'
-}
-compdef _simple_extract simple-extract
-alias se=simple-extract
-
-# Usage: smartcompress <file> (<type>)
-#f5# Smart archive creator
-smartcompress() {
-    emulate -L zsh
-    if [[ -n $2 ]] ; then
-        case $2 in
-            tgz | tar.gz)   tar -zcvf$1.$2 $1 ;;
-            tbz2 | tar.bz2) tar -jcvf$1.$2 $1 ;;
-            tar.Z)          tar -Zcvf$1.$2 $1 ;;
-            tar)            tar -cvf$1.$2  $1 ;;
-            gz | gzip)      gzip           $1 ;;
-            bz2 | bzip2)    bzip2          $1 ;;
-            *)
-                echo "Error: $2 is not a valid compression type"
-                ;;
-        esac
-    else
-        smartcompress $1 tar.gz
-    fi
-}
-
-# Usage: show-archive <archive>
-#f5# List an archive's content
-show-archive() {
-    emulate -L zsh
-    if [[ -f $1 ]] ; then
-        case $1 in
-            *.tar.gz)      gunzip -c $1 | tar -tf - -- ;;
-            *.tar)         tar -tf $1 ;;
-            *.tgz)         tar -ztf $1 ;;
-            *.zip)         unzip -l $1 ;;
-            *.bz2)         bzless $1 ;;
-            *.deb)         dpkg-deb --fsys-tarfile $1 | tar -tf - -- ;;
-            *)             echo "'$1' Error. Please go away" ;;
-        esac
-    else
-        echo "'$1' is not a valid archive"
-    fi
 }
 
 # It's shameless stolen from <http://www.vim.org/tips/tip.php?tip_id=167>
@@ -2514,76 +1727,8 @@ readme() {
     fi
 }
 
-# function ansi-colors()
-#f5# Display ANSI colors
-ansi-colors() {
-    typeset esc="\033[" line1 line2
-    echo " _ _ _40 _ _ _41_ _ _ _42 _ _ 43_ _ _ 44_ _ _45 _ _ _ 46_ _ _ 47_ _ _ 49_ _"
-    for fore in 30 31 32 33 34 35 36 37; do
-        line1="$fore "
-        line2="   "
-        for back in 40 41 42 43 44 45 46 47 49; do
-            line1="${line1}${esc}${back};${fore}m Normal ${esc}0m"
-            line2="${line2}${esc}${back};${fore};1m Bold   ${esc}0m"
-        done
-        echo -e "$line1\n$line2"
-    done
-}
-
 #f5# Find all files in \$PATH with setuid bit set
 suidfind() { ls -latg $path | grep '^...s' }
-
-# TODO: So, this is the third incarnation of this function!?
-#f5# Reload given functions
-refunc() {
-    for func in $argv ; do
-        unfunction $func
-        autoload $func
-    done
-}
-compdef _functions refunc
-
-# a small check to see which DIR is located on which server/partition.
-# stolen and modified from Sven's zshrc.forall
-#f5# Report diskusage of a directory
-dirspace() {
-    emulate -L zsh
-    if [[ -n "$1" ]] ; then
-        for dir in "$@" ; do
-            if [[ -d "$dir" ]] ; then
-                ( cd $dir; echo "-<$dir>"; du -shx .; echo);
-            else
-                echo "warning: $dir does not exist" >&2
-            fi
-        done
-    else
-        for dir in $path; do
-            if [[ -d "$dir" ]] ; then
-                ( cd $dir; echo "-<$dir>"; du -shx .; echo);
-            else
-                echo "warning: $dir does not exist" >&2
-            fi
-        done
-    fi
-}
-
-#f5# Simple thumbnails generator
-genthumbs() {
-    rm -rf thumb-* index.html
-    echo "
-<html>
-  <head>
-    <title>Images</title>
-  </head>
-  <body>" > index.html
-    for f in *.(gif|jpeg|jpg|png) ; do
-        convert -size 100x200 "$f" -resize 100x200 thumb-"$f"
-        echo "    <a href=\"$f\"><img src=\"thumb-$f\"></a>" >> index.html
-    done
-    echo "
-  </body>
-</html>" >> index.html
-}
 
 #f5# Set all ulimit parameters to \kbd{unlimited}
 allulimit() {
@@ -2594,27 +1739,6 @@ allulimit() {
     ulimit -n unlimited
     ulimit -s unlimited
     ulimit -t unlimited
-}
-
-#f5# RFC 2396 URL encoding in Z-Shell
-urlencode() {
-    emulate -L zsh
-    setopt extendedglob
-    input=( ${(s::)1} )
-    print ${(j::)input/(#b)([^A-Za-z0-9_.!~*\'\(\)-])/%${(l:2::0:)$(([##16]#match))}}
-}
-
-# http://strcat.de/blog/index.php?/archives/335-Software-sauber-deinstallieren...html
-#f5# Log 'make install' output
-mmake() {
-    emulate -L zsh
-    [[ ! -d ~/.errorlogs ]] && mkdir ~/.errorlogs
-    make -n install > ~/.errorlogs/${PWD##*/}-makelog
-}
-
-#f5# Indent source code
-smart-indent() {
-    indent -npro -kr -i8 -ts8 -sob -l80 -ss -ncs "$@"
 }
 
 # highlight important stuff in diff output, usage example: hg diff | hidiff
@@ -2809,10 +1933,4 @@ function dman() {
 
 zrclocal
 
-## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
-# Local variables:
-# mode: sh
-# End:
-
-source /Users/aeg/.iterm2_shell_integration.zsh
