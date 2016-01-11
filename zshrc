@@ -1923,6 +1923,8 @@ whatwhen()  {
 # }}}
 }
 
+PATH=~/bin:$PATH
+
 # Open argument in Dash
 function dash() {
 	open "dash://$(urlencode $@)"
