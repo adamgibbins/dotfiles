@@ -161,8 +161,9 @@ ZSH_NO_DEFAULT_LOCALE=${ZSH_NO_DEFAULT_LOCALE:-0}
 
 source ~/.zsh/zgen/zgen.zsh
 zgen load jamesob/desk shell_plugins/zsh
-zgen oh-my-zsh plugins/autojump
+zgen load zsh-users/zsh-completions
 zgen load zsh-users/zsh-syntax-highlighting
+zgen oh-my-zsh plugins/autojump
 
 # utility functions {{{
 # this function checks if a command exists and returns either true
