@@ -23,6 +23,7 @@ sslcacertfile = ~/.mutt/certs/cacert.pem
 
 folderfilter = lambda folder: folder not in [
                                               'Calendar',
+                                              'Calendar/TIM Group Cezanne Holidays',
                                               'Contacts',
                                               'Deleted Items'
                                               'INBOX/Journal',
