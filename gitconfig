@@ -48,6 +48,7 @@
 
 [diff]
 	tool = vimdiff
+	external = ~/bin/git_diff_wrapper
 
 [merge]
 	summary = true
