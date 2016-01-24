@@ -49,3 +49,6 @@
 [submodule "config/nvim/bundle/vim-sleuth"]
 	path = config/nvim/bundle/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth.git
+[submodule "config/nvim/bundle/holokai"]
+	path = config/nvim/bundle/holokai
+	url = https://github.com/changyuheng/color-scheme-holokai-for-vim.git

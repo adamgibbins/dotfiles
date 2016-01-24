@@ -9,7 +9,7 @@ filetype plugin indent on
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
-colorscheme molokai
+colorscheme holokai
 
 set noshowmode " Lightline includes the mode, stop the duplicate info
 set spelllang=en_gb
