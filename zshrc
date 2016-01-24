@@ -1704,17 +1704,6 @@ rundirs() {
   ( for d ($@) {cd -q $d && { print cd $d; ${(z)CMD} ; cd -q $STARTDIR }} )
 }
 
-# It's shameless stolen from <http://www.vim.org/tips/tip.php?tip_id=167>
-#f5# Use \kbd{vim} as your manpage reader
-vman() {
-    emulate -L zsh
-    if (( ${#argv} == 0 )); then
-        printf 'usage: vman <topic>\n'
-        return 1
-    fi
-    man "$@" | col -b | view -c 'set ft=man nomod nolist' -
-}
-
 # function readme() { $PAGER -- (#ia3)readme* }
 #f5# View all README-like files in current directory in pager
 readme() {
@@ -1727,9 +1716,6 @@ readme() {
         print 'No README files.'
     fi
 }
-
-#f5# Find all files in \$PATH with setuid bit set
-suidfind() { ls -latg $path | grep '^...s' }
 
 #f5# Set all ulimit parameters to \kbd{unlimited}
 allulimit() {
