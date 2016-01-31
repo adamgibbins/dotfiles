@@ -56,6 +56,13 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
+let g:ledger_bin = '~/doc/ledger/bin/ledger'
+let g:ledger_default_commodity = '£'
+let g:ledger_fillstring = '  —'
+let g:ledger_maxwidth = 80
+let g:ledger_align_at = 60
+au FileType ledger map <leader>x :call ledger#transaction_state_toggle(line('.'), ' *!')<cr>
+
 autocmd! BufWritePost * Neomake
 
 let g:lightline =
