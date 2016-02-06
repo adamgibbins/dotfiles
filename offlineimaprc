@@ -36,3 +36,4 @@ folderfilter = lambda folder: folder not in [
                                               'RSS Feeds',
                                               'Trash',
                                             ]
+# vim: ft=cfg
