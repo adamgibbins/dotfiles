@@ -1,4 +1,5 @@
 [general]
+pythonfile = ~/.offlineimaprc.py
 accounts = TG
 ui = TTY.TTYUI
 fsync = False
@@ -15,6 +16,9 @@ type = Maildir
 localfolders = ~/Mail/TG
 
 [Repository TG-Remote]
+remotehost=imap.outlook.com
+remoteuser=adam.gibbins@timgroup.com
+remotepasseval = keyring.get_password('Office365', 'TIMGroup')
 maxconnections = 1
 realdelete = yes
 type = IMAP

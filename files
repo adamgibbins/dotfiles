@@ -11,6 +11,7 @@ msmtprc
 mutt
 muttrc
 offlineimaprc
+offlineimaprc.py
 profile
 tmux
 tmux.conf
