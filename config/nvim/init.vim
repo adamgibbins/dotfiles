@@ -41,6 +41,10 @@ set smartcase  " Don't ignore case when searching, if upper-case chars are used
 set directory=~/.config/nvim/swap
 set backupdir=~/.config/nvim/backup
 
+set undodir=~/.config/nvim/undo
+set undofile
+set undolevels=5000
+
 let mapleader=','
 let maplocalleader=','
 map <leader>ss :setlocal spell!<cr>
