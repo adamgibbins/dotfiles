@@ -1,0 +1,30 @@
+<!--
+  Install using:
+  ln -s karabiner-config.xml ~/Library/Application\ Support/Karabiner/private.xml
+-->
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Remap F19 to Hyper</name>
+    <appendix>OS X doesn't have a Hyper. This maps F19 to Control + Shift + Option + Command.</appendix>
+    <identifier>usercustom.f19_to_hyper</identifier>
+    <autogen>
+      --KeyToKey--
+      KeyCode::F19,
+      KeyCode::COMMAND_R,
+      ModifierFlag::OPTION_R | ModifierFlag::SHIFT_R | ModifierFlag::CONTROL_R,
+    </autogen>
+  </item>
+  <item>
+    <name>CODE Keyboard - Media Keys</name>
+    <identifier>dk4_media</identifier>
+    <autogen>
+      __KeyToKey__
+      ConsumerKeyCode::RawValue::0x0012, ModifierFlag::NONE, ConsumerKeyCode::MUSIC_PREV
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      ConsumerKeyCode::RawValue::0x0011, ModifierFlag::NONE, ConsumerKeyCode::MUSIC_NEXT
+    </autogen>
+  </item>
+</root>
