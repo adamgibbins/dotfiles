@@ -27,6 +27,7 @@ values."
      better-defaults
      deft
      emacs-lisp
+     finance
      git
      markdown
      org
