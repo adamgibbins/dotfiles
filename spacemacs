@@ -33,6 +33,7 @@ values."
      git
      github
      html
+     lua
      markdown
      (org :variables
           org-enable-github-support t)
