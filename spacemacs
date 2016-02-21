@@ -33,7 +33,8 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
+     (spell-checking :variables
+                     ispell-dictionary 'en_GB)
      syntax-checking
      version-control
      )
