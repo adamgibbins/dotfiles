@@ -13,6 +13,7 @@ muttrc
 offlineimaprc
 offlineimaprc.py
 profile
+spacemacs
 tmux
 tmux.conf
 urlview
