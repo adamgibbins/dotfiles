@@ -30,7 +30,8 @@ values."
      finance
      git
      markdown
-     org
+     (org :variables
+          org-enable-github-support t)
      osx
      (shell :variables
             shell-default-height 30
