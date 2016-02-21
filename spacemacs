@@ -25,21 +25,32 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
+     c-c++
      dash
      deft
      emacs-lisp
      finance
      git
+     github
+     html
      markdown
      (org :variables
           org-enable-github-support t)
      osx
+     php
+     puppet
+     (ruby :variables
+           ruby-version-manager 'chruby
+           ruby-test-runner 'rspec)
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     shell-scripts
      (spell-checking :variables
                      ispell-dictionary 'en_GB)
+     sql
      syntax-checking
+     vagrant
      version-control
      )
    ;; List of additional packages that will be installed without being
@@ -252,6 +263,7 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq vc-follow-symlinks t)
   (setq deft-directory "~/doc/scraps")
+  (setq magit-repository-directories '("~/src/"))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
