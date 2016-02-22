@@ -262,11 +262,13 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (setq vc-follow-symlinks t)
-  (setq linum-format "%d ")
-  (setq deft-directory "~/doc/scraps")
-  (setq magit-repository-directories '("~/src/"))
-  (setq ledger-post-amount-alignment-column 80)
+  (setq
+   vc-follow-symlinks t
+   linum-format "%d "
+   deft-directory "~/doc/scraps"
+   magit-repository-directories '("~/src/")
+   ledger-post-amount-alignment-column 80
+   )
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
