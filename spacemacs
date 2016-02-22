@@ -263,6 +263,7 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq
+   undo-tree-auto-save-history t
    vc-follow-symlinks t
    linum-format "%d "
    deft-directory "~/doc/scraps"
