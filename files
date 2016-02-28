@@ -14,6 +14,7 @@ offlineimaprc
 offlineimaprc.py
 profile
 spacemacs
+taskrc
 tmux
 tmux.conf
 urlview

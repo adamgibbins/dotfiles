@@ -1,0 +1,36 @@
+data.location=~/doc/taskwarrior
+
+include /usr/local/share/doc/task/rc/solarized-dark-256.theme
+include /usr/local/share/doc/task/rc/holidays.en-GB.rc
+
+# Settings
+_forcecolor=true
+default.project=Inbox
+regex=true
+search.case.sensitive=false
+
+# Contexts
+context.home=+home
+
+# Urgency
+urgency.user.tag.bill.coefficient=10
+
+# Calendar
+weekstart=Monday
+calendar.details=full
+alias.cal=calendar
+
+# UDAs
+uda.energy.type=string
+uda.energy.label=Energy
+uda.energy.values=Entertainment,Brain Dead,Hanging Around,Full Focus,Decision
+
+# Reports
+report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.remaining,until.remaining,energy,description,urgency
+report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Energy,Description,Urg
+
+report.recurringall.columns=id,uuid.short,parent,entry,modified,start.active,status,recur,wait.remaining,scheduled,due,until,depends,priority,project,tags,description.count,imask,mask
+report.recurringall.description=All Recurring Tasks
+report.recurringall.filter=+PARENT or +CHILD
+report.recurringall.labels=ID,UUID,Parent,Created,Mod,A,Status,Recur,Wait,Sched,Due,Until,Deps,P,Project,Tags,Description,Mask Index,Mask
+report.recurringall.sort=parent,due
