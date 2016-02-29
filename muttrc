@@ -29,7 +29,7 @@ set net_inc    = 5
 
 set sort = 'date-sent'
 set sort = 'threads'
-set sort_aux = 'reverse-last-date-received'
+set sort_aux = 'last-date-received'
 set strict_threads = yes
 unset collapse_unread
 set uncollapse_jump # Do not collapse unread messages
