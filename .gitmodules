@@ -55,3 +55,9 @@
 [submodule "config/nvim/bundle/vim-startify"]
 	path = config/nvim/bundle/vim-startify
 	url = https://github.com/mhinz/vim-startify.git
+[submodule "config/nvim/bundle/vim-lucius"]
+	path = config/nvim/bundle/vim-lucius
+	url = https://github.com/jonathanfilip/vim-lucius
+[submodule "config/nvim/bundle/vim-taskwarrior"]
+	path = config/nvim/bundle/vim-taskwarrior
+	url = https://github.com/blindFS/vim-taskwarrior.git

@@ -69,6 +69,9 @@ let g:ledger_maxwidth = 80
 let g:ledger_align_at = 60
 au FileType ledger map <leader>x :call ledger#transaction_state_toggle(line('.'), ' *!')<cr>
 
+let g:task_rc_override = 'rc._forcecolor=no rc.defaultwidth=120'
+let g:task_default_prompt = ['description', 'project', 'energy', 'priority', 'due', 'tags']
+
 autocmd! BufWritePost * Neomake
 
 let g:lightline =
