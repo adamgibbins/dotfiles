@@ -1,19 +1,30 @@
 data.location=~/doc/taskwarrior
 
-include /usr/local/share/doc/task/rc/solarized-dark-256.theme
 include /usr/local/share/doc/task/rc/holidays.en-GB.rc
+calendar.holidays=full
 
 # Settings
-_forcecolor=true
+_forcecolor=yes
 default.project=Inbox
-regex=true
-search.case.sensitive=false
+exit.on.missing.db=on
+journal.time=yes
+regex=yes
+search.case.sensitive=no
+verbose=blank,header,footnote,label,new-id,affected,edit,special,project,sync,filter,unwait,recur
 
 # Contexts
+alias.c=context
 context.home=+home
+context.personal=project != TG
+context.tg=project:TG or +errand
 
 # Urgency
-urgency.user.tag.bill.coefficient=10
+urgency.user.tag.bill.coefficient=9
+urgency.blocking.coefficient=1
+urgency.inherit=yes
+urgency.project.coefficient=0
+urgency.tags.coefficient=0
+urgency.user.project.Inbox.coefficient=100
 
 # Calendar
 weekstart=Monday
@@ -21,9 +32,10 @@ calendar.details=full
 alias.cal=calendar
 
 # UDAs
-uda.energy.type=string
 uda.energy.label=Energy
+uda.energy.type=string
 uda.energy.values=Entertainment,Brain Dead,Hanging Around,Full Focus,Decision
+uda.priority.values=H,,L
 
 # Reports
 report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.remaining,until.remaining,energy,description,urgency
@@ -34,3 +46,5 @@ report.recurringall.description=All Recurring Tasks
 report.recurringall.filter=+PARENT or +CHILD
 report.recurringall.labels=ID,UUID,Parent,Created,Mod,A,Status,Recur,Wait,Sched,Due,Until,Deps,P,Project,Tags,Description,Mask Index,Mask
 report.recurringall.sort=parent,due
+
+# vim:ft=config
