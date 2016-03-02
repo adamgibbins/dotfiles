@@ -1,6 +1,7 @@
 data.location=~/doc/taskwarrior
 
 include /usr/local/share/doc/task/rc/holidays.en-GB.rc
+include /usr/local/share/doc/task/rc/dark-red-256.theme
 calendar.holidays=full
 
 # Settings
