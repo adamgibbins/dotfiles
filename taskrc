@@ -26,6 +26,7 @@ urgency.inherit=yes
 urgency.project.coefficient=0
 urgency.tags.coefficient=0
 urgency.user.project.Inbox.coefficient=100
+urgency.uda.priority.L.coefficient=-0.1
 
 # Calendar
 weekstart=Monday
