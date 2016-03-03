@@ -1,8 +1,12 @@
 data.location=~/doc/taskwarrior
 
+# Holidays
 include /usr/local/share/doc/task/rc/holidays.en-GB.rc
-include /usr/local/share/doc/task/rc/dark-red-256.theme
 calendar.holidays=full
+
+# Colours
+include /usr/local/share/doc/task/rc/dark-red-256.theme
+color.uda.priority.L=grey5
 
 # Settings
 _forcecolor=yes
