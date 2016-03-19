@@ -155,3 +155,5 @@ unset bash_prompt
 if [ -d ~/bin ] ; then
   PATH=~/bin:"${PATH}"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

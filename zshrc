@@ -1920,6 +1920,8 @@ function dman() {
 	open "dash://man:$(urlencode $@)"
 }
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 zrclocal
 
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
