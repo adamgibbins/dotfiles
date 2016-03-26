@@ -22,6 +22,7 @@ alias.c=context
 context.home=+home
 context.personal=project != TG
 context.tg=project:TG or +errand
+context.islandor=project:Islandor
 
 # Urgency
 urgency.user.tag.bill.coefficient=9
@@ -29,8 +30,10 @@ urgency.blocking.coefficient=1
 urgency.inherit=yes
 urgency.project.coefficient=0
 urgency.tags.coefficient=0
-urgency.user.project.Inbox.coefficient=100
+urgency.user.project.Inbox.coefficient=60
 urgency.uda.priority.L.coefficient=-0.1
+urgency.due.coefficient=100
+urgency.annotations.coefficient=0
 
 # Calendar
 weekstart=Monday
