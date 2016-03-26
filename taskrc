@@ -20,20 +20,22 @@ verbose=blank,header,footnote,label,new-id,affected,edit,special,project,sync,fi
 # Contexts
 alias.c=context
 context.home=+home
-context.personal=project != TG
+context.personal=project != TG and project != Entertainment
 context.tg=project:TG or +errand
 context.islandor=project:Islandor
 
 # Urgency
-urgency.user.tag.bill.coefficient=9
+urgency.annotations.coefficient=0
 urgency.blocking.coefficient=1
+urgency.due.coefficient=100
 urgency.inherit=yes
 urgency.project.coefficient=0
 urgency.tags.coefficient=0
-urgency.user.project.Inbox.coefficient=60
+urgency.uda.energy.Entertainment.coefficient=-100
 urgency.uda.priority.L.coefficient=-0.1
-urgency.due.coefficient=100
-urgency.annotations.coefficient=0
+urgency.user.project.Entertainment.coefficient=-100
+urgency.user.project.Inbox.coefficient=60
+urgency.user.tag.bill.coefficient=9
 
 # Calendar
 weekstart=Monday
