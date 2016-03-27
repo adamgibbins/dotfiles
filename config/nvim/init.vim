@@ -95,4 +95,6 @@ func LightLineFugitive()
 endfunc
 
 let g:polyglot_disabled = ['puppet']
+let g:vimwiki_list = [{'path': '~/doc/scraps', 'path_html': '~/Public/scraps', 'ext': '.txt'}]
+let taskwiki_data_location = "~/doc/taskwarrior"
 let g:deoplete#enable_at_startup = 1

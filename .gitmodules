@@ -64,6 +64,15 @@
 [submodule "config/nvim/bundle/vim-puppet"]
 	path = config/nvim/bundle/vim-puppet
 	url = https://github.com/voxpupuli/vim-puppet.git
+[submodule "config/nvim/bundle/taskwiki"]
+	path = config/nvim/bundle/taskwiki
+	url = https://github.com/tbabej/taskwiki.git
+[submodule "config/nvim/bundle/vimwiki"]
+	path = config/nvim/bundle/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
+[submodule "config/nvim/bundle/AnsiEsc"]
+	path = config/nvim/bundle/AnsiEsc
+	url = https://github.com/powerman/vim-plugin-AnsiEsc.git
 [submodule "config/nvim/bundle/deoplete"]
 	path = config/nvim/bundle/deoplete
 	url = https://github.com/Shougo/deoplete.nvim
