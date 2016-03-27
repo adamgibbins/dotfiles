@@ -61,3 +61,6 @@
 [submodule "config/nvim/bundle/vim-taskwarrior"]
 	path = config/nvim/bundle/vim-taskwarrior
 	url = https://github.com/blindFS/vim-taskwarrior.git
+[submodule "config/nvim/bundle/vim-puppet"]
+	path = config/nvim/bundle/vim-puppet
+	url = https://github.com/voxpupuli/vim-puppet.git

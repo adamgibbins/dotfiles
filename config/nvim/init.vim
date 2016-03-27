@@ -93,3 +93,5 @@ let g:lightline =
 func LightLineFugitive()
   return exists('*fugitive#head') ? fugitive#head() : ''  
 endfunc
+
+let g:polyglot_disabled = ['puppet']
