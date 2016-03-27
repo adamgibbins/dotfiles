@@ -95,3 +95,4 @@ func LightLineFugitive()
 endfunc
 
 let g:polyglot_disabled = ['puppet']
+let g:deoplete#enable_at_startup = 1
