@@ -270,6 +270,10 @@ layers configuration. You are free to put any user code."
    magit-repository-directories '("~/src/")
    ledger-post-amount-alignment-column 80
    )
+
+  (add-to-list 'load-path "~/src/beancount/src/elisp")
+  (require 'beancount)
+  (add-to-list 'auto-mode-alist '("\\.beancount\\'" . beancount-mode))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
