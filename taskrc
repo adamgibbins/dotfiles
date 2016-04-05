@@ -5,7 +5,7 @@ include /usr/local/share/doc/task/rc/holidays.en-GB.rc
 calendar.holidays=full
 
 # Colours
-include /usr/local/share/doc/task/rc/dark-red-256.theme
+include /usr/local/share/doc/task/rc/dark-256.theme
 color.uda.priority.L=grey5
 
 # Settings
