@@ -15,7 +15,7 @@
 # Adjustments would still go to the .zshrc.local file.
 ################################################################################
 
-export CC=gcc-4.2
+export CC=gcc
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
