@@ -7,7 +7,7 @@ source /usr/local/opt/fzf/plugin/fzf.vim
 syntax on
 filetype plugin indent on
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
 set t_Co=256
 colorscheme lucius
 set bg=dark
