@@ -19,6 +19,13 @@ source $my_mutt_home/colors.muttrc
 source $my_mutt_home/keybindings.muttrc
 # }}}
 
+# Hide all headers
+ignore *
+# Only show those I'm interested in
+unignore from subject to cc date x-mailer x-url user-agent
+# in this order
+hdr_order date from to cc subject
+
 set wait_key   = no
 set mbox_type  = Maildir
 set timeout    = 3
