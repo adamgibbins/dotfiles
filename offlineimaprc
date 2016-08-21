@@ -1,6 +1,6 @@
 [general]
 pythonfile = ~/.offlineimaprc.py
-accounts = TG
+accounts = TG,AG
 ui = TTY.TTYUI
 fsync = False
 socktimeout = 120
@@ -40,4 +40,26 @@ folderfilter = lambda folder: folder not in [
                                               'RSS Feeds',
                                               'Trash',
                                             ]
+
+[Account AG]
+localrepository = AG-Local
+remoterepository = AG-Remote
+status_backend = sqlite
+
+[Repository AG-Local]
+type = Maildir
+localfolders = ~/Mail/AG
+
+[Repository AG-Remote]
+remotehost=imap.fastmail.com
+remoteuser=adamgibbins@fastmail.com
+remotepasseval = keyring.get_password('Fastmail', 'AdamGibbins')
+maxconnections = 3
+expunge = no
+type = IMAP
+ssl = yes
+sslcacertfile = ~/.mutt/certs/cacert.pem
+
+folderfilter = lambda foldername: foldername not in ['Trash']
+
 # vim: ft=cfg

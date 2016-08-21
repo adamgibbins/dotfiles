@@ -1,0 +1,10 @@
+set from = 'Adam Gibbins <adam@adamgibbins.com>'
+set sendmail = '/usr/local/bin/msmtp -a adamgibbins'
+
+set record = =AG/Sent
+set trash = =AG/Trash
+set spoolfile = =AG/INBOX
+
+macro index,pager A "<save-message>=AG/Archive/<enter>" "Move to Archive"
+
+# vim: ft=muttrc

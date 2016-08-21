@@ -3,7 +3,7 @@ reset all
 # Paths {{{
 set my_mutt_home     = ~/.mutt
 set folder           = ~/Mail
-set spoolfile        = ~/Mail/TG/INBOX
+set spoolfile        = +AG/INBOX
 set alias_file       = $my_mutt_home/alias
 set certificate_file = $my_mutt_home/certs
 set mailcap_path     = $my_mutt_home/mailcap
@@ -26,6 +26,22 @@ unignore from subject to cc date x-mailer x-url user-agent
 # in this order
 hdr_order date from to cc subject
 
+set sidebar_visible
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
+
+mailboxes "-- AG ---------------" \
+          +AG/INBOX \
+          +AG/Archive \
+          +AG/Sent \
+          "-- TG ---------------" \
+          +TG/INBOX \
+          +TG/Archive \
+          +TG/Sent\ Items
+
+folder-hook AG/* source ~/.mutt/accounts/adamgibbins
+folder-hook TG/* source ~/.mutt/accounts/timgroup
+
 set wait_key   = no
 set mbox_type  = Maildir
 set timeout    = 3
@@ -43,11 +59,7 @@ set uncollapse_jump # Do not collapse unread messages
 unset mark_old
 
 set realname = 'Adam Gibbins'
-set from = 'Adam Gibbins <adam.gibbins@timgroup.com>'
-set sendmail = '/usr/local/bin/msmtp -a timgroup'
 set sendmail_wait = 0
-set record="+TG/Sent Items"
-set trash="+TG/Deleted Items"
 
 auto_view text/html # Display HTML inline
 set implicit_autoview = no

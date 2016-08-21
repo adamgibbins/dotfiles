@@ -1,0 +1,10 @@
+set from = 'Adam Gibbins <adam.gibbins@timgroup.com>'
+set sendmail = '/usr/local/bin/msmtp -a timgroup'
+
+set record = "+TG/Sent Items"
+set trash = "+TG/Deleted Items"
+set spoolfile = +TG/INBOX
+
+macro index,pager A "<save-message>=TG/Archive/<enter>" "Move to Archive"
+
+# vim: ft=muttrc

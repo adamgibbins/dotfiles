@@ -1,5 +1,3 @@
-macro index,pager A "<save-message>=TG/Archive/<enter>" "Move to Archive"
-
 # Attachments {{{
 bind attach <return> view-mailcap
 macro pager \Cu "|urlview<enter>" "Call urlview to open links"
