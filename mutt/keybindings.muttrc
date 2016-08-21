@@ -31,3 +31,6 @@ bind index p recall-message
 bind pager R group-reply
 bind index R group-reply
 # }}}
+
+# Sync the inbox
+macro index o "<shell-escape>offlineimap -qf INBOX<enter>"
