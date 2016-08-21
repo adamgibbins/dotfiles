@@ -29,11 +29,13 @@ hdr_order date from to cc subject
 set sidebar_visible
 set sidebar_format = "%B%* (%N)"
 set mail_check_stats
+set sidebar_short_path
 
 mailboxes "+-- AG ---------------" \
           +AG/INBOX \
           +AG/Archive \
           +AG/Sent \
+          +AG/Lists.lobsters \
           "+-- TG ---------------" \
           +TG/INBOX \
           +TG/Archive \
