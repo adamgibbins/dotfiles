@@ -10,6 +10,7 @@ gnupg/gpg.conf
 msmtprc
 mutt
 muttrc
+notmuch-config
 offlineimaprc
 offlineimaprc.py
 profile
