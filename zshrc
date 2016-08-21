@@ -1569,9 +1569,6 @@ alias md='mkdir -p'
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
 alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
 
-# simple webserver
-check_com -c python && alias http="python -m SimpleHTTPServer"
-
 # Use 'g' instead of 'git':
 check_com g || alias g='git'
 
