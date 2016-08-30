@@ -2,27 +2,26 @@
 doing_file: ~/doc/scraps/doing.taskpaper
 current_section: Currently
 editor_app: 
+autotag:
+  whitelist: []
+  synonyms: []
 templates:
   default:
-    date_format: '%Y-%m-%d %H:%M'
-    template: '%date | %title%note'
+    date_format: "%F %R"
+    template: "%date | %title%note"
     wrap_width: 0
   today:
-    date_format: '%_I:%M%P'
-    template: '%date: %title %interval%note'
+    template: "%date: %title %interval%note"
     wrap_width: 0
   last:
-    date_format: '%-I:%M%P on %a'
-    template: '%title (at %date)%odnote'
+    template: "%title (at %date)%odnote"
     wrap_width: 88
   recent:
-    date_format: '%_I:%M%P'
-    template: '%shortdate: %title'
+    template: "%shortdate: %title"
     wrap_width: 88
 views:
   done:
-    date_format: '%_I:%M%P'
-    template: '%date | %title%note'
+    template: "%date | %title%note"
     wrap_width: 0
     section: All
     count: 0
@@ -30,12 +29,12 @@ views:
     tags: done complete cancelled
     tags_bool: OR
   colour:
-    date_format: '%F %_I:%M%P'
-    template: '%boldblack%date %boldgreen| %boldwhite%title%default%note'
+    template: "%boldblack%date %boldgreen| %boldwhite%title%default%note"
     wrap_width: 0
     section: Currently
-    count: 10
+    count: 50
     order: asc
 marker_tag: flagged
 marker_color: red
 :include_notes: true
+default_tags: []
