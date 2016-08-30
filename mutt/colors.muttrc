@@ -36,3 +36,14 @@ color index magenta default ~T
 
 # deleted messages
 color index black yellow ~D
+
+# shiny git diffs
+color   body    brightwhite     default         ^[[:space:]].*
+color   body    brightwhite     default         ^(diff).*
+color   body    white           default         ^[\-\-\-].*
+color   body    white           default         ^[\+\+\+].*
+color   body    green           default         ^[\+].*
+color   body    red             default         ^[\-].*
+color   body    brightblue      default         [@@].*
+color   body    brightwhite     default         ^(Signed-off-by).*
+color   body    brightwhite     default         ^(Cc)
