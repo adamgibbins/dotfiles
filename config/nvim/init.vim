@@ -96,4 +96,5 @@ endfunc
 
 let g:vimwiki_list = [{'path': '~/doc/scraps', 'path_html': '~/Public/scraps', 'ext': '.txt'}]
 let taskwiki_data_location = "~/doc/taskwarrior"
+let b:beancount_root = "~/doc/beancount"
 let g:deoplete#enable_at_startup = 1
