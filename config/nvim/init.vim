@@ -75,6 +75,7 @@ let g:task_rc_override = 'rc._forcecolor=no rc.defaultwidth=120'
 let g:task_default_prompt = ['description', 'project', 'energy', 'priority', 'due', 'tags']
 
 autocmd! BufWritePost * Neomake
+let g:neomake_open_list = 2
 
 let g:lightline =
   \ {
