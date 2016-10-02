@@ -24,6 +24,7 @@ source /usr/local/opt/chruby/share/chruby/auto.sh
 fpath=($fpath /usr/local/share/doc/task/scripts/zsh)
 autoload -Uz compinit
 compinit
+# }}}
 
 # be verbose, i.e. show descriptions
 # zstyle ':completion:*' verbose yes
