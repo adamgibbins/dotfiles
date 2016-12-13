@@ -58,9 +58,6 @@
 [submodule "config/nvim/bundle/vim-lucius"]
 	path = config/nvim/bundle/vim-lucius
 	url = https://github.com/jonathanfilip/vim-lucius
-[submodule "config/nvim/bundle/vim-taskwarrior"]
-	path = config/nvim/bundle/vim-taskwarrior
-	url = https://github.com/blindFS/vim-taskwarrior.git
 [submodule "config/nvim/bundle/vim-beancount"]
 	path = config/nvim/bundle/vim-beancount
 	url = https://github.com/nathangrigg/vim-beancount.git
