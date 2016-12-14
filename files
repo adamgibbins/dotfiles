@@ -7,6 +7,7 @@ gemrc
 gitconfig
 gitignore
 gnupg/gpg.conf
+karabiner.d
 msmtprc
 mutt
 muttrc
