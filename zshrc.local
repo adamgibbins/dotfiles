@@ -15,6 +15,7 @@
 # Adjustments would still go to the .zshrc.local file.
 ################################################################################
 
+export EDITOR=nvim
 export CC=gcc
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
