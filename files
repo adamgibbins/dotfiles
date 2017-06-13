@@ -1,5 +1,6 @@
 bash_aliases
 bashrc
+config/karabiner
 config/nvim
 digrc
 doingrc
@@ -7,7 +8,6 @@ gemrc
 gitconfig
 gitignore
 gnupg/gpg.conf
-karabiner.d
 msmtprc
 mutt
 muttrc
