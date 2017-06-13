@@ -163,6 +163,7 @@ source ~/.zsh/zgen/zgen.zsh
 zgen load jamesob/desk shell_plugins/zsh
 zgen load zsh-users/zsh-completions
 zgen load zsh-users/zsh-syntax-highlighting
+zgen load zsh-users/zsh-autosuggestions
 zgen oh-my-zsh plugins/autojump
 
 # utility functions {{{
@@ -514,6 +515,8 @@ if is439 ; then
     bindkey '^r' history-incremental-pattern-search-backward
     bindkey '^s' history-incremental-pattern-search-forward
 fi
+
+bindkey '^ ' autosuggest-accept
 # }}}
 
 # a generic accept-line wrapper {{{
