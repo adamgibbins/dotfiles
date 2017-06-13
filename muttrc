@@ -3,7 +3,7 @@ reset all
 # Paths {{{
 set my_mutt_home     = ~/.mutt
 set folder           = ~/Mail
-set spoolfile        = +AG/INBOX
+set spoolfile        = +TG/INBOX
 set alias_file       = $my_mutt_home/alias
 set certificate_file = $my_mutt_home/certs
 set mailcap_path     = $my_mutt_home/mailcap
@@ -26,7 +26,7 @@ unignore from subject to cc date x-mailer x-url user-agent
 unhdr_order *
 hdr_order date from to cc subject
 
-set sidebar_visible
+#set sidebar_visible
 set sidebar_format = "%B%* (%N)"
 set mail_check_stats
 set sidebar_short_path
