@@ -17,8 +17,8 @@ localfolders = ~/Mail/TG
 
 [Repository TG-Remote]
 remotehost=imap.outlook.com
-remoteuser=adam.gibbins@timgroup.com
 remotepasseval = keyring.get_password('Office365', 'TIMGroup')
+remoteuser=adam.gibbins@acuris.com
 maxconnections = 1
 realdelete = yes
 type = IMAP

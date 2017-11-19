@@ -1,4 +1,4 @@
-set from = 'Adam Gibbins <adam.gibbins@timgroup.com>'
+set from = 'Adam Gibbins <adam.gibbins@acuris.com>'
 set sendmail = '/usr/local/bin/msmtp -a timgroup'
 
 set record = "+TG/Sent Items"
