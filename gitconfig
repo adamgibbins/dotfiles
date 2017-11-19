@@ -1,7 +1,7 @@
 [user]
-	name       = Adam Gibbins
-	email      = adam@adamgibbins.com
+	name = Adam Gibbins
 	signingkey = C703DE05
+	useconfigonly = true
 
 [format]
 	numbered = auto
