@@ -50,6 +50,7 @@
 [diff]
 	tool = vimdiff
 	external = ~/bin/git_diff_wrapper
+	compactionHeuristic = true
 
 [merge]
 	summary = true
