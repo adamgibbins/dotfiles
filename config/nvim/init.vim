@@ -2,7 +2,13 @@ runtime bundle/pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 call pathogen#helptags()
 
-source /usr/local/opt/fzf/plugin/fzf.vim
+set rtp+=/usr/local/opt/fzf
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,node_modules,vendor}/*" '
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 syntax on
 filetype plugin indent on
