@@ -74,8 +74,8 @@ au FileType ledger map <leader>x :call ledger#transaction_state_toggle(line('.')
 let g:task_rc_override = 'rc._forcecolor=no rc.defaultwidth=120'
 let g:task_default_prompt = ['description', 'project', 'energy', 'priority', 'due', 'tags']
 
-autocmd! BufWritePost,BufWinEnter * Neomake
-let g:neomake_open_list = 2
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:lightline =
   \ {
@@ -84,10 +84,22 @@ let g:lightline =
   \     'left': [
   \       [ 'mode', 'paste', 'warning' ],
   \       [ 'fugitive', 'readonly', 'filename', 'modified' ]
+  \     ],
+  \     'right': [
+  \       [ 'linter_errors', 'linter_warnings', 'linter_ok' ]
   \     ]
   \   },
   \   'component_function': {
   \     'fugitive': 'LightLineFugitive'
+  \   },
+  \   'component_expand': {
+  \     'linter_warnings': 'lightline#ale#warnings',
+  \     'linter_errors': 'lightline#ale#errors',
+  \     'linter_ok': 'lightline#ale#ok',
+  \   },
+  \   'component_type': {
+  \     'linter_warnings': 'warning',
+  \     'linter_errors': 'error',
   \   }
   \ }
 

@@ -34,9 +34,6 @@
 [submodule "config/nvim/bundle/ledger"]
 	path = config/nvim/bundle/ledger
 	url = git://github.com/ledger/vim-ledger
-[submodule "config/nvim/bundle/neomake"]
-	path = config/nvim/bundle/neomake
-	url = git://github.com/benekastah/neomake.git
 [submodule "config/nvim/bundle/gutentags"]
 	path = config/nvim/bundle/gutentags
 	url = git://github.com/ludovicchabant/vim-gutentags
@@ -73,3 +70,9 @@
 [submodule "config/nvim/bundle/deoplete"]
 	path = config/nvim/bundle/deoplete
 	url = https://github.com/Shougo/deoplete.nvim
+[submodule "config/nvim/bundle/ale"]
+	path = config/nvim/bundle/ale
+	url = https://github.com/w0rp/ale.git
+[submodule "config/nvim/bundle/lightline-ale"]
+	path = config/nvim/bundle/lightline-ale
+	url = https://github.com/maximbaz/lightline-ale.git
