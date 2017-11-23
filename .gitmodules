@@ -58,9 +58,6 @@
 [submodule "config/nvim/bundle/vim-beancount"]
 	path = config/nvim/bundle/vim-beancount
 	url = https://github.com/nathangrigg/vim-beancount.git
-[submodule "config/nvim/bundle/taskwiki"]
-	path = config/nvim/bundle/taskwiki
-	url = https://github.com/tbabej/taskwiki.git
 [submodule "config/nvim/bundle/vimwiki"]
 	path = config/nvim/bundle/vimwiki
 	url = https://github.com/vimwiki/vimwiki.git
