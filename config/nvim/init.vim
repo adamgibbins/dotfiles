@@ -89,7 +89,9 @@ let g:lightline =
   \       [ 'fugitive', 'readonly', 'filename', 'modified' ]
   \     ],
   \     'right': [
-  \       [ 'linter_errors', 'linter_warnings', 'linter_ok' ]
+  \       [ 'linter_errors', 'linter_warnings', 'linter_ok' ],
+  \       [ 'percent', 'lineinfo' ],
+  \       [ 'fileformat', 'fileencoding', 'filetype' ],
   \     ]
   \   },
   \   'component_function': {
