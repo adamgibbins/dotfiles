@@ -79,6 +79,7 @@ au FileType ledger map <leader>x :call ledger#transaction_state_toggle(line('.')
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap F <Plug>(easymotion-prefix)s
 
 let g:lightline =
   \ {

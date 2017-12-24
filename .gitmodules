@@ -73,3 +73,6 @@
 [submodule "config/nvim/bundle/lightline-ale"]
 	path = config/nvim/bundle/lightline-ale
 	url = https://github.com/maximbaz/lightline-ale.git
+[submodule "config/nvim/bundle/vim-easymotion"]
+	path = config/nvim/bundle/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion.git
