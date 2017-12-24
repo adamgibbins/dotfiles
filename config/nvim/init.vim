@@ -32,6 +32,7 @@ set hidden
 set shada+='50
 set mouse=r
 set updatecount=50
+set list
 
 set encoding=utf-8
 set fileencoding=utf-8
