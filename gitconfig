@@ -48,8 +48,7 @@
 	excludesfile       = ~/.gitignore
 
 [diff]
-	tool = vimdiff
-	external = ~/bin/git_diff_wrapper
+	tool = nvim -d
 	compactionHeuristic = true
 
 [merge]
@@ -71,5 +70,8 @@
   httpd = webrick
   port  = 4000
   browser = open
+
+[init]
+	defaultBranch = main
 
 # vim: st=2:ts=2:noet:ft=gitconfig
