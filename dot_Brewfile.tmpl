@@ -1,0 +1,77 @@
+brew 'atuin' # Shell history search
+brew 'awscli'
+brew 'bat'
+brew 'chezmoi'
+brew 'difftastic' # AST diff
+brew 'dtach' # Light tmux
+brew 'eza' # ls replacement
+brew 'fd' # find replacement
+brew 'ffmpeg'
+brew 'fzf'
+brew 'gh'
+brew 'git'
+brew 'git-absorb'
+brew 'git-delta'
+brew 'glow' # Markdown viewer
+brew 'granted'
+brew 'hyperfine'
+brew 'ipcalc'
+brew 'jq'
+brew 'just'
+brew 'lazygit'
+brew 'magic-wormhole'
+brew 'mise'
+brew 'mosh'
+brew 'ncdu'
+brew 'neovim'
+brew 'nmap'
+brew 'ripgrep'
+brew 'sd' # sed replacement
+brew 'shellcheck'
+brew 'tig'
+brew 'tldr'
+brew 'tmux'
+brew 'uv'
+brew 'watch'
+brew 'wget'
+brew 'yt-dlp'
+brew 'zoxide' # cd replacement
+
+cask '1password'
+cask '1password-cli'
+cask 'alfred'
+cask 'firefox'
+cask 'font-jetbrains-mono-nerd-font'
+cask 'ghostty'
+cask 'hammerspoon'
+cask 'hyperkey'
+cask 'microsoft-edge'
+cask 'obsidian'
+cask 'spotify'
+cask 'stats'
+cask 'visual-studio-code'
+
+# Personal
+{{- if eq .chezmoi.username "aeg" }}
+cask 'arq'
+cask 'calibre'
+cask 'coconutbattery'
+cask 'discord'
+cask 'fastmail'
+cask 'google-chrome'
+cask 'google-earth-pro'
+cask 'home-assistant'
+cask 'iina'
+cask 'mx-power-gadget'
+cask 'orbstack'
+cask 'portfolioperformance'
+cask 'signal'
+cask 'steam'
+cask 'tailscale-app'
+cask 'whatsapp'
+cask 'yubico-authenticator'
+
+# Work
+{{- else }}
+brew 'mergermarket/tap/cdflow2', trusted: true
+{{- end }}

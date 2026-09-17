@@ -1,0 +1,13 @@
+[".config/nvim"]
+    type = "git-repo"
+    url = "git@github.com:adamgibbins/neovim-config.git"
+    refreshPeriod = "168h"
+    [".config/nvim".pull]
+        args = ["--ff-only"]
+
+[".hammerspoon"]
+    type = "git-repo"
+    url = "git@github.com:adamgibbins/hammerspoon-config.git"
+    refreshPeriod = "168h"
+    [".hammerspoon".pull]
+        args = ["--ff-only"]

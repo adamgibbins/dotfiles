@@ -1,0 +1,25 @@
+# Required for MacOS 27.0 https://github.com/ghostty-org/ghostty/issues/13001
+auto-update-channel = tip
+font-family = "JetBrainsMono Nerd Font Mono"
+theme = light:Flexoki Light, dark:Flexoki Dark
+
+macos-option-as-alt = left
+macos-titlebar-style = tabs
+
+background-opacity = 0.95
+background-blur = true
+background-blur-radius = 20
+
+keybind = global:cmd+§=toggle_quick_terminal
+#quick-terminal-position = center
+#quick-terminal-animation-duration = 0.1
+
+#keybind = super+f=write_screen_file:open
+
+split-divider-color = grey
+unfocused-split-fill = #500028
+
+mouse-hide-while-typing = true
+
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = bell,notify
