@@ -1,0 +1,7 @@
+[tools]
+node = "latest"
+prek = "latest"
+python = "latest"
+shellcheck = "latest"
+terraform = "latest"
+uv = "latest"
