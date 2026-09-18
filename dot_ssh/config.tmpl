@@ -5,6 +5,7 @@ Include ~/.ssh/config.d/*
 
 Host *
     {{- if eq .chezmoi.username "aeg" }}
+    User aeg
     {{- else }}
     User adamgibbins
     {{- end }}
