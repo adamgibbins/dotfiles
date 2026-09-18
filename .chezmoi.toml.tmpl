@@ -1,5 +1,6 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
 
+sourceDir = "~/src/adamgibbins/dotfiles"
 encryption = "age"
 [age]
     identity = "~/.config/chezmoi/key.txt"
