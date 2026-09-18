@@ -1,0 +1,280 @@
+# profiling <<<
+# run `ZSH_PROFILE_RC=1 zsh` then `zprof` to see where startup time goes
+(( ${ZSH_PROFILE_RC:-0} )) && zmodload zsh/zprof
+# >>>
+
+# options <<<
+setopt append_history       # append rather than overwrite the history file
+setopt share_history        # import new commands from the history file live
+setopt extended_history     # record timestamp + duration per command
+setopt histignorealldups    # drop the older duplicate when one is re-run
+setopt histignorespace      # don't record lines starting with a space
+setopt auto_cd              # `cd`-able name on its own acts as `cd name`
+setopt extended_glob        # enable #, ~ and ^ in globs
+setopt auto_pushd           # push the old directory onto the directory stack
+setopt pushd_ignore_dups    # ...without duplicates
+setopt nonomatch            # don't error out on a glob with no matches
+setopt nobeep
+setopt notify               # report background job status immediately
+setopt completeinword       # allow completion in the middle of a word
+setopt interactivecomments  # allow # comments on the command line
+setopt correct              # command-name spelling correction
+
+# don't flash a reverse-video % placeholder when redrawing the prompt after
+# a completion listing
+unsetopt prompt_sp
+
+HISTFILE=~/.zsh_history
+HISTSIZE=5000
+SAVEHIST=10000
+REPORTTIME=5 # warn if a command used more than 5s of CPU time
+
+typeset -U path cdpath fpath manpath
+# >>>
+
+# directory stack persistence <<<
+DIRSTACKSIZE=20
+DIRSTACKFILE=~/.zdirs
+
+if [[ -f $DIRSTACKFILE ]] && (( ${#dirstack} == 0 )); then
+    dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+    [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+fi
+
+chpwd() {
+    [[ -n $DIRSTACKFILE ]] || return
+    local -aU stack
+    stack=( $PWD $dirstack )
+    print -l $stack >! $DIRSTACKFILE
+}
+# >>>
+
+# environment <<<
+export EDITOR=${EDITOR:-nvim}
+export PAGER=${PAGER:-'less -R'}
+export CLICOLOR=1
+
+# GNU dircolors default database (macOS's BSD ls doesn't use this format, but
+# zsh's completion menu does, via the list-colors zstyle below)
+export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.7z=01;31:*.ace=01;31:*.alz=01;31:*.apk=01;31:*.arc=01;31:*.arj=01;31:*.bz=01;31:*.bz2=01;31:*.cab=01;31:*.cpio=01;31:*.crate=01;31:*.deb=01;31:*.drpm=01;31:*.dwm=01;31:*.dz=01;31:*.ear=01;31:*.egg=01;31:*.esd=01;31:*.gz=01;31:*.jar=01;31:*.lha=01;31:*.lrz=01;31:*.lz=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.lzo=01;31:*.pyz=01;31:*.rar=01;31:*.rpm=01;31:*.rz=01;31:*.sar=01;31:*.swm=01;31:*.t7z=01;31:*.tar=01;31:*.taz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tgz=01;31:*.tlz=01;31:*.txz=01;31:*.tz=01;31:*.tzo=01;31:*.tzst=01;31:*.udeb=01;31:*.war=01;31:*.whl=01;31:*.wim=01;31:*.xz=01;31:*.z=01;31:*.zip=01;31:*.zoo=01;31:*.zst=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.jxl=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:'
+export CC=gcc
+
+{{ if ne .chezmoi.username "aeg" -}}
+export JOB_NAME=adam
+
+# Netskope TLS inspection (IONgroup) re-signs outbound HTTPS with its own CA,
+# which Node/bun don't trust by default. Add it on top of the built-in bundle.
+export NODE_EXTRA_CA_CERTS="${HOME}/.config/certs/netskope-ca.pem"
+{{ end }}
+
+# colorize less
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+# >>>
+
+# plugins <<<
+source ~/.local/share/zgen/zgen.zsh
+if ! zgen saved; then
+    zgen load zsh-users/zsh-completions
+    zgen load zsh-users/zsh-autosuggestions
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen save
+fi
+# >>>
+
+# cache slow-to-generate shell setup so we don't fork a subprocess on every
+# startup; run `update-shell-cache` after upgrading <<<
+ZSH_CACHE_DIR=~/.cache/zsh
+[[ -d $ZSH_CACHE_DIR ]] || mkdir -p $ZSH_CACHE_DIR
+
+update-shell-cache() {
+    /opt/homebrew/bin/brew shellenv > "$ZSH_CACHE_DIR/brew-shellenv.zsh"
+    kubectl completion zsh > "$ZSH_CACHE_DIR/kubectl-completion.zsh"
+}
+
+[[ -r "$ZSH_CACHE_DIR/brew-shellenv.zsh" ]] || update-shell-cache
+source "$ZSH_CACHE_DIR/brew-shellenv.zsh"
+# >>>
+
+# completion system <<<
+autoload -Uz compinit && compinit
+zmodload zsh/complist
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' menu select=5
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose true
+zstyle ':completion:*' special-dirs ..
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
+zstyle ':completion:*:approximate:' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3)) numeric )'
+zstyle ':completion:*:processes' command 'ps -au$USER'
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.*' insert-sections true
+zstyle ':completion:*:man:*' menu yes select
+
+bindkey -M menuselect '\e^M' accept-and-menu-complete
+bindkey -M menuselect '^o'   accept-and-infer-next-history
+
+[[ -r "$ZSH_CACHE_DIR/kubectl-completion.zsh" ]] || update-shell-cache
+source "$ZSH_CACHE_DIR/kubectl-completion.zsh"
+# >>>
+
+# keybindings <<<
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+zle -C hist-complete complete-word _generic
+zstyle ':completion:hist-complete:*' completer _history
+
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER != sudo\ * ]]; then
+        BUFFER="sudo $BUFFER"
+        CURSOR=$(( CURSOR + 5 ))
+    fi
+}
+zle -N sudo-command-line
+
+alias run-help >&/dev/null && unalias run-help
+autoload -Uz run-help run-help-git
+
+bindkey -e
+bindkey '^ '     autosuggest-accept  # ctrl-space accepts the current autosuggestion
+bindkey ' '      magic-space        # history expansion on space
+bindkey '\ee'    edit-command-line  # edit the command line in $EDITOR
+bindkey '\ei'    menu-complete      # menu completion
+bindkey '^X^X'   hist-complete      # complete word from history
+bindkey '^Os'    sudo-command-line  # prepend sudo to the command line
+bindkey '\e[A'   up-line-or-search  # up arrow: history search by prefix
+bindkey '\e[B'   down-line-or-search
+# >>>
+
+# prompt <<<
+autoload -Uz colors && colors
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' max-exports 1
+zstyle ':vcs_info:*' actionformats "%{${fg[magenta]}%}(%s)%{${fg[yellow]}%}-%{${fg[magenta]}%}[%{${fg[green]}%}%b%{${fg[yellow]}%}|%{${fg[red]}%}%a%{${fg[magenta]}%}]%{${reset_color}%} "
+zstyle ':vcs_info:*' formats       "%{${fg[magenta]}%}(%s)%{${fg[yellow]}%}-%{${fg[magenta]}%}[%{${fg[green]}%}%b%{${fg[magenta]}%}]%{${reset_color}%} "
+
+setopt prompt_subst
+setopt transient_rprompt
+
+precmd() { vcs_info }
+
+if [[ $TERM == dumb ]]; then
+    PROMPT='%(?..%? )%n@%m %40<...<%B%~%b%<< %# '
+else
+    if (( EUID != 0 )); then
+        PROMPT="%(?..%{${fg_bold[red]}%}%?%{${reset_color}%} )%{${fg[blue]}%}%n%{${reset_color}%}@%m %40<...<%B%~%b%<< "
+    else
+        PROMPT="%(?..%{${fg_bold[blue]}%}%?%{${reset_color}%} )%{${fg_bold[red]}%}%n%{${reset_color}%}@%m %40<...<%B%~%b%<< "
+    fi
+    PROMPT="${PROMPT}"'${vcs_info_msg_0_}'"%# "
+fi
+RPROMPT='%(?..:() '
+# >>>
+
+# aliases <<<
+alias ls='ls -b -CF'
+alias la='ls -la'
+alias ll='ls -l'
+alias lh='ls -hAl'
+alias l='ls -lF'
+
+alias ...='cd ../../'
+
+alias cp='nocorrect cp'   # no spelling correction on cp
+alias mkdir='nocorrect mkdir'
+alias mv='nocorrect mv'
+alias rm='nocorrect rm'
+
+alias rd='rmdir'
+alias md='mkdir'
+
+alias top10='print -l ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
+
+alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "PreferredAuthentications=keyboard-interactive"'
+alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
+alias sshold='ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa'
+
+alias cat=bat
+alias g=git
+
+alias k=kubectl
+{{ if ne .chezmoi.username "aeg" -}}
+alias kpg='kubectl --context pg'
+alias koy='kubectl --context oy'
+alias kwa-staging='kubectl --context wa-staging'
+alias kwa-prod='kubectl --context wa-prod'
+{{ end -}}
+
+alias dip="docker inspect --format '{{ "{{" }} .NetworkSettings.IPAddress {{ "}}" }}'"
+alias dkd="docker run -d -P"
+alias dki="docker run -t -i -P"
+
+alias tmn='tmux new -s $(basename $(pwd))'
+alias tma='tmux attach -d -t'
+
+alias -g '...'='../..'
+alias -g '....'='../../..'
+alias -g V='| vim -'
+# >>>
+
+# functions <<<
+freload() { while (( $# )); do unfunction $1; autoload -Uz $1; shift; done }
+compdef _functions freload
+
+edalias() { [[ -z "$1" ]] && { echo "Usage: edalias <alias_to_edit>"; return 1 } || vared aliases'[$1]' }
+compdef _aliases edalias
+
+edfunc() { [[ -z "$1" ]] && { echo "Usage: edfunc <function_to_edit>"; return 1 } || zed -f "$1" }
+compdef _functions edfunc
+autoload -Uz zed
+
+profile() { ZSH_PROFILE_RC=1 $SHELL "$@" }
+
+mcd() { mkdir -p "$@" && cd "$@" }
+cdt() { local t=$(mktemp -d); echo "$t"; builtin cd "$t" }
+
+# cd to the containing directory if given a file, e.g. `cd /etc/fstab`
+cd() {
+    if (( $# == 1 )) && [[ -f $1 ]]; then
+        [[ ! -e ${1:h} ]] && return 1
+        print "Correcting ${1} to ${1:h}"
+        builtin cd ${1:h}
+    else
+        builtin cd "$@"
+    fi
+}
+
+dash() { open "dash://$(urlencode $@)" }
+dman() { open "dash://man:$(urlencode $@)" }
+
+drm() { docker rm $(docker ps -q -a) }
+dri() { docker rmi $(docker images -q) }
+db() { docker build -t="$1" . }
+# >>>
+
+# fzf <<<
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# >>>
+
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# Claude Code
+export USE_BUILTIN_RIPGREP=0
+
+eval "$(mise activate zsh)"
+eval "$(atuin init zsh)"
+
+# vim:filetype=zsh foldmethod=marker foldmarker=<<<,>>> autoindent expandtab shiftwidth=4
