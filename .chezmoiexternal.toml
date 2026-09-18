@@ -12,9 +12,9 @@
     [".hammerspoon".pull]
         args = ["--ff-only"]
 
-[".local/share/zgen"]
+[".local/share/antidote"]
     type = "git-repo"
-    url = "https://github.com/tarjoilija/zgen.git"
+    url = "https://github.com/mattmc3/antidote.git"
     refreshPeriod = "168h"
-    [".local/share/zgen".pull]
+    [".local/share/antidote".pull]
         args = ["--ff-only"]
