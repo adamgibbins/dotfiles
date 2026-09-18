@@ -50,7 +50,7 @@ chpwd() {
 # >>>
 
 # environment <<<
-export EDITOR=${EDITOR:-nvim}
+export EDITOR=nvim
 export PAGER=${PAGER:-'less -R'}
 export CLICOLOR=1
 
@@ -97,6 +97,7 @@ source $ZSH_PLUGINS_ZSH
 # one before it <<<
 zsh-defer -c 'eval "$(/opt/homebrew/bin/brew shellenv)"'
 zsh-defer -c 'eval "$(kubectl completion zsh)"'
+zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 # >>>
 
 # completion system <<<
@@ -258,8 +259,6 @@ dri() { docker rmi $(docker images -q) }
 db() { docker build -t="$1" . }
 # >>>
 
-# fzf <<<
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # >>>
