@@ -36,6 +36,7 @@
 	branch-touched = for-each-ref --sort=-authorname refs/remotes/ --format='%(refname:short) %(committerdate:short) %(authorname)'
 	git = !git
 	ab = absorb --and-rebase
+	dft = difftool -y -t difftastic
 
 [core]
 	fsmonitor = true
@@ -59,6 +60,7 @@
 
 [commit]
 	gpgsign = true
+	verbose = true
 
 [tag]
 	gpgsign = true
@@ -67,6 +69,14 @@
 	tool = nvim -d
 	algorithm = histogram
 	colorMoved = default
+	mnemonicPrefix = true
+	renames = true
+
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+
+[branch]
+	sort = -committerdate
 
 [merge]
 	conflictstyle = zdiff3
