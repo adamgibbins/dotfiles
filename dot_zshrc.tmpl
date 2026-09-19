@@ -186,7 +186,6 @@ alias lh='eza -hAl'
 alias l='eza -lF'
 
 alias ...='cd ../../'
-alias cd='z'
 
 alias cp='nocorrect cp'   # no spelling correction on cp
 alias mkdir='nocorrect mkdir'
@@ -241,7 +240,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Claude Code
 export USE_BUILTIN_RIPGREP=0
 
-zsh-defer -c 'eval "$(zoxide init zsh)"'
+zsh-defer -c 'eval "$(zoxide init --cmd cd zsh)"'
 zsh-defer -c 'eval "$(atuin init zsh)"'
 zsh-defer -c 'eval "$(mise activate zsh)"'
 
