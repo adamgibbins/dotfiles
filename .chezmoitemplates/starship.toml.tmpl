@@ -1,0 +1,24 @@
+format = "$directory$git_branch$git_status$aws$character"
+
+[directory]
+style = "{{ .directory }}"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "{{ .git_branch }}"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "{{ .git_status }}"
+format = "([$all_status$ahead_behind]($style)) "
+
+[aws]
+symbol = " "
+style = "{{ .aws }}"
+format = "[$symbol$profile]($style) "
+
+[character]
+success_symbol = "[❯]({{ .character_success }})"
+error_symbol = "[❯]({{ .character_error }})"

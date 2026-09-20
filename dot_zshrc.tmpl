@@ -53,6 +53,8 @@ chpwd() {
 export EDITOR=nvim
 export PAGER=${PAGER:-'less -R'}
 export CLICOLOR=1
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
 
 # GNU dircolors default database (macOS's BSD ls doesn't use this format, but
 # zsh's completion menu does, via the list-colors zstyle below)
@@ -165,32 +167,6 @@ bindkey '\e[A'   up-line-or-search  # up arrow: history search by prefix
 bindkey '\e[B'   down-line-or-search
 # >>>
 
-# prompt <<<
-autoload -Uz colors && colors
-autoload -Uz vcs_info
-
-zstyle ':vcs_info:*' max-exports 1
-zstyle ':vcs_info:*' actionformats "%{${fg[magenta]}%}(%s)%{${fg[yellow]}%}-%{${fg[magenta]}%}[%{${fg[green]}%}%b%{${fg[yellow]}%}|%{${fg[red]}%}%a%{${fg[magenta]}%}]%{${reset_color}%} "
-zstyle ':vcs_info:*' formats       "%{${fg[magenta]}%}(%s)%{${fg[yellow]}%}-%{${fg[magenta]}%}[%{${fg[green]}%}%b%{${fg[magenta]}%}]%{${reset_color}%} "
-
-setopt prompt_subst
-setopt transient_rprompt
-
-precmd() { vcs_info }
-
-if [[ $TERM == dumb ]]; then
-  PROMPT='%(?..%? )%n@%m %40<...<%B%~%b%<< %# '
-else
-  if (( EUID != 0 )); then
-    PROMPT="%(?..%{${fg_bold[red]}%}%?%{${reset_color}%} )%{${fg[blue]}%}%n%{${reset_color}%}@%m %40<...<%B%~%b%<< "
-  else
-    PROMPT="%(?..%{${fg_bold[blue]}%}%?%{${reset_color}%} )%{${fg_bold[red]}%}%n%{${reset_color}%}@%m %40<...<%B%~%b%<< "
-  fi
-  PROMPT="${PROMPT}"'${vcs_info_msg_0_}'"%# "
-fi
-RPROMPT='%(?..:() '
-# >>>
-
 # aliases <<<
 alias ls='eza'
 alias la='eza -la'
@@ -257,6 +233,7 @@ if defaults read -g AppleInterfaceStyle &>/dev/null; then
     --color=spinner:#3AA99F,info:#3AA99F,separator:#1C1B1A
     --color=pointer:#D0A215,marker:#D14D41,prompt:#D0A215"
   export BAT_THEME='Flexoki Dark'
+  export STARSHIP_CONFIG="$HOME/.config/starship-dark.toml"
 else
   export FZF_DEFAULT_OPTS="
     --color=fg:#B7B5AC,bg:#FFFCF0,hl:#100F0F
@@ -265,6 +242,7 @@ else
     --color=spinner:#3AA99F,info:#3AA99F,separator:#F2F0E5
     --color=pointer:#D0A215,marker:#D14D41,prompt:#D0A215"
   export BAT_THEME='Flexoki Light'
+  export STARSHIP_CONFIG="$HOME/.config/starship-light.toml"
 fi
 # >>>
 
@@ -273,6 +251,10 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Claude Code
 export USE_BUILTIN_RIPGREP=0
 
+# Granted
+alias assume=". assume"
+
+eval "$(starship init zsh)"
 zsh-defer -c 'eval "$(zoxide init --cmd cd zsh)"'
 zsh-defer -c 'eval "$(atuin init zsh)"'
 zsh-defer -c 'eval "$(mise activate zsh)"'
