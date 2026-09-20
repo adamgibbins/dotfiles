@@ -3,7 +3,7 @@ auto-update-channel = tip
 auto-update = download
 
 #font-family = "CommitMono Nerd Font"
-#font-family = "IBM Plex Mono"
+#font-family = "BlexMono Nerd Font"
 #font-family = "JetBrainsMono Nerd Font Mono"
 font-family = "MonoLisaCode Trial"
 #font-family = "Monaspace Krypton NF"
