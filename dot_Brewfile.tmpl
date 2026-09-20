@@ -1,0 +1,104 @@
+brew 'atuin', start_service: true # Shell history search
+brew 'awscli'
+brew 'bat'
+brew 'chezmoi'
+brew 'difftastic' # AST diff
+brew 'dtach' # Light tmux
+brew 'eza' # ls replacement
+brew 'fd' # find replacement
+brew 'ffmpeg'
+brew 'fzf'
+brew 'gh'
+brew 'git'
+brew 'git-absorb'
+brew 'git-delta'
+brew 'git-extras'
+brew 'git-lfs'
+brew 'glow' # Markdown viewer
+brew 'granted'
+brew 'hyperfine'
+brew 'ipcalc'
+brew 'jj'
+brew 'jq'
+brew 'just'
+brew 'lazygit'
+brew 'magic-wormhole'
+brew 'mas'
+brew 'mise'
+brew 'mosh'
+brew 'ncdu'
+brew 'neovim'
+brew 'nmap'
+brew 'ripgrep'
+brew 'sd' # sed replacement
+brew 'shellcheck'
+brew 'tig'
+brew 'tldr'
+brew 'tmux'
+brew 'uv'
+brew 'watch'
+brew 'wget'
+brew 'yt-dlp'
+brew 'zoxide' # cd replacement
+
+cask '1password'
+cask '1password-cli'
+cask 'alfred'
+cask 'firefox'
+cask 'font-commit-mono-nerd-font'
+cask 'font-ibm-plex-mono'
+cask 'font-ibm-plex-sans'
+cask 'font-jetbrains-mono-nerd-font'
+cask 'font-monaspace-nf'
+cask 'ghostty'
+cask 'google-chrome'
+cask 'hammerspoon'
+cask 'hyperkey'
+cask 'microsoft-edge'
+cask 'obsidian'
+cask 'openlogi'
+cask 'spotify'
+cask 'stats'
+cask 'visual-studio-code'
+cask 'wireshark-app'
+cask 'yubico-authenticator'
+
+# Personal
+{{- if eq .chezmoi.username "aeg" }}
+brew 'beancount-language-server'
+brew 'rclone'
+brew 'restic'
+
+cask 'arq'
+cask 'balenaetcher'
+cask 'calibre'
+cask 'chatgpt'
+cask 'claude'
+cask 'claude-code'
+cask 'cleanshot'
+cask 'coconutbattery'
+cask 'codex'
+cask 'discord'
+cask 'fastmail'
+cask 'fujitsu-scansnap-home'
+cask 'google-earth-pro'
+cask 'home-assistant'
+cask 'iina'
+cask 'mx-power-gadget'
+cask 'orbstack'
+cask 'portfolioperformance'
+cask 'signal'
+cask 'slack'
+cask 'steam'
+cask 'tailscale-app'
+cask 'whatsapp'
+
+mas 'Microsoft Excel', id: 462058435
+mas 'Flighty', id: 1358823008
+mas 'TestFlight', id: 899247664
+mas 'Brother P-touch Editor', id: 1453365242
+
+# Work
+{{- else }}
+brew 'mergermarket/tap/cdflow2', trusted: true
+{{- end }}

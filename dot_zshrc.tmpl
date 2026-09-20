@@ -1,0 +1,280 @@
+# profiling <<<
+# run `ZSH_PROFILE_RC=1 zsh` then `zprof` to see where startup time goes
+(( ${ZSH_PROFILE_RC:-0} )) && zmodload zsh/zprof
+# >>>
+
+# options <<<
+setopt append_history       # append rather than overwrite the history file
+setopt share_history        # import new commands from the history file live
+setopt extended_history     # record timestamp + duration per command
+setopt histignorealldups    # drop the older duplicate when one is re-run
+setopt histignorespace      # don't record lines starting with a space
+setopt auto_cd              # `cd`-able name on its own acts as `cd name`
+setopt extended_glob        # enable #, ~ and ^ in globs
+setopt auto_pushd           # push the old directory onto the directory stack
+setopt pushd_ignore_dups    # ...without duplicates
+setopt nonomatch            # don't error out on a glob with no matches
+setopt nobeep
+setopt notify               # report background job status immediately
+setopt completeinword       # allow completion in the middle of a word
+setopt interactivecomments  # allow # comments on the command line
+setopt correct              # command-name spelling correction
+
+# don't flash a reverse-video % placeholder when redrawing the prompt after
+# a completion listing
+unsetopt prompt_sp
+
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=100000
+REPORTTIME=5 # warn if a command used more than 5s of CPU time
+
+typeset -U path cdpath fpath manpath
+# >>>
+
+# directory stack persistence <<<
+DIRSTACKSIZE=20
+DIRSTACKFILE=~/.zdirs
+
+if [[ -f $DIRSTACKFILE ]] && (( ${#dirstack} == 0 )); then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+fi
+
+chpwd() {
+  [[ -n $DIRSTACKFILE ]] || return
+  local -aU stack
+  stack=( $PWD $dirstack )
+  print -l $stack >! $DIRSTACKFILE
+}
+# >>>
+
+# environment <<<
+export EDITOR=nvim
+export PAGER=${PAGER:-'less -R'}
+export CLICOLOR=1
+
+# GNU dircolors default database (macOS's BSD ls doesn't use this format, but
+# zsh's completion menu does, via the list-colors zstyle below)
+export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.7z=01;31:*.ace=01;31:*.alz=01;31:*.apk=01;31:*.arc=01;31:*.arj=01;31:*.bz=01;31:*.bz2=01;31:*.cab=01;31:*.cpio=01;31:*.crate=01;31:*.deb=01;31:*.drpm=01;31:*.dwm=01;31:*.dz=01;31:*.ear=01;31:*.egg=01;31:*.esd=01;31:*.gz=01;31:*.jar=01;31:*.lha=01;31:*.lrz=01;31:*.lz=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.lzo=01;31:*.pyz=01;31:*.rar=01;31:*.rpm=01;31:*.rz=01;31:*.sar=01;31:*.swm=01;31:*.t7z=01;31:*.tar=01;31:*.taz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tgz=01;31:*.tlz=01;31:*.txz=01;31:*.tz=01;31:*.tzo=01;31:*.tzst=01;31:*.udeb=01;31:*.war=01;31:*.whl=01;31:*.wim=01;31:*.xz=01;31:*.z=01;31:*.zip=01;31:*.zoo=01;31:*.zst=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.jxl=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:'
+export CC=gcc
+
+{{ if ne .chezmoi.username "aeg" -}}
+export JOB_NAME=adam
+
+# Netskope TLS inspection (IONgroup) re-signs outbound HTTPS with its own CA,
+# which Node/bun don't trust by default. Add it on top of the built-in bundle.
+export NODE_EXTRA_CA_CERTS="${HOME}/.config/certs/netskope-ca.pem"
+{{ end }}
+
+# colorize less
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+# >>>
+
+# cache dir, used by antidote's plugin bundle and zsh's completion cache <<<
+ZSH_CACHE_DIR=~/.cache/zsh
+[[ -d $ZSH_CACHE_DIR ]] || mkdir -p $ZSH_CACHE_DIR
+# >>>
+
+# plugins <<<
+source ~/.local/share/antidote/antidote.zsh
+ZSH_PLUGINS_TXT=~/.zsh_plugins.txt
+ZSH_PLUGINS_ZSH="$ZSH_CACHE_DIR/plugins.zsh"
+if [[ ! -f $ZSH_PLUGINS_ZSH || $ZSH_PLUGINS_TXT -nt $ZSH_PLUGINS_ZSH ]]; then
+  antidote bundle <$ZSH_PLUGINS_TXT >|$ZSH_PLUGINS_ZSH
+fi
+source $ZSH_PLUGINS_ZSH
+# >>>
+
+# defer slow-to-generate shell setup until after the first prompt so it
+# doesn't block startup; order matters since each depends on PATH from the
+# one before it <<<
+zsh-defer -c 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+zsh-defer -c 'eval "$(kubectl completion zsh)"'
+zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
+# >>>
+
+# completion system <<<
+autoload -Uz compinit
+# rebuild the completion dump only once a day; trust the cache otherwise
+if [[ -n $ZSH_CACHE_DIR/.zcompdump(#qN.mh+24) ]]; then
+  compinit -d "$ZSH_CACHE_DIR/.zcompdump"
+else
+  compinit -C -d "$ZSH_CACHE_DIR/.zcompdump"
+fi
+zmodload zsh/complist
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' menu select=5
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose true
+zstyle ':completion:*' special-dirs ..
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
+zstyle ':completion:*:approximate:' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3)) numeric )'
+zstyle ':completion:*:processes' command 'ps -au$USER'
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.*' insert-sections true
+zstyle ':completion:*:man:*' menu yes select
+
+bindkey -M menuselect '\e^M' accept-and-menu-complete
+bindkey -M menuselect '^o'   accept-and-infer-next-history
+# >>>
+
+# fzf-tab: fuzzy-filter the completion menu, with previews <<<
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:(nvim|cat|bat):*' fzf-preview 'bat --color=always $realpath'
+zstyle ':fzf-tab:complete:git-(log|show|diff):*' fzf-preview 'git diff --color=always $word'
+# >>>
+
+# keybindings <<<
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+zle -C hist-complete complete-word _generic
+zstyle ':completion:hist-complete:*' completer _history
+
+sudo-command-line() {
+  [[ -z $BUFFER ]] && zle up-history
+  if [[ $BUFFER != sudo\ * ]]; then
+    BUFFER="sudo $BUFFER"
+    CURSOR=$(( CURSOR + 5 ))
+  fi
+}
+zle -N sudo-command-line
+
+alias run-help >&/dev/null && unalias run-help
+autoload -Uz run-help run-help-git
+
+bindkey -e
+bindkey '^ '     autosuggest-accept  # ctrl-space accepts the current autosuggestion
+bindkey ' '      magic-space        # history expansion on space
+bindkey '\ee'    edit-command-line  # edit the command line in $EDITOR
+bindkey '\ei'    menu-complete      # menu completion
+bindkey '^X^X'   hist-complete      # complete word from history
+bindkey '^Os'    sudo-command-line  # prepend sudo to the command line
+bindkey '\e[A'   up-line-or-search  # up arrow: history search by prefix
+bindkey '\e[B'   down-line-or-search
+# >>>
+
+# prompt <<<
+autoload -Uz colors && colors
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' max-exports 1
+zstyle ':vcs_info:*' actionformats "%{${fg[magenta]}%}(%s)%{${fg[yellow]}%}-%{${fg[magenta]}%}[%{${fg[green]}%}%b%{${fg[yellow]}%}|%{${fg[red]}%}%a%{${fg[magenta]}%}]%{${reset_color}%} "
+zstyle ':vcs_info:*' formats       "%{${fg[magenta]}%}(%s)%{${fg[yellow]}%}-%{${fg[magenta]}%}[%{${fg[green]}%}%b%{${fg[magenta]}%}]%{${reset_color}%} "
+
+setopt prompt_subst
+setopt transient_rprompt
+
+precmd() { vcs_info }
+
+if [[ $TERM == dumb ]]; then
+  PROMPT='%(?..%? )%n@%m %40<...<%B%~%b%<< %# '
+else
+  if (( EUID != 0 )); then
+    PROMPT="%(?..%{${fg_bold[red]}%}%?%{${reset_color}%} )%{${fg[blue]}%}%n%{${reset_color}%}@%m %40<...<%B%~%b%<< "
+  else
+    PROMPT="%(?..%{${fg_bold[blue]}%}%?%{${reset_color}%} )%{${fg_bold[red]}%}%n%{${reset_color}%}@%m %40<...<%B%~%b%<< "
+  fi
+  PROMPT="${PROMPT}"'${vcs_info_msg_0_}'"%# "
+fi
+RPROMPT='%(?..:() '
+# >>>
+
+# aliases <<<
+alias ls='eza'
+alias la='eza -la'
+alias ll='eza -l'
+alias lh='eza -hAl'
+alias l='eza -lF'
+
+alias ...='cd ../../'
+
+alias cp='nocorrect cp'   # no spelling correction on cp
+alias mkdir='nocorrect mkdir'
+alias mv='nocorrect mv'
+alias rm='nocorrect rm'
+
+alias rd='rmdir'
+alias md='mkdir'
+
+alias top10='print -l ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
+
+alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "PreferredAuthentications=keyboard-interactive"'
+alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
+alias sshold='ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa'
+
+alias cat=bat
+alias g=git
+
+alias k=kubectl
+{{ if ne .chezmoi.username "aeg" -}}
+alias kpg='kubectl --context pg'
+alias koy='kubectl --context oy'
+alias kwa-staging='kubectl --context wa-staging'
+alias kwa-prod='kubectl --context wa-prod'
+{{ end -}}
+
+alias dip="docker inspect --format '{{ "{{" }} .NetworkSettings.IPAddress {{ "}}" }}'"
+alias dkd="docker run -d -P"
+alias dki="docker run -t -i -P"
+
+alias tmn='tmux new -s $(basename $(pwd))'
+alias tma='tmux attach -d -t'
+
+alias -g '...'='../..'
+alias -g '....'='../../..'
+alias -g V='| nvim -'
+# >>>
+
+# functions <<<
+profile() { ZSH_PROFILE_RC=1 $SHELL "$@" }
+
+mcd() { mkdir -p "$@" && cd "$@" }
+cdt() { local t=$(mktemp -d); echo "$t"; builtin cd "$t" }
+# >>>
+
+# fzf <<<
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# Flexoki colors, matched to macOS appearance at shell start
+if defaults read -g AppleInterfaceStyle &>/dev/null; then
+  export FZF_DEFAULT_OPTS="
+    --color=fg:#878580,bg:#100F0F,hl:#CECDC3
+    --color=fg+:#878580,bg+:#1C1B1A,hl+:#CECDC3
+    --color=border:#D14D41,header:#CECDC3,gutter:#100F0F
+    --color=spinner:#3AA99F,info:#3AA99F,separator:#1C1B1A
+    --color=pointer:#D0A215,marker:#D14D41,prompt:#D0A215"
+  export BAT_THEME='Flexoki Dark'
+else
+  export FZF_DEFAULT_OPTS="
+    --color=fg:#B7B5AC,bg:#FFFCF0,hl:#100F0F
+    --color=fg+:#B7B5AC,bg+:#F2F0E5,hl+:#100F0F
+    --color=border:#AF3029,header:#100F0F,gutter:#FFFCF0
+    --color=spinner:#3AA99F,info:#3AA99F,separator:#F2F0E5
+    --color=pointer:#D0A215,marker:#D14D41,prompt:#D0A215"
+  export BAT_THEME='Flexoki Light'
+fi
+# >>>
+
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# Claude Code
+export USE_BUILTIN_RIPGREP=0
+
+zsh-defer -c 'eval "$(zoxide init --cmd cd zsh)"'
+zsh-defer -c 'eval "$(atuin init zsh)"'
+zsh-defer -c 'eval "$(mise activate zsh)"'
+
+# vim:filetype=zsh foldmethod=marker foldmarker=<<<,>>> autoindent expandtab shiftwidth=2

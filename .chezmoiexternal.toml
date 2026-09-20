@@ -1,0 +1,27 @@
+[".config/nvim"]
+    type = "git-repo"
+    url = "git@github.com:adamgibbins/neovim-config.git"
+    refreshPeriod = "168h"
+    [".config/nvim".pull]
+        args = ["--ff-only"]
+
+[".hammerspoon"]
+    type = "git-repo"
+    url = "git@github.com:adamgibbins/hammerspoon-config.git"
+    refreshPeriod = "168h"
+    [".hammerspoon".pull]
+        args = ["--ff-only"]
+
+[".local/share/antidote"]
+    type = "git-repo"
+    url = "https://github.com/mattmc3/antidote.git"
+    refreshPeriod = "168h"
+    [".local/share/antidote".pull]
+        args = ["--ff-only"]
+
+[".local/share/tmux/plugins/tpm"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tpm.git"
+    refreshPeriod = "168h"
+    [".local/share/tmux/plugins/tpm".pull]
+        args = ["--ff-only"]

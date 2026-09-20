@@ -1,0 +1,10 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+
+sourceDir = "~/src/adamgibbins/dotfiles"
+encryption = "age"
+[age]
+    identity = "~/.config/chezmoi/key.txt"
+    recipient = "age17799eettv3h49x8ypy76y5wrx2snf5wk4m8phs33llk36rchwajq2ckf8t"
+
+[data]
+    email = {{ $email | quote }}

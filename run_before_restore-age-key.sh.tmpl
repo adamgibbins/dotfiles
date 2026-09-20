@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Restores the chezmoi age identity from 1Password so encrypted_ files
+# can be decrypted on a fresh machine before chezmoi applies them.
+
+set -euo pipefail
+
+KEY_FILE="{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
+
+if [ ! -s "$KEY_FILE" ]; then
+  mkdir -p "$(dirname "$KEY_FILE")"
+  op read 'op://Personal/Chezmoi age encryption key/password' > "$KEY_FILE.tmp"
+  mv "$KEY_FILE.tmp" "$KEY_FILE"
+  chmod 600 "$KEY_FILE"
+fi

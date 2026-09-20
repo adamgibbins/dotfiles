@@ -1,0 +1,5 @@
+Aloxaf/fzf-tab
+romkatv/zsh-defer
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+zsh-users/zsh-syntax-highlighting

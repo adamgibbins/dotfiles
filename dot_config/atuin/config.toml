@@ -1,0 +1,8 @@
+dialect = "uk"
+filter_mode = "session-preload"
+workspaces = true
+style = "compact"
+secrets_filter = false
+
+[tmux]
+enabled = true

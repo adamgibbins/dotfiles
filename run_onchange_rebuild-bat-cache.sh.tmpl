@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Themes hash: {{ include "dot_config/bat/themes/Flexoki Light.tmTheme" | sha256sum }}{{ include "dot_config/bat/themes/Flexoki Dark.tmTheme" | sha256sum }}
+
+set -euo pipefail
+
+bat cache --build

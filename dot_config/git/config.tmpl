@@ -1,0 +1,110 @@
+[user]
+  name = Adam Gibbins
+  signingkey = ~/.ssh/id_ed25519.pub
+  email = {{ .email }}
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  allowedSignersFile = ~/.config/git/allowed_signers
+
+[format]
+  numbered = auto
+
+[pager]
+  status = true
+  show-branch = true
+
+[alias]
+  st = status -sb
+  ci = commit
+  co = checkout
+  d = diff -b
+  b = branch -av
+  pp = !git pull --rebase && git push
+  staged = diff --cached
+  unstaged = diff
+  both = diff HEAD
+  worddiff = diff --word-diff
+  oneline = log --pretty --decorate
+  amend = commit --amend
+  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  who = "!sh -c 'git log -1 --pretty=\"format:%an <%ae>\" --author=\"$1\"' -"
+  msg = commit --allow-empty -m
+  unstage = reset HEAD
+  uncommit = reset --soft HEAD^
+  branch-touched = for-each-ref --sort=-authorname refs/remotes/ --format='%(refname:short) %(committerdate:short) %(authorname)'
+  git = !git
+  ab = absorb --and-rebase
+  dft = difftool -y -t difftastic
+
+[core]
+  fsmonitor = true
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  line-numbers = true
+  side-by-side = true
+  navigate = true
+  hyperlinks = true
+  hyperlinks-file-link-format = vscode://file/{path}:{line}
+
+[column]
+  ui = auto
+
+[help]
+  autocorrect = 10
+
+[commit]
+  gpgsign = true
+  verbose = true
+
+[tag]
+  gpgsign = true
+
+[diff]
+  tool = nvim -d
+  algorithm = histogram
+  colorMoved = default
+  mnemonicPrefix = true
+  renames = true
+
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+
+[branch]
+  autoSetupRebase = always
+  sort = -committerdate
+
+[merge]
+  conflictstyle = zdiff3
+
+[fetch]
+  prune = true
+
+[rerere]
+  enabled = true
+
+[pull]
+  rebase = true
+
+[rebase]
+  autoStash = true
+  updateRefs = true
+
+[push]
+  default = current
+  autoSetupRemote = true
+
+[init]
+  defaultBranch = main
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
