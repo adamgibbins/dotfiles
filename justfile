@@ -1,6 +1,6 @@
 # Apply dotfiles
 default:
-  chezmoi apply --source=.
+  chezmoi init --source=. --apply
 
 # Show pending changes
 diff:
