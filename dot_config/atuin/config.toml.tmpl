@@ -6,3 +6,13 @@ secrets_filter = false
 
 [tmux]
 enabled = true
+
+[ai]
+{{- if eq .chezmoi.username "aeg" }}
+enabled = true
+
+[pty_proxy]
+enabled = true
+{{- else }}
+enabled = false
+{{- end -}}
