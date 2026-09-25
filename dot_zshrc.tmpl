@@ -222,8 +222,9 @@ cdt() { local t=$(mktemp -d); echo "$t"; builtin cd "$t" }
 # >>>
 
 # fzf <<<
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude .jj --exclude node_modules'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git --exclude .jj --exclude node_modules'
 
 # ANSI numbers; Ghostty's Flexoki theme sets them
 export FZF_DEFAULT_OPTS="
