@@ -1,14 +1,18 @@
 [".config/nvim"]
     type = "git-repo"
-    url = "git@github.com:adamgibbins/neovim-config.git"
+    url = "https://github.com/adamgibbins/neovim-config.git"
     refreshPeriod = "168h"
+    [".config/nvim".clone]
+        args = ["--config", "remote.origin.pushurl=git@github.com:adamgibbins/neovim-config.git"]
     [".config/nvim".pull]
         args = ["--ff-only"]
 
 [".hammerspoon"]
     type = "git-repo"
-    url = "git@github.com:adamgibbins/hammerspoon-config.git"
+    url = "https://github.com/adamgibbins/hammerspoon-config.git"
     refreshPeriod = "168h"
+    [".hammerspoon".clone]
+        args = ["--config", "remote.origin.pushurl=git@github.com:adamgibbins/hammerspoon-config.git"]
     [".hammerspoon".pull]
         args = ["--ff-only"]
 
