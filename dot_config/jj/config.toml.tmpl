@@ -1,0 +1,28 @@
+"$schema" = "https://docs.jj-vcs.dev/latest/config-schema.json"
+
+[user]
+name = "Adam Gibbins"
+email = {{ .email | quote }}
+
+[ui]
+default-command = "log"
+
+[signing]
+behavior = "drop"
+backend = "ssh"
+key = "~/.ssh/id_ed25519.pub"
+backends.ssh.allowed-signers = "~/.config/git/allowed_signers"
+
+[git]
+sign-on-push = true
+
+[revset-aliases]
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
+
+[template-aliases]
+'format_short_change_id(id)' = 'id.shortest()'
+
+[aliases]
+# Move nearest bookmark up to @
+tug = ['bookmark', 'move', '--from', 'closest_bookmark(@)', '--to', 'closest_pushable(@)']
