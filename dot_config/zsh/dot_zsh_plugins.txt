@@ -1,4 +1,4 @@
-Aloxaf/fzf-tab
+ Aloxaf/fzf-tab
 romkatv/zsh-defer
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions

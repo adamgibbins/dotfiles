@@ -24,7 +24,7 @@ setopt correct              # command-name spelling correction
 # a completion listing
 unsetopt prompt_sp
 
-HISTFILE=~/.zsh_history
+HISTFILE=$XDG_DATA_HOME/zsh/history
 HISTSIZE=50000
 SAVEHIST=100000
 REPORTTIME=5 # warn if a command used more than 5s of CPU time
@@ -34,7 +34,7 @@ typeset -U path cdpath fpath manpath
 
 # directory stack persistence <<<
 DIRSTACKSIZE=20
-DIRSTACKFILE=~/.zdirs
+DIRSTACKFILE=$XDG_DATA_HOME/zsh/dirs
 
 if [[ -f $DIRSTACKFILE ]] && (( ${#dirstack} == 0 )); then
   dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
@@ -83,7 +83,7 @@ ZSH_CACHE_DIR=~/.cache/zsh
 
 # plugins <<<
 source ~/.local/share/antidote/antidote.zsh
-ZSH_PLUGINS_TXT=~/.zsh_plugins.txt
+ZSH_PLUGINS_TXT=$ZDOTDIR/.zsh_plugins.txt
 ZSH_PLUGINS_ZSH="$ZSH_CACHE_DIR/plugins.zsh"
 if [[ ! -f $ZSH_PLUGINS_ZSH || $ZSH_PLUGINS_TXT -nt $ZSH_PLUGINS_ZSH ]]; then
   antidote bundle <$ZSH_PLUGINS_TXT >|$ZSH_PLUGINS_ZSH
@@ -241,7 +241,7 @@ export USE_BUILTIN_RIPGREP=0
 alias assume=". assume"
 
 STARSHIP_INIT=$ZSH_CACHE_DIR/starship.zsh
-if [[ ! -s $STARSHIP_INIT || $commands[starship] -nt $STARSHIP_INIT || ~/.zshrc -nt $STARSHIP_INIT ]]; then
+if [[ ! -s $STARSHIP_INIT || $commands[starship] -nt $STARSHIP_INIT || $ZDOTDIR/.zshrc -nt $STARSHIP_INIT ]]; then
   starship init zsh | grep -v '^PROMPT2=' >| $STARSHIP_INIT
 fi
 source $STARSHIP_INIT
