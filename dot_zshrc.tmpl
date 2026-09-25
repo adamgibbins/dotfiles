@@ -53,8 +53,6 @@ chpwd() {
 export EDITOR=nvim
 export PAGER=${PAGER:-'less -R'}
 export CLICOLOR=1
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_DATA_HOME="${HOME}/.local/share"
 
 # GNU dircolors default database (macOS's BSD ls doesn't use this format, but
 # zsh's completion menu does, via the list-colors zstyle below)
@@ -94,7 +92,13 @@ source $ZSH_PLUGINS_ZSH
 # >>>
 
 # defer slow setup past first prompt <<<
-zsh-defer -c 'eval "$(kubectl completion zsh)"'
+if (( $+commands[kubectl] )); then
+  KUBECTL_COMPLETION=$ZSH_CACHE_DIR/kubectl-completion.zsh
+  if [[ ! -s $KUBECTL_COMPLETION || $commands[kubectl] -nt $KUBECTL_COMPLETION ]]; then
+    kubectl completion zsh >| $KUBECTL_COMPLETION
+  fi
+  zsh-defer source $KUBECTL_COMPLETION
+fi
 zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 # >>>
 
@@ -172,8 +176,6 @@ alias ll='eza -l'
 alias lh='eza -hAl'
 alias l='eza -lF'
 
-alias ...='cd ../../'
-
 alias cp='nocorrect cp'   # no spelling correction on cp
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
@@ -186,7 +188,7 @@ alias top10='print -l ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "PreferredAuthentications=keyboard-interactive"'
 alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
-alias sshold='ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa'
+alias sshold='ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa'
 
 alias cat=bat
 alias g=git
@@ -238,7 +240,6 @@ export USE_BUILTIN_RIPGREP=0
 # Granted
 alias assume=". assume"
 
-unset BAT_THEME STARSHIP_CONFIG # stale values from old shells
 STARSHIP_INIT=$ZSH_CACHE_DIR/starship.zsh
 if [[ ! -s $STARSHIP_INIT || $commands[starship] -nt $STARSHIP_INIT || ~/.zshrc -nt $STARSHIP_INIT ]]; then
   starship init zsh | grep -v '^PROMPT2=' >| $STARSHIP_INIT
