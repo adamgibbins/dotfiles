@@ -225,26 +225,13 @@ cdt() { local t=$(mktemp -d); echo "$t"; builtin cd "$t" }
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# Flexoki colors, matched to macOS appearance at shell start
-if defaults read -g AppleInterfaceStyle &>/dev/null; then
-  export FZF_DEFAULT_OPTS="
-    --color=fg:#878580,bg:#100F0F,hl:#CECDC3
-    --color=fg+:#878580,bg+:#1C1B1A,hl+:#CECDC3
-    --color=border:#D14D41,header:#CECDC3,gutter:#100F0F
-    --color=spinner:#3AA99F,info:#3AA99F,separator:#1C1B1A
-    --color=pointer:#D0A215,marker:#D14D41,prompt:#D0A215"
-  export BAT_THEME='Flexoki Dark'
-  export STARSHIP_CONFIG="$HOME/.config/starship-dark.toml"
-else
-  export FZF_DEFAULT_OPTS="
-    --color=fg:#B7B5AC,bg:#FFFCF0,hl:#100F0F
-    --color=fg+:#B7B5AC,bg+:#F2F0E5,hl+:#100F0F
-    --color=border:#AF3029,header:#100F0F,gutter:#FFFCF0
-    --color=spinner:#3AA99F,info:#3AA99F,separator:#F2F0E5
-    --color=pointer:#D0A215,marker:#D14D41,prompt:#D0A215"
-  export BAT_THEME='Flexoki Light'
-  export STARSHIP_CONFIG="$HOME/.config/starship-light.toml"
-fi
+# ANSI numbers; Ghostty's Flexoki theme sets them
+export FZF_DEFAULT_OPTS="
+  --color=fg:7,bg:-1,hl:-1
+  --color=fg+:-1,bg+:-1,hl+:3
+  --color=border:1,header:-1,gutter:-1
+  --color=spinner:6,info:6,separator:8
+  --color=pointer:3,marker:1,prompt:3"
 # >>>
 
 # Claude Code
@@ -253,11 +240,13 @@ export USE_BUILTIN_RIPGREP=0
 # Granted
 alias assume=". assume"
 
+unset BAT_THEME STARSHIP_CONFIG # stale values from old shells
 STARSHIP_INIT=$ZSH_CACHE_DIR/starship.zsh
-if [[ ! -s $STARSHIP_INIT || $commands[starship] -nt $STARSHIP_INIT ]]; then
-  starship init zsh >| $STARSHIP_INIT
+if [[ ! -s $STARSHIP_INIT || $commands[starship] -nt $STARSHIP_INIT || ~/.zshrc -nt $STARSHIP_INIT ]]; then
+  starship init zsh | grep -v '^PROMPT2=' >| $STARSHIP_INIT
 fi
 source $STARSHIP_INIT
+PROMPT2='%F{8}∙%f '
 unset RPROMPT # no right_format; skips a fork per prompt
 zsh-defer -c 'eval "$(zoxide init --cmd cd zsh)"'
 zsh-defer -c 'eval "$(atuin init zsh)"'

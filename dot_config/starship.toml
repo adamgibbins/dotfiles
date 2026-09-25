@@ -2,24 +2,24 @@ format = "$directory$git_branch$git_status$aws$character"
 command_timeout = 1000
 
 [directory]
-style = "{{ .directory }}"
+style = "blue"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = " "
-style = "{{ .git_branch }}"
+style = "purple"
 format = "[$symbol$branch]($style) "
 
 [git_status]
-style = "{{ .git_status }}"
+style = "red"
 format = "([$all_status$ahead_behind]($style)) "
 
 [aws]
 symbol = "☁️  "
-style = "{{ .aws }}"
+style = "cyan"
 format = "[$symbol$profile]($style) "
 
 [character]
-success_symbol = "[❯]({{ .character_success }})"
-error_symbol = "[❯]({{ .character_error }})"
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
