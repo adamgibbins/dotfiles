@@ -109,5 +109,9 @@
   process = git-lfs filter-process
   required = true
 
+[lfs]
+  # GitHub lacks pure SSH; skip slow probe
+  sshtransfer = never
+
 [include]
   path = ~/.config/git/config-local
