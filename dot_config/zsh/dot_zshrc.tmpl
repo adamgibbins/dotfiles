@@ -53,6 +53,7 @@ chpwd() {
 export EDITOR=nvim
 export PAGER=${PAGER:-'less -R'}
 export CLICOLOR=1
+export EZA_ICONS_AUTO=1
 
 # GNU dircolors default database (macOS's BSD ls doesn't use this format, but
 # zsh's completion menu does, via the list-colors zstyle below)
@@ -171,10 +172,10 @@ bindkey '^Os'    sudo-command-line  # prepend sudo to the command line
 
 # aliases <<<
 alias ls='eza'
-alias la='eza -la'
-alias ll='eza -l'
-alias lh='eza -hAl'
-alias l='eza -lF'
+alias la='eza -la --git'
+alias ll='eza -l --git'
+alias lh='eza -hAl --git'
+alias l='eza -lF --git'
 
 alias cp='nocorrect cp'   # no spelling correction on cp
 alias mkdir='nocorrect mkdir'
