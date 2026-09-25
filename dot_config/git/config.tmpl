@@ -41,6 +41,7 @@
 
 [core]
   fsmonitor = true
+  untrackedCache = true
   pager = delta
 
 [interactive]
@@ -66,6 +67,7 @@
 
 [tag]
   gpgsign = true
+  sort = version:refname
 
 [diff]
   tool = nvimdiff
@@ -100,6 +102,7 @@
 [push]
   default = current
   autoSetupRemote = true
+  followTags = true
 
 [init]
   defaultBranch = main
