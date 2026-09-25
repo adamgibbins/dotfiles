@@ -1,0 +1,11 @@
+# Inlined brew shellenv, mise shims: no forks
+typeset -U path fpath
+export HOMEBREW_PREFIX=/opt/homebrew
+export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+export HOMEBREW_REPOSITORY=/opt/homebrew
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+path=(~/.local/share/mise/shims ~/bin ~/.local/bin /opt/homebrew/bin /opt/homebrew/sbin $path)
+
+[[ -r ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
+path+=(/Applications/Obsidian.app/Contents/MacOS)

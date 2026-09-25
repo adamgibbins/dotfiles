@@ -94,10 +94,7 @@ fi
 source $ZSH_PLUGINS_ZSH
 # >>>
 
-# defer slow-to-generate shell setup until after the first prompt so it
-# doesn't block startup; order matters since each depends on PATH from the
-# one before it <<<
-zsh-defer -c 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+# defer slow setup past first prompt <<<
 zsh-defer -c 'eval "$(kubectl completion zsh)"'
 zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 # >>>
@@ -250,15 +247,18 @@ else
 fi
 # >>>
 
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH:/opt/homebrew/bin:$PATH"
-
 # Claude Code
 export USE_BUILTIN_RIPGREP=0
 
 # Granted
 alias assume=". assume"
 
-eval "$(starship init zsh)"
+STARSHIP_INIT=$ZSH_CACHE_DIR/starship.zsh
+if [[ ! -s $STARSHIP_INIT || $commands[starship] -nt $STARSHIP_INIT ]]; then
+  starship init zsh >| $STARSHIP_INIT
+fi
+source $STARSHIP_INIT
+unset RPROMPT # no right_format; skips a fork per prompt
 zsh-defer -c 'eval "$(zoxide init --cmd cd zsh)"'
 zsh-defer -c 'eval "$(atuin init zsh)"'
 zsh-defer -c 'eval "$(mise activate zsh)"'
