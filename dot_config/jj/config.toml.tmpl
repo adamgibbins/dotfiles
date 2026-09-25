@@ -26,3 +26,13 @@ sign-on-push = true
 [aliases]
 # Move nearest bookmark up to @
 tug = ['bookmark', 'move', '--from', 'closest_bookmark(@)', '--to', 'closest_pushable(@)']
+
+[templates]
+# Show diff in editor, like git commit -v
+draft_commit_description = '''
+concat(
+  builtin_draft_commit_description,
+  "\nJJ: ignore-rest\n",
+  diff.git(),
+)
+'''
