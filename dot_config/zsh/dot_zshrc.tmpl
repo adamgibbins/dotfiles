@@ -134,6 +134,7 @@ zstyle ':completion:*:processes' command 'ps -au$USER'
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections true
 zstyle ':completion:*:man:*' menu yes select
+zstyle ':completion:*:*:git:*' script $ZDOTDIR/git-completion.zsh
 
 bindkey -M menuselect '\e^M' accept-and-menu-complete
 bindkey -M menuselect '^o'   accept-and-infer-next-history
@@ -143,7 +144,12 @@ bindkey -M menuselect '^o'   accept-and-infer-next-history
 zstyle ':fzf-tab:*' switch-group '<' '>'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -1 --color=always $realpath'
 zstyle ':fzf-tab:complete:(nvim|cat|bat):*' fzf-preview 'bat --color=always $realpath'
-zstyle ':fzf-tab:complete:git-(log|show|diff):*' fzf-preview 'git diff --color=always $word'
+# Homebrew's _git has no per-subcommand context
+zstyle ':fzf-tab:complete:git:*' fzf-preview 'case ${words[(r)(diff|show|log)]} in
+  diff) git diff --color=always -- ${realpath:-${word% }} ;;
+  show) git show --color=always ${word% } ;;
+  log)  git log --oneline --color=always ${word% } ;;
+esac'
 # >>>
 
 # keybindings <<<
