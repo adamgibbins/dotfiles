@@ -1,0 +1,40 @@
+---
+# ANSI numbers; Ghostty's Flexoki theme sets them
+user: 3
+group: 7
+permission:
+  read: 2
+  write: 3
+  exec: 1
+  exec-sticky: 5
+  no-access: 7
+  octal: 6
+  acl: 6
+  context: 6
+date:
+  hour-old: 2
+  day-old: 6
+  older: 7
+size:
+  none: 7
+  small: 7
+  medium: 3
+  large: 1
+inode:
+  valid: 5
+  invalid: 7
+links:
+  valid: 5
+  invalid: 7
+tree-edge: 7
+git-status:
+  default: 7
+  unmodified: 7
+  ignored: 7
+  new-in-index: 2
+  new-in-workdir: 2
+  typechange: 3
+  deleted: 1
+  renamed: 2
+  modified: 3
+  conflicted: 1

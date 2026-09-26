@@ -1,0 +1,17 @@
+---
+blocks:
+  - permission
+  - user
+  - group
+  - size
+  - date
+  - git
+  - name
+color:
+  theme: custom
+hyperlink: auto
+size: short
+sorting:
+  dir-grouping: first
+date: +%Y-%m-%d %H:%M:%S
+indicators: true
