@@ -1,3 +1,4 @@
 .zprofile
 .zshrc
 .zsh_plugins.txt
+.Brewfile
