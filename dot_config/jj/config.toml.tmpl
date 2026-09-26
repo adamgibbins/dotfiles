@@ -16,6 +16,7 @@ backends.ssh.allowed-signers = "~/.config/git/allowed_signers"
 
 [git]
 sign-on-push = true
+private-commits = 'description(glob:"wip:*")'
 
 [revset-aliases]
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
