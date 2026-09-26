@@ -138,7 +138,7 @@ bindkey -M menuselect '^o'   accept-and-infer-next-history
 
 # fzf-tab: fuzzy-filter the completion menu, with previews <<<
 zstyle ':fzf-tab:*' switch-group '<' '>'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -1 --color=always $realpath'
 zstyle ':fzf-tab:complete:(nvim|cat|bat):*' fzf-preview 'bat --color=always $realpath'
 zstyle ':fzf-tab:complete:git-(log|show|diff):*' fzf-preview 'git diff --color=always $word'
 # >>>
@@ -172,11 +172,11 @@ bindkey '^Os'    sudo-command-line  # prepend sudo to the command line
 # >>>
 
 # aliases <<<
-alias ls='eza'
-alias la='eza -la --git'
-alias ll='eza -l --git'
-alias lh='eza -hAl --git'
-alias l='eza -lF --git'
+alias ls='lsd'
+alias la='lsd -la --git'
+alias ll='lsd -l --git'
+alias lh='lsd -hAl --git'
+alias l='lsd -lF --git'
 
 alias cp='nocorrect cp'   # no spelling correction on cp
 alias mkdir='nocorrect mkdir'
