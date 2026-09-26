@@ -23,8 +23,8 @@ keybind = global:cmd+§=toggle_quick_terminal
 
 #keybind = super+f=write_screen_file:open
 
-split-divider-color = grey
-unfocused-split-fill = #500028
+# Flexoki base-500; visible on both themes
+split-divider-color = #878580
 
 mouse-hide-while-typing = true
 
