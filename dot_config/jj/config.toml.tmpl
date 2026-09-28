@@ -31,6 +31,15 @@ bookmark-advance-to = 'closest_pushable(@)'
 'stack()' = 'stack(@)'
 'stack(x)' = 'stack(x, 2)'
 'stack(x, n)' = 'ancestors(reachable(x, mutable()), n)'
+# All my unmerged stacks
+'open()' = 'stack(mine() | @, 1) ~ hidden()'
+# r and the heads making it immutable
+'why_immutable(r)' = '(r & immutable()) | roots(r:: & immutable_heads())'
+# Commits containing x
+'d:x' = 'diff_lines(substring:x)'
+# Commits from the last month
+'recent()' = 'recent(all())'
+'recent(r)' = 'r & author_date(after:"1 month ago")'
 
 [template-aliases]
 # Shortest unique change ID
@@ -41,8 +50,15 @@ tug = ['bookmark', 'advance']
 difft = ['diff', '--tool', 'difft']
 # Rebase current stack onto trunk
 restack = ['rebase', '-o', 'trunk()', '-s', 'roots(trunk()..) & stack()']
+# Unmerged stacks
+open = ['log', '-r', 'open()']
+# Current stack only
+stack = ['log', '-r', 'stack()']
+# Add empty commits, as a todo list
+plan = ['new', '--no-edit', 'heads(@::)', '-m']
 
 [templates]
+git_push_bookmark = '"adamgibbins/push-" ++ change_id.short()'
 # Show diff in editor, like git commit -v
 draft_commit_description = '''
 concat(
