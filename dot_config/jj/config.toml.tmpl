@@ -27,8 +27,10 @@ bookmark-advance-to = 'closest_pushable(@)'
 [revset-aliases]
 # Nearest mutable, described, non-empty ancestor
 'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
-# Bases of local work not in trunk
-'mutable_roots()' = 'roots(trunk()..) & mutable()'
+# Mutable commits reachable from x
+'stack()' = 'stack(@)'
+'stack(x)' = 'stack(x, 2)'
+'stack(x, n)' = 'ancestors(reachable(x, mutable()), n)'
 
 [template-aliases]
 # Shortest unique change ID
@@ -37,8 +39,8 @@ bookmark-advance-to = 'closest_pushable(@)'
 [aliases]
 tug = ['bookmark', 'advance']
 difft = ['diff', '--tool', 'difft']
-# Rebase all local work onto trunk
-restack = ['rebase', '-o', 'trunk()', '-s', 'mutable_roots()']
+# Rebase current stack onto trunk
+restack = ['rebase', '-o', 'trunk()', '-s', 'roots(trunk()..) & stack()']
 
 [templates]
 # Show diff in editor, like git commit -v
@@ -54,3 +56,5 @@ concat(
 --when.repositories = ["~/src/adamgibbins"]
 [--scope.user]
 email = "adam@adamgibbins.com"
+
+# vim:ft=toml
