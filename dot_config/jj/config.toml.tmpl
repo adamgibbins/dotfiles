@@ -50,6 +50,8 @@ tug = ['bookmark', 'advance']
 difft = ['diff', '--tool', 'difft']
 # Rebase current stack onto trunk
 restack = ['rebase', '-o', 'trunk()', '-s', 'roots(trunk()..) & stack()']
+# Rebase all stacks onto trunk
+rebase-all = ['rebase', '-o', 'trunk()', '-s', '(::trunk())+ & mutable()']
 # Unmerged stacks
 open = ['log', '-r', 'open()']
 # Current stack only
@@ -67,6 +69,34 @@ concat(
   diff.git(),
 )
 '''
+
+[fix.tools.gofmt]
+command = ["gofmt"]
+patterns = ["glob:'**/*.go'"]
+
+[fix.tools.prettier]
+command = ["prettier", "--stdin-filepath", "$path"]
+patterns = ["glob:'**/*.{js,jsx,ts,tsx,json,yaml,yml,md,css,html}'"]
+
+[fix.tools.ruff]
+command = ["ruff", "format", "--stdin-filename", "$path", "-"]
+patterns = ["glob:'**/*.{py,pyi}'"]
+
+[fix.tools.rustfmt]
+command = ["rustfmt", "--edition", "2024"]
+patterns = ["glob:'**/*.rs'"]
+
+[fix.tools.shfmt]
+command = ["shfmt", "--filename", "$path"]
+patterns = ["glob:'**/*.{sh,bash}'"]
+
+[fix.tools.stylua]
+command = ["stylua", "--stdin-filepath", "$path", "-"]
+patterns = ["glob:'**/*.lua'"]
+
+[fix.tools.terraform]
+command = ["terraform", "fmt", "-"]
+patterns = ["glob:'**/*.{tf,tfvars}'"]
 
 [[--scope]]
 --when.repositories = ["~/src/adamgibbins"]
