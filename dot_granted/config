@@ -1,0 +1,8 @@
+DefaultBrowser = "FIREFOX"
+CustomBrowserPath = "/Applications/Firefox.app/Contents/MacOS/firefox"
+CustomSSOBrowserPath = ""
+Ordering = ""
+ExportCredentialSuffix = ""
+
+[Keyring]
+  Backend = "keychain"
