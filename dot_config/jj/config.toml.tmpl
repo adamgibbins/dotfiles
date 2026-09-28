@@ -51,7 +51,7 @@ difft = ['diff', '--tool', 'difft']
 # Rebase current stack onto trunk
 restack = ['rebase', '-o', 'trunk()', '-s', 'roots(trunk()..) & stack()']
 # Rebase all stacks onto trunk
-rebase-all = ['rebase', '-o', 'trunk()', '-s', '(::trunk())+ & mutable()']
+restack-all = ['rebase', '-o', 'trunk()', '-s', '(::trunk())+ & mutable()']
 # Unmerged stacks
 open = ['log', '-r', 'open()']
 # Current stack only
