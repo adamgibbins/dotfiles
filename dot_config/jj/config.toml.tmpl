@@ -18,7 +18,7 @@ backends.ssh.allowed-signers = "~/.config/git/allowed_signers"
 [git]
 sign-on-push = true
 # Block pushing wip: commits
-private-commits = 'description(glob:"wip:*")'
+private-commits = 'description(glob-i:"wip:*")'
 
 [revsets]
 # Skip empty working copy when advancing
