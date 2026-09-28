@@ -248,6 +248,7 @@ export USE_BUILTIN_RIPGREP=0
 
 # Granted
 alias assume=". assume"
+export GRANTED_ENABLE_AUTO_REASSUME=true
 
 STARSHIP_INIT=$ZSH_CACHE_DIR/starship.zsh
 if [[ ! -s $STARSHIP_INIT || $commands[starship] -nt $STARSHIP_INIT || $ZDOTDIR/.zshrc -nt $STARSHIP_INIT ]]; then
