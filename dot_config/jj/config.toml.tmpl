@@ -5,10 +5,11 @@ name = "Adam Gibbins"
 email = {{ .email | quote }}
 
 [ui]
+# Explicit to silence the default hint
 default-command = "log"
-diff-editor = ":builtin"
 
 [signing]
+# Sign on push, not every commit
 behavior = "drop"
 backend = "ssh"
 key = "~/.ssh/id_ed25519.pub"
@@ -16,19 +17,28 @@ backends.ssh.allowed-signers = "~/.config/git/allowed_signers"
 
 [git]
 sign-on-push = true
+# Block pushing wip: commits
 private-commits = 'description(glob:"wip:*")'
 
+[revsets]
+# Skip empty working copy when advancing
+bookmark-advance-to = 'closest_pushable(@)'
+
 [revset-aliases]
-'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+# Nearest mutable, described, non-empty ancestor
 'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
+# Bases of local work not in trunk
+'mutable_roots()' = 'roots(trunk()..) & mutable()'
 
 [template-aliases]
+# Shortest unique change ID
 'format_short_change_id(id)' = 'id.shortest()'
 
 [aliases]
-# Move nearest bookmark up to @
-tug = ['bookmark', 'move', '--from', 'closest_bookmark(@)', '--to', 'closest_pushable(@)']
-difft = ["diff", "--tool", "difft"]
+tug = ['bookmark', 'advance']
+difft = ['diff', '--tool', 'difft']
+# Rebase all local work onto trunk
+restack = ['rebase', '-o', 'trunk()', '-s', 'mutable_roots()']
 
 [templates]
 # Show diff in editor, like git commit -v
