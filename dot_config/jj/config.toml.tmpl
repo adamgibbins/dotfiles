@@ -58,6 +58,8 @@ open = ['log', '-r', 'open()']
 stack = ['log', '-r', 'stack()']
 # Add empty commits, as a todo list
 plan = ['new', '--no-edit', 'heads(@::)', '-m']
+# Abandon all orphan commits, get a lot of these when mix and matching git
+abandon-orphans = ['abandon', 'mutable() & description(exact:"") ~ @']
 
 [templates]
 git_push_bookmark = '"adamgibbins/push-" ++ change_id.short()'
