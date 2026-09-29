@@ -5,8 +5,7 @@ name = "Adam Gibbins"
 email = {{ .email | quote }}
 
 [ui]
-# Explicit to silence the default hint
-default-command = "log"
+default-command = "overview"
 
 [signing]
 # Sign on push, not every commit
@@ -46,6 +45,8 @@ bookmark-advance-to = 'closest_pushable(@)'
 'format_short_change_id(id)' = 'id.shortest()'
 
 [aliases]
+# Log plus working copy changes
+overview = ['log', '-T', 'builtin_log_compact ++ if(current_working_copy && !empty, diff.summary())']
 tug = ['bookmark', 'advance']
 difft = ['diff', '--tool', 'difft']
 # Rebase current stack onto trunk
