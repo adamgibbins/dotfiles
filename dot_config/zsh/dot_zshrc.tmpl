@@ -114,7 +114,7 @@ zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 
 # completion system <<<
 # compinit runs from completion.zsh, via antidote
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu no
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' group-name ''
