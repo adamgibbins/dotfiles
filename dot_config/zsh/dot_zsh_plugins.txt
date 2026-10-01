@@ -1,5 +1,6 @@
- Aloxaf/fzf-tab
+zsh-users/zsh-completions kind:fpath path:src
+$ZDOTDIR/completion.zsh
+Aloxaf/fzf-tab
 romkatv/zsh-defer
 zsh-users/zsh-autosuggestions
-zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
