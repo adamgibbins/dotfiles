@@ -204,7 +204,7 @@ alias dip="docker inspect --format '{{ "{{" }} .NetworkSettings.IPAddress {{ "}}
 alias dkd="docker run -d -P"
 alias dki="docker run -t -i -P"
 
-alias tmn='tmux new -s $(basename $(pwd))'
+alias tmn='tmux new -s ${PWD:t}'
 alias tma='tmux attach -d -t'
 
 alias -g '...'='../..'
