@@ -20,9 +20,7 @@ setopt completeinword       # allow completion in the middle of a word
 setopt interactivecomments  # allow # comments on the command line
 setopt correct              # command-name spelling correction
 
-# don't flash a reverse-video % placeholder when redrawing the prompt after
-# a completion listing
-unsetopt prompt_sp
+PROMPT_EOL_MARK='' # hide the % on partial lines
 
 HISTFILE=$XDG_DATA_HOME/zsh/history
 HISTSIZE=50000
