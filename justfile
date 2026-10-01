@@ -16,4 +16,4 @@ upgrade:
   zsh -c 'source ~/.local/share/antidote/antidote.zsh && antidote update'
   ~/.local/share/tmux/plugins/tpm/bin/update_plugins all
   nvim --headless '+Lazy! sync' +qa
-  -brew bundle cleanup --global
+#  -brew bundle cleanup --global
