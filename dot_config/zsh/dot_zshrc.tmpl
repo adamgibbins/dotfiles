@@ -26,6 +26,7 @@ HISTFILE=$XDG_DATA_HOME/zsh/history
 HISTSIZE=50000
 SAVEHIST=100000
 REPORTTIME=5 # warn if a command used more than 5s of CPU time
+WORDCHARS=${WORDCHARS//\/} # Ctrl-W stops at /
 
 typeset -U path cdpath fpath manpath
 # >>>
