@@ -104,6 +104,11 @@ if (( $+commands[kubectl] )); then
   fi
   zsh-defer source $KUBECTL_COMPLETION
 fi
+JJ_COMPLETION=$ZSH_CACHE_DIR/jj-completion.zsh
+if [[ ! -s $JJ_COMPLETION || $commands[jj] -nt $JJ_COMPLETION ]]; then
+  COMPLETE=zsh jj >| $JJ_COMPLETION
+fi
+zsh-defer source $JJ_COMPLETION
 zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 # >>>
 
