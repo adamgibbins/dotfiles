@@ -129,7 +129,8 @@ zstyle ':completion:*' special-dirs ..
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
-zstyle ':completion:*:approximate:' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3)) numeric )'
+zstyle ':completion:*' completer _complete _approximate
+zstyle ':completion:*:approximate:*' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3)) numeric )'
 zstyle ':completion:*:processes' command 'ps -au$USER'
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections true
