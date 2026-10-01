@@ -1,10 +1,10 @@
-{{- if eq .chezmoi.username "aeg" -}}
+{{- if .personal -}}
 Include ~/.orbstack/ssh/config
 {{- end }}
 Include ~/.ssh/config.d/*
 
 Host *
-    {{- if eq .chezmoi.username "aeg" }}
+    {{- if .personal }}
     User aeg
     {{- else }}
     User adamgibbins

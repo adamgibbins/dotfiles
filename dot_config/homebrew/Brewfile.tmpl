@@ -86,7 +86,7 @@ cask 'wireshark-app'
 cask 'yubico-authenticator'
 
 # Personal
-{{- if eq .chezmoi.username "aeg" }}
+{{- if .personal }}
 brew 'beancount-language-server'
 brew 'pam-reattach' # Touch ID sudo in tmux
 brew 'rclone'
