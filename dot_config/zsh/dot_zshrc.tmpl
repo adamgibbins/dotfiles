@@ -110,7 +110,7 @@ zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 # completion system <<<
 # compinit runs from completion.zsh, via antidote
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*' menu select=5
+zstyle ':completion:*' menu no
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose true
 zstyle ':completion:*' special-dirs ..
@@ -122,11 +122,7 @@ zstyle ':completion:*:approximate:*' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/
 zstyle ':completion:*:processes' command 'ps -au$USER'
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections true
-zstyle ':completion:*:man:*' menu yes select
 zstyle ':completion:*:*:git:*' script $ZDOTDIR/git-completion.zsh
-
-bindkey -M menuselect '\e^M' accept-and-menu-complete
-bindkey -M menuselect '^o'   accept-and-infer-next-history
 # >>>
 
 # fzf-tab: fuzzy-filter the completion menu, with previews <<<
