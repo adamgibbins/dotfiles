@@ -12,3 +12,8 @@ upgrade:
   brew bundle --global && \
   brew upgrade
   mise upgrade
+  chezmoi apply --source=. --refresh-externals
+  zsh -c 'source ~/.local/share/antidote/antidote.zsh && antidote update'
+  ~/.local/share/tmux/plugins/tpm/bin/update_plugins all
+  nvim --headless '+Lazy! sync' +qa
+  -brew bundle cleanup --global
