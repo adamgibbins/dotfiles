@@ -38,6 +38,7 @@
   git = !git
   ab = absorb --and-rebase
   dft = difftool -y -t difftastic
+  nav = -c pager.diff=diffnav-auto diff
 
 [core]
   fsmonitor = true
@@ -57,6 +58,9 @@
   navigate = true
   hyperlinks = true
   hyperlinks-file-link-format = vscode://file/{path}:{line}
+
+[delta "light-mode"]
+  light = true
 
 [column]
   ui = auto

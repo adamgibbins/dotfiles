@@ -49,6 +49,7 @@ bookmark-advance-to = 'closest_pushable(@)'
 overview = ['log', '-T', 'builtin_log_compact ++ if(current_working_copy && !empty, diff.summary())']
 tug = ['bookmark', 'advance']
 difft = ['diff', '--tool', 'difft']
+nav = ['diff', '--config=ui.diff-formatter=:git', '--config=ui.pager=diffnav-auto']
 # Rebase current stack onto trunk
 restack = ['rebase', '-o', 'trunk()', '-s', 'roots(trunk()..) & stack()']
 # Rebase all stacks onto trunk

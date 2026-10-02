@@ -1,0 +1,4 @@
+#!/bin/sh
+# Match delta to macOS appearance
+defaults read -g AppleInterfaceStyle >/dev/null 2>&1 || export DELTA_FEATURES=+light-mode
+exec diffnav "$@"
