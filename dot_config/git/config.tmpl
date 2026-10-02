@@ -34,7 +34,7 @@
   msg = commit --allow-empty -m
   unstage = reset HEAD
   uncommit = reset --soft HEAD^
-  branch-touched = for-each-ref --sort=-authorname refs/remotes/ --format='%(refname:short) %(committerdate:short) %(authorname)'
+  branch-touched = for-each-ref --sort=-committerdate refs/remotes/ --format='%(refname:short) %(committerdate:short) %(authorname)'
   git = !git
   ab = absorb --and-rebase
   dft = difftool -y -t difftastic
