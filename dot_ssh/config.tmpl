@@ -11,8 +11,10 @@ Host *
     {{- end }}
     UseKeychain yes
     AddKeysToAgent yes
-    SetEnv TERM=xterm-256color
     ServerAliveInterval 60
     ControlMaster auto
     ControlPath ~/.ssh/cm-%C
     ControlPersist 10m
+
+Match exec "test \"$TERM\" = tmux-256color"
+    SetEnv TERM=xterm-256color
