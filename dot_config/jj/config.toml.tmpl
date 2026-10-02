@@ -102,6 +102,12 @@ command = ["terraform", "fmt", "-"]
 patterns = ["glob:'**/*.{tf,tfvars}'"]
 
 [[--scope]]
+--when.commands = ["diff", "show"]
+[--scope.ui]
+pager = "delta"
+diff-formatter = ":git"
+
+[[--scope]]
 --when.repositories = ["~/src/adamgibbins"]
 [--scope.user]
 email = "adam@adamgibbins.com"
