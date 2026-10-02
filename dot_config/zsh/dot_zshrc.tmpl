@@ -67,14 +67,8 @@ export JOB_NAME=adam
 export NODE_EXTRA_CA_CERTS="${HOME}/.config/certs/netskope-ca.pem"
 {{ end }}
 
-# colorize less
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[7m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT='-c'
 # >>>
 
 # cache dir, used by antidote's plugin bundle and zsh's completion cache <<<
