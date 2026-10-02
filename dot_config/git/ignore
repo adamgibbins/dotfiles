@@ -3,3 +3,6 @@
 desktop.ini
 Thumbs.db
 tags
+.claude/settings.local.json
+mise.local.toml
+.mise.local.toml
