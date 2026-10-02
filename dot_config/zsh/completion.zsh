@@ -1,6 +1,6 @@
 autoload -Uz compinit
-# rebuild the completion dump only once a day; trust the cache otherwise
-if [[ -n $ZSH_CACHE_DIR/.zcompdump(#qN.mh+24) ]]; then
+# rebuild daily or when brew adds completions
+if [[ -n $ZSH_CACHE_DIR/.zcompdump(#qN.mh+24) || /opt/homebrew/share/zsh/site-functions -nt $ZSH_CACHE_DIR/.zcompdump ]]; then
   compinit -d "$ZSH_CACHE_DIR/.zcompdump"
 else
   compinit -C -d "$ZSH_CACHE_DIR/.zcompdump"
