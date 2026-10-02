@@ -183,8 +183,6 @@ alias rm='nocorrect rm'
 alias rd='rmdir'
 alias md='mkdir'
 
-alias top10='print -l ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
-
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "PreferredAuthentications=keyboard-interactive"'
 alias insecscp='scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
 alias sshold='ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa'
@@ -199,10 +197,6 @@ alias koy='kubectl --context oy'
 alias kwa-staging='kubectl --context wa-staging'
 alias kwa-prod='kubectl --context wa-prod'
 {{ end -}}
-
-alias dip="docker inspect --format '{{ "{{" }} .NetworkSettings.IPAddress {{ "}}" }}'"
-alias dkd="docker run -d -P"
-alias dki="docker run -t -i -P"
 
 alias tmn='tmux new -s ${PWD:t}'
 alias tma='tmux attach -d -t'
