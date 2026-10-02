@@ -155,6 +155,12 @@ sudo-command-line() {
 }
 zle -N sudo-command-line
 
+sesh-picker() {
+  sesh picker -i </dev/tty
+  zle reset-prompt
+}
+zle -N sesh-picker
+
 alias run-help >&/dev/null && unalias run-help
 autoload -Uz run-help run-help-git
 
@@ -165,6 +171,7 @@ bindkey '\ee'    edit-command-line  # edit the command line in $EDITOR
 bindkey '\ei'    menu-complete      # menu completion
 bindkey '^X^X'   hist-complete      # complete word from history
 bindkey '^Os'    sudo-command-line  # prepend sudo to the command line
+bindkey '\es'    sesh-picker        # pick or create a tmux session
 # >>>
 
 # aliases <<<

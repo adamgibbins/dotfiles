@@ -36,3 +36,8 @@
     refreshPeriod = "168h"
     filter.command = "sed"
     filter.args = ["/./s/^/{{ list "adam@adamgibbins.com" .email | uniq | join "," }} /"]
+
+[".claude/skills/sesh/SKILL.md"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/joshmedeski/sesh/main/skills/sesh/SKILL.md"
+    refreshPeriod = "168h"

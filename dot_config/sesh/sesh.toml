@@ -1,0 +1,9 @@
+#:schema https://github.com/joshmedeski/sesh/raw/main/sesh.schema.json
+sort_order = ["tmux", ["config", "zoxide"]]
+
+[default_session]
+preview_command = "lsd --tree --depth 2 --color always --icon always {}"
+
+[tui]
+show_icons = true
+preview = true
