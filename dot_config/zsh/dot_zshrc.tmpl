@@ -80,7 +80,7 @@ ZSH_CACHE_DIR=~/.cache/zsh
 source ~/.local/share/antidote/antidote.zsh
 ZSH_PLUGINS_TXT=$ZDOTDIR/.zsh_plugins.txt
 ZSH_PLUGINS_ZSH="$ZSH_CACHE_DIR/plugins.zsh"
-if [[ ! -f $ZSH_PLUGINS_ZSH || $ZSH_PLUGINS_TXT -nt $ZSH_PLUGINS_ZSH ]]; then
+if [[ ! -f $ZSH_PLUGINS_ZSH || $ZSH_PLUGINS_TXT -nt $ZSH_PLUGINS_ZSH || ~/.zshenv -nt $ZSH_PLUGINS_ZSH ]]; then
   antidote bundle <$ZSH_PLUGINS_TXT >|$ZSH_PLUGINS_ZSH
 fi
 source $ZSH_PLUGINS_ZSH
