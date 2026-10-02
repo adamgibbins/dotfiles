@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! gh auth status >/dev/null 2>&1; then
-  echo "gh not logged in; skipping extensions"
-  exit 0
-fi
-
-installed=$(gh extension list)
+ext_dir="${XDG_DATA_HOME:-$HOME/.local/share}/gh/extensions"
 for ext in dlvhdr/gh-dash nektos/gh-act; do
-  grep -q "$ext" <<<"$installed" || gh extension install "$ext"
+  [[ -d "$ext_dir/${ext#*/}" ]] || gh extension install "$ext"
 done
