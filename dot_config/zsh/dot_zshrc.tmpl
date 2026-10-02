@@ -68,7 +68,8 @@ export JOB_NAME=adam
 export NODE_EXTRA_CA_CERTS="${HOME}/.config/certs/netskope-ca.pem"
 {{ end }}
 
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANPAGER='env BATMAN_IS_BEING_MANPAGER=yes batman'
+export BATDIFF_USE_DELTA=true
 export MANROFFOPT='-c'
 # >>>
 
