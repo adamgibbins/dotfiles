@@ -37,7 +37,9 @@
   branch-touched = for-each-ref --sort=-committerdate refs/remotes/ --format='%(refname:short) %(committerdate:short) %(authorname)'
   git = !git
   ab = absorb --and-rebase
-  dft = difftool -y -t difftastic
+  difft = -c diff.external=difft diff --ext-diff
+  showt = -c diff.external=difft show --ext-diff
+  logt = -c diff.external=difft log -p --ext-diff
   nav = -c pager.diff=diffnav-auto diff
 
 [core]
@@ -82,9 +84,6 @@
   colorMoved = default
   mnemonicPrefix = true
   renames = true
-
-[difftool "difftastic"]
-  cmd = difft "$LOCAL" "$REMOTE"
 
 [branch]
   sort = -committerdate
