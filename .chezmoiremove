@@ -2,3 +2,4 @@
 .zshrc
 .zsh_plugins.txt
 .Brewfile
+.config/zsh/.zshenv
