@@ -1,5 +1,6 @@
 [tools]
 "npm:@github/copilot-language-server" = "latest"
+bun = "latest"
 go = "latest"
 "gem:ruby-lsp" = "0.26.11"
 ruby = "latest"
@@ -17,3 +18,6 @@ uv = "latest"
 {{- if .personal }}
 claude-code = "latest"
 {{- end }}
+
+[settings.npm]
+package_manager = "bun"
