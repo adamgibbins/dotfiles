@@ -1,5 +1,4 @@
-# Required for MacOS 27.0 https://github.com/ghostty-org/ghostty/issues/13001
-auto-update-channel = tip
+auto-update-channel = stable
 auto-update = download
 
 #font-family = "CommitMono Nerd Font"
