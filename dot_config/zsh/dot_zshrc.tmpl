@@ -93,18 +93,6 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=8'
 # >>>
 
 # defer slow setup past first prompt <<<
-if (( $+commands[kubectl] )); then
-  KUBECTL_COMPLETION=$ZSH_CACHE_DIR/kubectl-completion.zsh
-  if [[ ! -s $KUBECTL_COMPLETION || $commands[kubectl] -nt $KUBECTL_COMPLETION ]]; then
-    kubectl completion zsh >| $KUBECTL_COMPLETION
-  fi
-  zsh-defer source $KUBECTL_COMPLETION
-fi
-JJ_COMPLETION=$ZSH_CACHE_DIR/jj-completion.zsh
-if [[ ! -s $JJ_COMPLETION || $commands[jj] -nt $JJ_COMPLETION ]]; then
-  COMPLETE=zsh jj >| $JJ_COMPLETION
-fi
-zsh-defer source $JJ_COMPLETION
 zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 # >>>
 
@@ -112,7 +100,6 @@ zsh-defer -c '(( $+commands[fzf] )) && source <(fzf --zsh)'
 # compinit runs from completion.zsh, via antidote
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu no
-zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose true
 zstyle ':completion:*' special-dirs ..
@@ -124,14 +111,13 @@ zstyle ':completion:*:approximate:*' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/
 zstyle ':completion:*:processes' command 'ps -au$USER'
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections true
-zstyle ':completion:*:*:git:*' script $ZDOTDIR/git-completion.zsh
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 # >>>
 
 # fzf-tab: fuzzy-filter the completion menu, with previews <<<
 zstyle ':fzf-tab:*' switch-group '<' '>'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -1 --color=always $realpath'
 zstyle ':fzf-tab:complete:(nvim|cat|bat):*' fzf-preview 'bat --color=always $realpath'
-# Homebrew's _git has no per-subcommand context
 zstyle ':fzf-tab:complete:git:*' fzf-preview 'case ${words[(r)(diff|show|log)]} in
   diff) git diff --color=always -- ${realpath:-${word% }} ;;
   show) git show --color=always ${word% } ;;
@@ -255,5 +241,6 @@ PROMPT2='%F{8}∙%f '
 unset RPROMPT # no right_format; skips a fork per prompt
 zsh-defer -c 'eval "$(zoxide init --cmd cd zsh)"'
 zsh-defer -c 'eval "$(atuin init zsh)"'
+zsh-defer -c 'eval "$(carapace _carapace)"'
 
 # vim:filetype=zsh foldmethod=marker foldmarker=<<<,>>> autoindent expandtab shiftwidth=2
