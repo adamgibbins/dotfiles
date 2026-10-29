@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+d=com.superlogical.rex
+
+# App
+defaults write $d SUEnableAutomaticChecks -bool true
+defaults write $d rex.agents.names-sessions -bool true
+defaults write $d rex.client.remoteControl -bool false
+
+# Server
+defaults write $d rex.server.automatic-restart-enabled -bool true
+defaults write $d rex.server.tailnet-enabled -bool {{ .personal }}
+{{- if .personal }}
+defaults write $d rex.server.tailnet-hostname -string {{ printf "%s-rex" .chezmoi.hostname | quote }}
+{{- end }}
+
+# Appearance
+defaults write $d Workspace.appearance -string system
+defaults write $d Workspace.interfaceStyle -string useTheme
+defaults write $d Workspace.darkThemeID -string merino-dark
+defaults write $d Workspace.lightThemeID -string merino-light
+defaults write $d Workspace.appIconVisibility -string dockOnly
+defaults write $d Workspace.animationStyle -string natural
+
+# Layout
+defaults write $d Workspace.sidebarPosition -string left
+defaults write $d Workspace.tabStyle -string vertical
+defaults write $d Workspace.tabsFillAvailableSpace -bool false
+defaults write $d Workspace.tabIconCount -int 3
+defaults write $d Workspace.tabIconColorMode -string always
+defaults write $d Workspace.tabIconTintMode -string off
+
+# Panes
+defaults write $d Workspace.paneDensity -string compact
+defaults write $d Workspace.showsPaneHeaders -bool true
+defaults write $d Workspace.showsActivePaneBorder -bool false
+defaults write $d Workspace.activePaneBorderColor -string accent
+defaults write $d Workspace.inactivePaneFadeMode -string both
+defaults write $d Workspace.tintsPanesWithProgramBackground -bool true
+defaults write $d Workspace.usesStandardInactiveWindowPaneStyles -bool true
+defaults write $d Workspace.focusFollowsMouse -bool false
+
+# Terminal
+defaults write $d Workspace.terminalFontName -string "MonoLisaCode Trial"
+defaults write $d Workspace.terminalFontSmoothing -bool false
+defaults write $d Workspace.terminalImproveTextContrast -bool true
+defaults write $d Workspace.terminalUseThemePalette -bool false
+defaults write $d Workspace.terminalSmoothScrolling -bool false
+defaults write $d Workspace.terminalSelectionRoundedCorners -bool true
+defaults write $d Workspace.terminalOptionKeyBehavior -string leftActsAsAlt
+defaults write $d Workspace.terminalCursorStyle -string block
+defaults write $d Workspace.terminalCursorStyleForced -bool false
+defaults write $d Workspace.terminalCursorBlinkUsesCustomInterval -bool false
+defaults write $d Workspace.terminalCursorBlinkIntervalMilliseconds -int 500
+
+# vim: set ft=sh
