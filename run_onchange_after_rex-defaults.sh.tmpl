@@ -11,9 +11,18 @@ defaults write $d rex.client.remoteControl -bool false
 # Server
 defaults write $d rex.server.automatic-restart-enabled -bool true
 defaults write $d rex.server.tailnet-enabled -bool {{ .personal }}
+{{- $tailnetName := printf "%s-rex" .chezmoi.hostname }}
 {{- if .personal }}
-defaults write $d rex.server.tailnet-hostname -string {{ printf "%s-rex" .chezmoi.hostname | quote }}
+defaults write $d rex.server.tailnet-hostname -string {{ $tailnetName | quote }}
 {{- end }}
+if command -v rex >/dev/null; then
+{{- if .personal }}
+  rex server tailscale on --autostart=false || true
+  rex server tailscale rename --autostart=false {{ $tailnetName | quote }} || true
+{{- else }}
+  rex server tailscale off --autostart=false || true
+{{- end }}
+fi
 
 # Appearance
 defaults write $d Workspace.appearance -string system
