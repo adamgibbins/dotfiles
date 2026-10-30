@@ -115,4 +115,10 @@ diff-formatter = ":git"
 [--scope.user]
 email = "adam@adamgibbins.com"
 
+[[--scope]]
+--when.repositories = ["~/src/adamgibbins/newbean"]
+[--scope.fix.tools.beancount]
+command = ["$root/scripts/bean-fmt.sh", "--stdin", "$path"]
+patterns = ["glob:'**/*.beancount'"]
+
 # vim:ft=toml
