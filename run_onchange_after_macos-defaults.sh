@@ -72,6 +72,31 @@ defaults write com.apple.dock showhidden -bool true
 # Bottom-right hot corner starts screen saver
 defaults write com.apple.dock wvous-br-corner -int 5
 defaults write com.apple.dock wvous-br-modifier -int 0
+# Faster Mission Control animation
+defaults write com.apple.dock expose-animation-duration -float 0.15
+
+# Screenshots
+# Save to Downloads
+defaults write com.apple.screencapture location -string "$HOME/Downloads"
+# PNG format
+defaults write com.apple.screencapture type -string png
+# No window shadow
+defaults write com.apple.screencapture disable-shadow -bool true
+
+# Activity Monitor
+# Open window on launch
+defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+# Show all processes
+defaults write com.apple.ActivityMonitor ShowCategory -int 0
+
+# Safari
+# Show Develop menu
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+
+# Messages
+# No smart quotes
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add automaticQuoteSubstitutionEnabled -bool false
 
 # Finder
 # Always show file extensions
@@ -94,8 +119,12 @@ defaults write com.apple.finder FXDefaultSearchScope -string SCcf
 defaults write com.apple.finder NewWindowTarget -string PfAF
 # No warning on extension change
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+# Drag-hover opens folders
+defaults write NSGlobalDomain com.apple.springing.enabled -bool true
 # Drag-hover opens folders faster
 defaults write NSGlobalDomain com.apple.springing.delay -float 0.1
+# Select text in Quick Look
+defaults write com.apple.finder QLEnableTextSelection -bool true
 # No .DS_Store on network shares
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 # No .DS_Store on USB drives
