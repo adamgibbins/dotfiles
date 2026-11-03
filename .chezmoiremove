@@ -3,3 +3,5 @@
 .zsh_plugins.txt
 .Brewfile
 .config/zsh/.zshenv
+.config/sesh
+.claude/skills/sesh
