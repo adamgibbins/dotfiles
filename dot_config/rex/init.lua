@@ -88,5 +88,28 @@ rex.action{
   end,
 }
 
+rex.action{
+  name  = "fork_claude",
+  title = "Fork Claude",
+  run   = function(ctx, args)
+    local proc = rex.block.call(terminal, "process", { block_id = ctx.block_id })
+    local fg = proc and proc.foreground
+    if not fg or fg.name ~= "claude" then error("focused pane isn't running claude", 0) end
+    local f = io.open(os.getenv("HOME") .. "/.claude/sessions/" .. fg.pid .. ".json")
+    if not f then error("no claude session file for pid " .. fg.pid, 0) end
+    local id = rex.json.decode(f:read("*a")).sessionId
+    f:close()
+    local _, err = rex.session.new_window{
+      window_label = "claude fork",
+      layout       = rex.layout.block{
+        flavor  = terminal .. ".shell",
+        options = { command = { "claude", "--resume", id, "--fork-session" }, cwd = fg.cwd },
+      },
+    }
+    if err ~= nil then error(err, 0) end
+  end,
+}
+
+rex.bind("ctrl+alt+shift+f", "fork_claude")
 rex.bind("ctrl+alt+shift+l", "vcs_float")
 rex.bind("ctrl+alt+shift+b", "btop_float")
