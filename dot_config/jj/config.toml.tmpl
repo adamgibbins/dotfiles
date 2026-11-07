@@ -47,7 +47,7 @@ bookmark-advance-to = 'closest_pushable(@)'
 [aliases]
 # Log plus working copy changes
 overview = ['log', '-T', 'builtin_log_compact ++ if(current_working_copy && !empty, diff.summary())']
-tug = ['bookmark', 'advance']
+gf = ['git', 'fetch']
 difft = ['diff', '--tool', 'difft']
 showt = ['show', '--tool', 'difft']
 logt = ['log', '-p', '--tool', 'difft']
