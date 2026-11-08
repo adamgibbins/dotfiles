@@ -1,5 +1,10 @@
-format = "$directory$jj_bookmark$jj_status$jj_metrics$git_branch$git_status$aws$character"
+format = "$directory$vcs$aws$character"
 command_timeout = 1000
+
+[vcs]
+order = ["jj", "git"]
+jj_modules = "$jj_bookmark$jj_status$jj_metrics"
+git_modules = "$git_branch$git_status"
 
 [directory]
 style = "blue"
