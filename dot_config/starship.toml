@@ -1,4 +1,4 @@
-format = "$directory$git_branch$git_status$aws$character"
+format = "$directory$jj_bookmark$jj_status$jj_metrics$git_branch$git_status$aws$character"
 command_timeout = 1000
 
 [directory]
